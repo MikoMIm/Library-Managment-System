@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mordvinovdsw.library.controllers.Issue_Controller">
+   <children>
+      <Pane prefHeight="676.0" prefWidth="1096.0" style="-fx-background-color: #242425;">
+         <children>
+            <TableView fx:id="IssueView" layoutX="428.0" layoutY="89.0" prefHeight="540.0" prefWidth="622.0">
+              <columns>
+                <TableColumn fx:id="IDIssueBook" prefWidth="99.0" text="Issue ID" />
+                <TableColumn fx:id="ID_book" minWidth="0.0" prefWidth="142.0" text="Book ID" />
+                  <TableColumn fx:id="ID_Member" prefWidth="75.0" text="Member ID" />
+                  <TableColumn fx:id="DateE" prefWidth="133.0" text="Date of hire" />
+                  <TableColumn fx:id="DateR" prefWidth="98.0" text="Return date" />
+                  <TableColumn fx:id="status" prefWidth="75.0" text="Status" />
+              </columns>
+            </TableView>
+            <ComboBox fx:id="bookIdCombo" layoutX="220.0" layoutY="142.0" prefHeight="36.0" prefWidth="174.0" />
+            <ComboBox fx:id="memberIdCombo" layoutX="220.0" layoutY="188.0" prefHeight="36.0" prefWidth="174.0" />
+            <TextField fx:id="idField" layoutX="220.0" layoutY="95.0" prefHeight="36.0" prefWidth="174.0" />
+            <DatePicker fx:id="issueDatePicker" layoutX="221.0" layoutY="234.0" prefHeight="36.0" prefWidth="174.0" />
+            <DatePicker fx:id="returnDatePicker" layoutX="221.0" layoutY="283.0" prefHeight="36.0" prefWidth="174.0" />
+            <ComboBox fx:id="statusCombo" layoutX="220.0" layoutY="328.0" prefHeight="36.0" prefWidth="174.0" />
+            <Label layoutX="144.0" layoutY="100.0" text="Issue ID" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="144.0" layoutY="147.0" text="Book ID" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="116.0" layoutY="194.0" text="Member ID" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="112.0" layoutY="239.0" text="Date of hire" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="112.0" layoutY="288.0" text="Return date" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="159.0" layoutY="333.0" text="Status" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="addButton" layoutX="175.0" layoutY="451.0" mnemonicParsing="false" onAction="#addData" prefHeight="46.0" prefWidth="166.0" style="-fx-background-color: #87c6ad;" text="Add" />
+            <Button fx:id="saveButton" layoutX="175.0" layoutY="390.0" mnemonicParsing="false" onAction="#updateData" prefHeight="46.0" prefWidth="166.0" style="-fx-background-color: #87c6ad;" text="Save" />
+            <Button fx:id="removeButton" layoutX="175.0" layoutY="511.0" mnemonicParsing="false" onAction="#deleteData" prefHeight="46.0" prefWidth="166.0" style="-fx-background-color: #87c6ad;" text="Delete" />
+            <Button fx:id="ClearButton" layoutX="175.0" layoutY="568.0" mnemonicParsing="false" onAction="#clearFields" prefHeight="46.0" prefWidth="166.0" style="-fx-background-color: #fbc337;" text="Clear the fields" />
+         </children>
+      </Pane>
+      <Button layoutX="24.0" layoutY="24.0" mnemonicParsing="false" onAction="#exit" prefHeight="36.0" prefWidth="96.0" style="-fx-background-color: #e50704;" text="←">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

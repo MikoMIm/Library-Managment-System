@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="708.0" prefWidth="901.0" style="-fx-background-color: #242425;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mordvinovdsw.library.controllers.MainMenu_controller">
+   <children>
+      <Button layoutX="82.0" layoutY="26.0" mnemonicParsing="false" onAction="#pressed_memberList_button" prefHeight="308.0" prefWidth="334.0" style="-fx-background-color: #242425; -fx-border-radius: 30; -fx-background-radius: 30;" stylesheets="@../../../Stylesheet/Style_fastMenu.css">
+         <graphic>
+            <ImageView>
+               <image>
+                  <Image url="@../../../IMG/members.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="470.0" layoutY="26.0" mnemonicParsing="false" onAction="#pressed_Issue_button" prefHeight="308.0" prefWidth="334.0" style="-fx-background-color: #242425; -fx-border-radius: 30; -fx-background-radius: 30;" stylesheets="@../../../Stylesheet/Style_fastMenu.css">
+         <graphic>
+            <ImageView>
+               <image>
+                  <Image url="@../../../IMG/Books%20issued.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="82.0" layoutY="354.0" mnemonicParsing="false" onAction="#pressed_bookList_button" prefHeight="308.0" prefWidth="334.0" style="-fx-background-color: #242425; -fx-border-radius: 30; -fx-background-radius: 30;" stylesheets="@../../../Stylesheet/Style_fastMenu.css">
+         <graphic>
+            <ImageView>
+               <image>
+                  <Image url="@../../../IMG/Books%20list.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label layoutX="184.0" layoutY="395.0" text="List of books" textFill="#30ff79">
+         <effect>
+            <Blend />
+         </effect>
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="161.0" layoutY="56.0" prefHeight="35.0" prefWidth="175.0" text="List of members" textFill="#30ff79">
+         <effect>
+            <Blend />
+         </effect>
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="568.0" layoutY="56.0" text="Issued books" textFill="#30ff79">
+         <effect>
+            <Blend />
+         </effect>
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button layoutX="470.0" layoutY="354.0" mnemonicParsing="false" onAction="#logout" prefHeight="308.0" prefWidth="334.0" style="-fx-background-color: #242425; -fx-border-radius: 30; -fx-background-radius: 30;" stylesheets="@../../../Stylesheet/Style_fastMenu.css">
+         <graphic>
+            <ImageView>
+               <image>
+                  <Image url="@../../../IMG/logout.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label layoutX="576.0" layoutY="378.0" text="Log out" textFill="#30ff79">
+         <effect>
+            <Blend />
+         </effect>
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>
