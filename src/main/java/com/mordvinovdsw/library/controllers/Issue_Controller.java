@@ -8,8 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.io.IOException;
+
+import com.mordvinovdsw.library.Database.Book;
 import com.mordvinovdsw.library.Database.DBConnection;
 import com.mordvinovdsw.library.Database.Issue;
+import com.mordvinovdsw.library.Database.Member;
 import com.mordvinovdsw.library.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,9 +40,9 @@ public class Issue_Controller implements Initializable {
     @FXML
     private TextField idField;
     @FXML
-    private ComboBox<String> bookIdCombo;
+    private ComboBox<Book> bookIdCombo;
     @FXML
-    private ComboBox<String> memberIdCombo;
+    private ComboBox<Member> memberIdCombo;
     @FXML
     private DatePicker issueDatePicker;
     @FXML
@@ -53,6 +56,8 @@ public class Issue_Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeTableColumns();
         loadData();
+        loadBooks();
+        loadMembers();
     }
 
     private void initializeTableColumns() {
@@ -89,9 +94,11 @@ public class Issue_Controller implements Initializable {
     @FXML
     private void addData() {
         try (Connection connection = DBConnection.getConnection()) {
+            // Query to get the maximum ID
             String maxIdQuery = "SELECT MAX(Book_Issue_ID) AS max_id FROM Book_Issue";
             int issueID = 1;
 
+            // Get the next issue ID
             try (PreparedStatement maxIdStatement = connection.prepareStatement(maxIdQuery)) {
                 ResultSet resultSet = maxIdStatement.executeQuery();
                 if (resultSet.next()) {
@@ -101,14 +108,39 @@ public class Issue_Controller implements Initializable {
                     }
                 }
             }
+
+            // Insert query
             String query = "INSERT INTO Book_Issue (Book_Issue_ID, Book_ID, Member_ID, Date_Issue, Date_Return, Book_Issue_Status) VALUES (?, ?, ?, ?, ?, ?)";
+
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setInt(1, issueID);
-                statement.setInt(2, Integer.parseInt(bookIdCombo.getSelectionModel().getSelectedItem()));
-                statement.setInt(3, Integer.parseInt(memberIdCombo.getSelectionModel().getSelectedItem()));
+
+                // Get selected Book and set its ID
+                Book selectedBook = bookIdCombo.getSelectionModel().getSelectedItem();
+                if (selectedBook != null) {
+                    statement.setInt(2, selectedBook.getBookID());
+                } else {
+                    System.err.println("No book selected");
+                    return; // Exit if no book is selected
+                }
+
+                // Get selected Member and set its ID
+                Member selectedMember = memberIdCombo.getSelectionModel().getSelectedItem();
+                if (selectedMember != null) {
+                    statement.setInt(3, selectedMember.getId()); // Use the getId() method
+                } else {
+                    System.err.println("No member selected");
+                    return; // Exit if no member is selected
+                }
+
+                // Setting issue and return dates
                 statement.setString(4, issueDatePicker.getValue() != null ? issueDatePicker.getValue().toString() : null);
                 statement.setString(5, returnDatePicker.getValue() != null ? returnDatePicker.getValue().toString() : null);
+
+                // Set the status
                 statement.setString(6, statusCombo.getSelectionModel().getSelectedItem());
+
+                // Execute the update
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -122,12 +154,35 @@ public class Issue_Controller implements Initializable {
             try (Connection connection = DBConnection.getConnection()) {
                 String query = "UPDATE Book_Issue SET Book_ID = ?, Member_ID = ?, Date_Issue = ?, Date_Return = ?, Book_Issue_Status = ? WHERE Book_Issue_ID = ?";
                 try (PreparedStatement statement = connection.prepareStatement(query)) {
-                    statement.setInt(1, Integer.parseInt(bookIdCombo.getSelectionModel().getSelectedItem()));
-                    statement.setInt(2, Integer.parseInt(memberIdCombo.getSelectionModel().getSelectedItem()));
-                    statement.setString(3, issueDatePicker.getValue().toString());
-                    statement.setString(4, returnDatePicker.getValue().toString());
+                    // Get selected Book and set its ID
+                    Book selectedBook = bookIdCombo.getSelectionModel().getSelectedItem();
+                    if (selectedBook != null) {
+                        statement.setInt(1, selectedBook.getBookID());
+                    } else {
+                        System.err.println("No book selected");
+                        return;
+                    }
+
+                    // Get selected Member and set its ID
+                    Member selectedMember = memberIdCombo.getSelectionModel().getSelectedItem();
+                    if (selectedMember != null) {
+                        statement.setInt(2, selectedMember.getId());
+                    } else {
+                        System.err.println("No member selected");
+                        return;
+                    }
+
+                    // Setting issue and return dates
+                    statement.setString(3, issueDatePicker.getValue() != null ? issueDatePicker.getValue().toString() : null);
+                    statement.setString(4, returnDatePicker.getValue() != null ? returnDatePicker.getValue().toString() : null);
+
+                    // Set the status
                     statement.setString(5, statusCombo.getSelectionModel().getSelectedItem());
+
+                    // Set the Book_Issue_ID
                     statement.setInt(6, Integer.parseInt(idField.getText()));
+
+                    // Execute the update
                     statement.executeUpdate();
                 }
                 loadData();
@@ -167,5 +222,44 @@ public class Issue_Controller implements Initializable {
     @FXML
     private void exit() throws IOException {
         Main.changeScene();
+    }
+
+
+    private void loadBooks() {
+        ObservableList<Book> books = FXCollections.observableArrayList();
+        try (Connection connection = DBConnection.getConnection()) {
+            String query = "SELECT * FROM Book_List"; // Replace 'Books' with your actual table name
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                ResultSet resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("Book_Id"); // Replace 'bookID' with your actual column name
+                    String title = resultSet.getString("Book_Title"); // Replace 'bookTitle' with your actual column name
+                    double price = resultSet.getDouble("Price"); // Adjust according to your schema
+                    int bookNumber = resultSet.getInt("Book_Numbers"); // Adjust according to your schema
+                    books.add(new Book(id, title, price, bookNumber));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error loading books: " + e.getMessage());
+        }
+        bookIdCombo.setItems(books);
+    }
+
+    private void loadMembers() {
+        ObservableList<Member> members = FXCollections.observableArrayList();
+        try (Connection connection = DBConnection.getConnection()) {
+            String query = "SELECT Member_ID, Member_Name FROM Members";
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                ResultSet resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    int memberId = resultSet.getInt("Member_ID");
+                    String memberName = resultSet.getString("Member_Name");
+                    members.add(new Member(memberId, memberName, null, null, null, null, null));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error loading members: " + e.getMessage());
+        }
+        memberIdCombo.setItems(members);
     }
 }
