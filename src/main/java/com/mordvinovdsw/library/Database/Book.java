@@ -35,8 +35,12 @@ public class Book {
         return bookNumber.get();
     }
 
-    
+    @Override
+    public String toString() {
+        return bookID.get() + " - " + bookTitle.get();
+    }
 }
+
 
 
 
