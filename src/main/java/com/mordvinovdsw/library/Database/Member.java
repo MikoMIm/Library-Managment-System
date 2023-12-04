@@ -50,4 +50,8 @@ public class Member{
         return Status.get();
     }
 
+    @Override
+    public String toString() {
+        return getId() + " - " + getName();
+    }
 }
