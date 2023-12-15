@@ -15,3 +15,8 @@
 
 
 }
+
+.gridStyle_Line {
+  -fx-border-color: red;
+   -fx-border-width: 2;
+}

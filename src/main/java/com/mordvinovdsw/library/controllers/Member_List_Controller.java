@@ -48,8 +48,6 @@ public class Member_List_Controller implements Initializable {
 
 
     @FXML
-    private TextField ID_memebrfiled;
-    @FXML
     private TextField nameField;
 
     @FXML
@@ -119,7 +117,6 @@ public class Member_List_Controller implements Initializable {
         memberTable.setOnMouseClicked(event -> {
             Member selectedMember = memberTable.getSelectionModel().getSelectedItem();
             if (selectedMember != null) {
-                ID_memebrfiled.setText(String.valueOf(selectedMember.getId()));
                 nameField.setText(selectedMember.getName());
                 phoneField.setText(selectedMember.getPhone());
                 emailField.setText(selectedMember.getEmail());
@@ -176,7 +173,6 @@ public class Member_List_Controller implements Initializable {
     }
 
     private void clearFields() {
-        ID_memebrfiled.clear();
         nameField.clear();
         phoneField.clear();
         emailField.clear();
@@ -187,7 +183,6 @@ public class Member_List_Controller implements Initializable {
 
     @FXML
     private void clearFieldsb() {
-        ID_memebrfiled.clear();
         nameField.clear();
         phoneField.clear();
         emailField.clear();
@@ -219,7 +214,6 @@ public class Member_List_Controller implements Initializable {
 
     @FXML
     private void updateData() {
-        int MemeberId = Integer.parseInt(ID_memebrfiled.getText());
         String name = nameField.getText();
         String phone = phoneField.getText();
         String email = emailField.getText();
@@ -236,7 +230,6 @@ public class Member_List_Controller implements Initializable {
             statement.setString(4, Rdate );
             statement.setString(5, Dateexpair);
             statement.setString(6, Status );
-            statement.setInt(7, MemeberId);
 
             int result = statement.executeUpdate();
             if (result == 1) {

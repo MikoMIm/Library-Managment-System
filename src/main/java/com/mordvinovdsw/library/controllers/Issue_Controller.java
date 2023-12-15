@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.io.IOException;
 
@@ -38,8 +40,6 @@ public class Issue_Controller implements Initializable {
     @FXML
     private TableColumn<Issue, String> status;
     @FXML
-    private TextField idField;
-    @FXML
     private ComboBox<Book> bookIdCombo;
     @FXML
     private ComboBox<Member> memberIdCombo;
@@ -54,11 +54,15 @@ public class Issue_Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        statusCombo.getItems().add("Active");
+        statusCombo.getItems().add("Inactive");
         initializeTableColumns();
         loadData();
         loadBooks();
         loadMembers();
     }
+
+
 
     private void initializeTableColumns() {
         IDIssueBook.setCellValueFactory(new PropertyValueFactory<>("issueID"));
@@ -179,8 +183,6 @@ public class Issue_Controller implements Initializable {
                     // Set the status
                     statement.setString(5, statusCombo.getSelectionModel().getSelectedItem());
 
-                    // Set the Book_Issue_ID
-                    statement.setInt(6, Integer.parseInt(idField.getText()));
 
                     // Execute the update
                     statement.executeUpdate();
@@ -194,7 +196,6 @@ public class Issue_Controller implements Initializable {
 
     @FXML
     private void clearFields() {
-        idField.clear();
         bookIdCombo.getSelectionModel().clearSelection();
         memberIdCombo.getSelectionModel().clearSelection();
         issueDatePicker.setValue(null);

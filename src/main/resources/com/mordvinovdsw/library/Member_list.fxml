@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="450.0" prefWidth="947.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mordvinovdsw.library.controllers.Member_List_Controller">
+<AnchorPane prefHeight="450.0" prefWidth="947.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mordvinovdsw.library.controllers.Member_List_Controller">
    <children>
       <Pane prefHeight="613.0" prefWidth="1566.0" style="-fx-background-color: #242425;">
          <children>
@@ -29,11 +29,6 @@
             <Button fx:id="addButton" layoutX="92.0" layoutY="423.0" mnemonicParsing="false" onAction="#addMember" prefHeight="46.0" prefWidth="166.0" style="-fx-background-color: #87c6ad;" text="Add" />
             <Button fx:id="editButton" layoutX="92.0" layoutY="362.0" mnemonicParsing="false" onAction="#updateData" prefHeight="46.0" prefWidth="166.0" style="-fx-background-color: #87c6ad;" text="Save" />
             <Button fx:id="removeButton" layoutX="92.0" layoutY="483.0" mnemonicParsing="false" onAction="#delete" prefHeight="46.0" prefWidth="166.0" style="-fx-background-color: #87c6ad;" text="Delete" />
-            <TextField fx:id="ID_memebrfiled" layoutX="175.0" layoutY="62.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </TextField>
             <TextField fx:id="nameField" layoutX="175.0" layoutY="103.0">
                <font>
                   <Font size="14.0" />
@@ -49,11 +44,6 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <Label layoutX="78.0" layoutY="64.0" text="Memebr ID" textFill="WHITE">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
             <Label layoutX="50.0" layoutY="105.0" text="Member Name" textFill="WHITE">
                <font>
                   <Font size="18.0" />

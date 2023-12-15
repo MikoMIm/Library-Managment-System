@@ -28,8 +28,7 @@ public class Book_list_Controller implements Initializable{
     private TableColumn<Book, Double> priceColumn ;
     @FXML
     private TableColumn<Book, Integer> bookNumberColumn ;
-    @FXML
-    private TextField bookIDField;
+
     @FXML
     private TextField bookTitleField;
     @FXML
@@ -42,7 +41,6 @@ public class Book_list_Controller implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        bookIDField.setEditable(false);
         bookIDColumn.setCellValueFactory(new PropertyValueFactory<>("bookID"));
         bookTitleColumn.setCellValueFactory(new PropertyValueFactory<>("bookTitle"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
@@ -106,7 +104,6 @@ public class Book_list_Controller implements Initializable{
     }
     @FXML
     private void updateData() {
-        int bookID = Integer.parseInt(bookIDField.getText());
         String bookTitle = bookTitleField.getText();
         double price = Double.parseDouble(priceField.getText());
         int bookNumber = Integer.parseInt(bookNumberField.getText());
@@ -117,7 +114,6 @@ public class Book_list_Controller implements Initializable{
             statement.setString(1, bookTitle);
             statement.setDouble(2, price);
             statement.setInt(3, bookNumber);
-            statement.setInt(4, bookID);
 
             int result = statement.executeUpdate();
             if (result == 1) {
@@ -130,7 +126,6 @@ public class Book_list_Controller implements Initializable{
     }
 
     private void clearFields() {
-        bookIDField.clear();
         bookTitleField.clear();
         priceField.clear();
         bookNumberField.clear();
@@ -138,7 +133,6 @@ public class Book_list_Controller implements Initializable{
 
     @FXML
     private void clearFieldsb() {
-        bookIDField.clear();
         bookTitleField.clear();
         priceField.clear();
         bookNumberField.clear();
@@ -165,7 +159,6 @@ public class Book_list_Controller implements Initializable{
         tableView.setOnMouseClicked(event -> {
             Book selectedBook = tableView.getSelectionModel().getSelectedItem();
             if (selectedBook != null) {
-                bookIDField.setText(String.valueOf(selectedBook.getBookID()));
                 bookTitleField.setText(selectedBook.getBookTitle());
                 priceField.setText(String.valueOf(selectedBook.getPrice()));
                 bookNumberField.setText(String.valueOf(selectedBook.getBookNumber()));
