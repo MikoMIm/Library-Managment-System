@@ -20,7 +20,7 @@
 
    <VBox alignment="CENTER" spacing="20" HBox.hgrow="ALWAYS">
       <ImageView>
-         <Image url="@../../../IMG/looked.png"/>
+         <Image url="@../../../IMG/lock.png"/>
       </ImageView>
       <Label style="-fx-font-size: 20px;" text="User ID" textFill="WHITE" />
       <TextField fx:id="userID" maxWidth="1.7976931348623157E308" prefHeight="47.0" prefWidth="180.0" promptText="User ID" style="-fx-font-size: 14px;">
