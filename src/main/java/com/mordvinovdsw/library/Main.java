@@ -20,7 +20,7 @@ public class Main extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1150, 650);
-        stage.setResizable(false);
+        stage.setResizable(true);
         stage.setTitle("Just Lib System");
         stage.setScene(scene);
         stage.show();
@@ -49,8 +49,8 @@ public class Main extends Application {
 
     public static void BookList() throws IOException {
         {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Book_list.fxml"));
-            Scene scene_blist = new Scene(fxmlLoader.load(), 1025, 541);
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Books_list.fxml"));
+            Scene scene_blist = new Scene(fxmlLoader.load(), 1500, 920);
             stg.setScene(scene_blist);
             stg.show();
 

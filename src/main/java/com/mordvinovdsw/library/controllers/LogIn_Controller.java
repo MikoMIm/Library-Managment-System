@@ -17,8 +17,6 @@ public class LogIn_Controller {
     public LogIn_Controller(){
         login = new LogIn();
     }
-    @FXML
-    private Button button;
 
     @FXML
     private Label wrongLogin;
@@ -46,10 +44,5 @@ public class LogIn_Controller {
             wrongLogin.setText("Wrong Login or password. ");
         }
     }
-
-
-
-
-
 }
 
