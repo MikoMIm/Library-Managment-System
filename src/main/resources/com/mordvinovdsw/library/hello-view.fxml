@@ -11,21 +11,16 @@
 <?import javafx.scene.layout.VBox?>
 
 <HBox style="-fx-background-color: #242425;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mordvinovdsw.library.controllers.LogIn_Controller">
-   <!-- ImageView container -->
    <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
       <ImageView fx:id="IMG" preserveRatio="true">
-         <image>
-            <Image url="@../../../IMG/Logo2.png" /> <!-- Replace with the correct path to your image -->
-         </image>
+         <Image url="@../../../IMG/Logo2.png"/>
       </ImageView>
    </VBox>
 
-   <!-- VBox container for user inputs and login button -->
+
    <VBox alignment="CENTER" spacing="20" HBox.hgrow="ALWAYS">
       <ImageView>
-         <image>
-            <Image url="@../../../IMG/looked.png" />
-         </image>
+         <Image url="@../../../IMG/looked.png"/>
       </ImageView>
       <Label style="-fx-font-size: 20px;" text="User ID" textFill="WHITE" />
       <TextField fx:id="userID" maxWidth="1.7976931348623157E308" prefHeight="47.0" prefWidth="180.0" promptText="User ID" style="-fx-font-size: 14px;">
