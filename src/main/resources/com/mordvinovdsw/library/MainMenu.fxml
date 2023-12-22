@@ -1,82 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.Blend?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="708.0" prefWidth="901.0" style="-fx-background-color: #242425;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mordvinovdsw.library.controllers.MainMenu_controller">
+<GridPane fx:id="mainMenuGrid" hgap="10" maxHeight="Infinity" maxWidth="Infinity" style="-fx-background-color: #242425;" stylesheets="@../../../Stylesheet/Style_fastMenu.css" vgap="10" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mordvinovdsw.library.controllers.MainMenu_controller">
+
+   <columnConstraints>
+      <ColumnConstraints hgrow="ALWAYS" percentWidth="50" />
+      <ColumnConstraints hgrow="ALWAYS" percentWidth="50" />
+   </columnConstraints>
+
+   <rowConstraints>
+      <RowConstraints percentHeight="50" vgrow="ALWAYS" />
+      <RowConstraints percentHeight="50" vgrow="ALWAYS" />
+   </rowConstraints>
+
    <children>
-      <Button layoutX="82.0" layoutY="26.0" mnemonicParsing="false" onAction="#pressed_memberList_button" prefHeight="308.0" prefWidth="334.0" style="-fx-background-color: #242425; -fx-border-radius: 30; -fx-background-radius: 30;" stylesheets="@../../../Stylesheet/Style_fastMenu.css">
-         <graphic>
-            <ImageView>
-               <image>
-                  <Image url="@../../../IMG/members.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button layoutX="470.0" layoutY="26.0" mnemonicParsing="false" onAction="#pressed_Issue_button" prefHeight="308.0" prefWidth="334.0" style="-fx-background-color: #242425; -fx-border-radius: 30; -fx-background-radius: 30;" stylesheets="@../../../Stylesheet/Style_fastMenu.css">
-         <graphic>
-            <ImageView>
-               <image>
-                  <Image url="@../../../IMG/Books%20issued.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button layoutX="82.0" layoutY="354.0" mnemonicParsing="false" onAction="#pressed_bookList_button" prefHeight="308.0" prefWidth="334.0" style="-fx-background-color: #242425; -fx-border-radius: 30; -fx-background-radius: 30;" stylesheets="@../../../Stylesheet/Style_fastMenu.css">
-         <graphic>
-            <ImageView>
-               <image>
-                  <Image url="@../../../IMG/Books%20list.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Label layoutX="184.0" layoutY="395.0" text="List of books" textFill="#30ff79">
-         <effect>
-            <Blend />
-         </effect>
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Label layoutX="161.0" layoutY="56.0" prefHeight="35.0" prefWidth="175.0" text="List of members" textFill="#30ff79">
-         <effect>
-            <Blend />
-         </effect>
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Label layoutX="568.0" layoutY="56.0" text="Issued books" textFill="#30ff79">
-         <effect>
-            <Blend />
-         </effect>
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Button layoutX="470.0" layoutY="354.0" mnemonicParsing="false" onAction="#logout" prefHeight="308.0" prefWidth="334.0" style="-fx-background-color: #242425; -fx-border-radius: 30; -fx-background-radius: 30;" stylesheets="@../../../Stylesheet/Style_fastMenu.css">
-         <graphic>
-            <ImageView>
-               <image>
-                  <Image url="@../../../IMG/logout.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Label layoutX="576.0" layoutY="378.0" text="Log out" textFill="#30ff79">
-         <effect>
-            <Blend />
-         </effect>
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
+      <StackPane GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.vgrow="ALWAYS">
+         <Button fx:id="memberListButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#pressed_memberList_button" styleClass="menu-button">
+            <graphic>
+               <VBox alignment="CENTER" spacing="10">
+                  <ImageView fitHeight="133.0" fitWidth="198.0" preserveRatio="true">
+                     <Image url="@../../../IMG/members.png" />
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </ImageView>
+                  <Label styleClass="menu-label" text="List of members">
+                     <VBox.margin>
+                        <Insets bottom="-50.0" />
+                     </VBox.margin></Label>
+               </VBox>
+            </graphic>
+            <StackPane.margin>
+               <Insets left="10.0" top="10.0" />
+            </StackPane.margin>
+         </Button>
+      </StackPane>
+      <StackPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.vgrow="ALWAYS">
+         <Button fx:id="issueListButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#pressed_Issue_button" styleClass="menu-button">
+            <graphic>
+               <VBox alignment="CENTER" spacing="10">
+                  <ImageView fitHeight="137.0" fitWidth="143.0" preserveRatio="true">
+                     <Image url="@../../../IMG/Books_issued.png" />
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </ImageView>
+                  <Label styleClass="menu-label" text="Issued books">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin></Label>
+               </VBox>
+            </graphic>
+            <StackPane.margin>
+               <Insets right="10.0" top="10.0" />
+            </StackPane.margin>
+         </Button>
+      </StackPane>
+      <StackPane GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+         <Button fx:id="bookListButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#pressed_bookList_button" styleClass="menu-button">
+            <graphic>
+               <VBox alignment="CENTER" spacing="10">
+                  <ImageView fitHeight="143.0" fitWidth="156.0" preserveRatio="true">
+                     <Image url="@../../../IMG/books_list.png" />
+                  </ImageView>
+                  <Label styleClass="menu-label" text="List of books" />
+               </VBox>
+            </graphic>
+            <StackPane.margin>
+               <Insets bottom="10.0" left="10.0" />
+            </StackPane.margin>
+         </Button>
+      </StackPane>
+
+      <StackPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+         <Button fx:id="logoutButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#logout" styleClass="menu-button">
+            <graphic>
+               <VBox alignment="CENTER" spacing="10">
+                  <ImageView fitHeight="142.0" fitWidth="155.0" preserveRatio="true">
+                     <Image url="@../../../IMG/logout.png" />
+                     <VBox.margin>
+                        <Insets left="20.0" top="20.0" />
+                     </VBox.margin>
+                  </ImageView>
+                  <Label styleClass="menu-label" text="Log out">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin></Label>
+               </VBox>
+            </graphic>
+            <StackPane.margin>
+               <Insets bottom="10.0" right="10.0" />
+            </StackPane.margin>
+         </Button>
+      </StackPane>
    </children>
-</Pane>
+</GridPane>

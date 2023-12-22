@@ -5,18 +5,44 @@
     -fx-border-width: 2px;
      -fx-text-fill: #ffffff;
 
-
-
 }
 
 .button:hover {
-    -fx-background-color: #df00a4;
-    -fx-border-color: #257cff;
 
+    -fx-border-color: #257cff;
 
 }
 
-.gridStyle_Line {
-  -fx-border-color: red;
-   -fx-border-width: 2;
+.text-field {
+    -fx-font-size: 16px;
+    -fx-pref-width: 500px;
+    -fx-pref-height: 40px;
+}
+
+.transparent-button {
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+    -fx-border-width: 2;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    }
+}
+
+.menu-button {
+    -fx-background-color: transparent;
+    -fx-border-color: #ffffff;
+    -fx-border-width: 2;
+    -fx-background-insets: 0;
+    -fx-padding: 10;
+    -fx-border-radius: 30;
+    -fx-background-radius: 30;
+}
+
+.menu-label {
+    -fx-font-size: 24px;
+    -fx-text-fill: #30ff79;
+    -fx-padding: 10;
+    -fx-alignment: center;
 }
