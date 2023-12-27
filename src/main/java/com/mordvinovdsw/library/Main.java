@@ -1,11 +1,14 @@
 package com.mordvinovdsw.library;
 
+import com.mordvinovdsw.library.utils.StageUtils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -27,6 +30,9 @@ public class Main extends Application {
 
     }
 
+    public static Stage getStage() {
+        return stg;
+    }
     public static void changeScene() throws IOException {
         {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("MainMenu.fxml"));
@@ -48,13 +54,12 @@ public class Main extends Application {
     }
 
     public static void BookList() throws IOException {
-        {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Books_list.fxml"));
-            Scene scene_blist = new Scene(fxmlLoader.load(), 1500, 920);
-            stg.setScene(scene_blist);
-            stg.show();
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Books_list.fxml"));
+        Scene scene_blist = new Scene(fxmlLoader.load(), 1500, 1000);
+        stg.setScene(scene_blist);
+        StageUtils.centerStageOnScreen(stg, scene_blist);
 
-        }
+        stg.show();
     }
 
     public static void MemberList() throws IOException {
@@ -62,6 +67,7 @@ public class Main extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Member_list.fxml"));
             Scene scene_blist = new Scene(fxmlLoader.load(), 1566, 613);
             stg.setScene(scene_blist);
+            StageUtils.centerStageOnScreen(stg, scene_blist);
             stg.show();
 
         }
@@ -72,6 +78,7 @@ public class Main extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Issue_list.fxml"));
             Scene scene_blist = new Scene(fxmlLoader.load(), 1096, 676);
             stg.setScene(scene_blist);
+            StageUtils.centerStageOnScreen(stg, scene_blist);
             stg.show();
 
         }

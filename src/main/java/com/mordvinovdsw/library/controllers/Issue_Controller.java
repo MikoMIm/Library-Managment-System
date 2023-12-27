@@ -237,7 +237,9 @@ public class Issue_Controller implements Initializable {
                     String title = resultSet.getString("Book_Title"); // Replace 'bookTitle' with your actual column name
                     double price = resultSet.getDouble("Price"); // Adjust according to your schema
                     int bookNumber = resultSet.getInt("Book_Numbers"); // Adjust according to your schema
-                    books.add(new Book(id, title, price, bookNumber));
+                    String ISBN10 = resultSet.getString("ISBN_10"); // Add the new column to your query
+                    String ISBN13 = resultSet.getString("ISBN_13"); // Add the new column to your query
+                    //books.add(new Book(id, title, price, bookNumber, ISBN10, ISBN13));
                 }
             }
         } catch (SQLException e) {
