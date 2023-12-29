@@ -64,12 +64,10 @@ public class Books_list_Controller implements Initializable {
         populateGridWithBooks(books);
         sortData();
 
-        // Add a listener to the search TextField for real-time search functionality
         searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             handleSearchAction(newValue);
         });
 
-        // Ensure that changing the search criterion resets the search
         searchComboBox.setOnAction(event -> {
             handleSearchAction(searchTextField.getText());
         });
@@ -77,10 +75,14 @@ public class Books_list_Controller implements Initializable {
 
     private List<Book> getBooksFromDatabase() {
         List<Book> books = new ArrayList<>();
-        String sql = "SELECT bl.Book_Id, bl.Book_Title, bl.Book_Numbers, bl.ISBN_10, bl.ISBN_13, GROUP_CONCAT(g.Genre_Name, ', ') AS Genres "
+        String sql = "SELECT bl.Book_Id, bl.Book_Title, bl.Book_Numbers, bl.ISBN_10, bl.ISBN_13, "
+                + "GROUP_CONCAT(DISTINCT g.Genre_Name) AS Genres, "
+                + "GROUP_CONCAT(DISTINCT a.Author_Name) AS Authors "
                 + "FROM Book_List bl "
                 + "LEFT JOIN Book_Genres bg ON bl.Book_Id = bg.Book_Id "
                 + "LEFT JOIN Genres g ON bg.Genre_Id = g.Genre_Id "
+                + "LEFT JOIN Book_Authors ba ON bl.Book_Id = ba.Book_Id "
+                + "LEFT JOIN Authors a ON ba.Author_Id = a.Author_Id "
                 + "GROUP BY bl.Book_Id, bl.Book_Title, bl.Book_Numbers, bl.ISBN_10, bl.ISBN_13";
 
         try (Connection conn = DBConnection.getConnection();
@@ -93,8 +95,10 @@ public class Books_list_Controller implements Initializable {
                 int number = rs.getInt("Book_Numbers");
                 String isbn10 = rs.getString("ISBN_10");
                 String isbn13 = rs.getString("ISBN_13");
-                String genres = rs.getString("Genres"); // Get the concatenated genre names
-                books.add(new Book(id, title, number, isbn10, isbn13, genres));
+                String genres = rs.getString("Genres");
+                String authors = rs.getString("Authors");
+
+                books.add(new Book(id, title, number, isbn10, isbn13, genres, authors));
             }
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
@@ -171,19 +175,18 @@ public class Books_list_Controller implements Initializable {
     }
     @FXML
     private void handleSearchAction(String searchText) {
-        // If searchText is empty, reset the list to show all books
         if (searchText == null || searchText.trim().isEmpty()) {
             populateGridWithBooks(books);
             return;
         }
 
         String lowerCaseSearchText = searchText.toLowerCase();
-        String searchCriterion = searchComboBox.getValue(); // Get the selected search criterion
+        String searchCriterion = searchComboBox.getValue();
 
         List<Book> filteredBooks = books.stream()
                 .filter(book -> {
                     if (searchCriterion == null || searchCriterion.isEmpty()) {
-                        return true; // No criterion selected, return all books
+                        return true;
                     }
                     switch (searchCriterion) {
                         case "Book ID":

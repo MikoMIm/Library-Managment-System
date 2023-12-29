@@ -12,9 +12,9 @@
 
 <AnchorPane prefHeight="519.0" prefWidth="424.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mordvinovdsw.library.supportControllers.EditBookController">
    <children>
-      <Pane layoutX="-6.0" prefHeight="653.0" prefWidth="801.0" style="-fx-background-color: #242425;">
+      <Pane layoutX="-6.0" prefHeight="709.0" prefWidth="801.0" style="-fx-background-color: #242425;">
          <children>
-            <Button fx:id="saveButton" layoutX="529.0" layoutY="527.0" mnemonicParsing="false" onAction="#saveData" prefHeight="72.0" prefWidth="185.0" style="-fx-background-color: #077C50;" text="Save" textFill="WHITE">
+            <Button fx:id="saveButton" layoutX="524.0" layoutY="596.0" mnemonicParsing="false" onAction="#saveData" prefHeight="72.0" prefWidth="185.0" style="-fx-background-color: #077C50;" text="Save" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font></Button>
@@ -23,7 +23,7 @@
                   <Font size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="bookNumberField" layoutX="186.0" layoutY="312.0" prefHeight="49.0" prefWidth="63.0">
+            <TextField fx:id="bookNumberField" layoutX="181.0" layoutY="381.0" prefHeight="49.0" prefWidth="63.0">
                <font>
                   <Font size="18.0" />
                </font>
@@ -33,37 +33,37 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label layoutX="63.0" layoutY="325.0" text="Quantity" textFill="WHITE">
+            <Label layoutX="58.0" layoutY="394.0" text="Quantity" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button fx:id="cancelButton" layoutX="87.0" layoutY="527.0" mnemonicParsing="false" onAction="#cancel" prefHeight="72.0" prefWidth="185.0" style="-fx-background-color: #AB1706;" text="Cancel" textFill="WHITE">
+            <Button fx:id="cancelButton" layoutX="82.0" layoutY="596.0" mnemonicParsing="false" onAction="#cancel" prefHeight="72.0" prefWidth="185.0" style="-fx-background-color: #AB1706;" text="Cancel" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="addButton" layoutX="527.0" layoutY="499.0" mnemonicParsing="false" onAction="#addData" prefHeight="72.0" prefWidth="185.0" style="-fx-background-color: #87c6ad;" text="Add" visible="false">
+            <Button fx:id="addButton" layoutX="524.0" layoutY="596.0" mnemonicParsing="false" onAction="#addData" prefHeight="72.0" prefWidth="185.0" style="-fx-background-color: #077C50;" text="Add" textFill="WHITE" visible="false">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
-            <TextField fx:id="ISBN10Field" layoutX="187.0" layoutY="375.0" prefHeight="49.0" prefWidth="276.0">
+            <TextField fx:id="ISBN10Field" layoutX="182.0" layoutY="444.0" prefHeight="49.0" prefWidth="276.0">
                <font>
                   <Font size="18.0" />
                </font>
             </TextField>
-            <Label layoutX="77.0" layoutY="382.0" text="ISBN (10)" textFill="WHITE">
+            <Label layoutX="72.0" layoutY="451.0" text="ISBN (10)" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="ISBN13Field" layoutX="190.0" layoutY="436.0" prefHeight="49.0" prefWidth="270.0">
+            <TextField fx:id="ISBN13Field" layoutX="185.0" layoutY="505.0" prefHeight="49.0" prefWidth="270.0">
                <font>
                   <Font size="18.0" />
                </font>
             </TextField>
-            <Label layoutX="72.0" layoutY="443.0" text="ISBN (13)" textFill="WHITE">
+            <Label layoutX="67.0" layoutY="512.0" text="ISBN (13)" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
@@ -104,16 +104,30 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="AuthorField" layoutX="187.0" layoutY="254.0" prefHeight="49.0" prefWidth="582.0">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </TextField>
-            <Button fx:id="AutoFillButton" layoutX="473.0" layoutY="439.0" mnemonicParsing="false" onAction="#AutoFill" prefHeight="43.0" prefWidth="236.0" style="-fx-background-color: #077C50;" text="AutoFill Title and Author" textFill="WHITE">
+            <Button fx:id="AutoFillButton" layoutX="468.0" layoutY="508.0" mnemonicParsing="false" onAction="#autofillData" prefHeight="43.0" prefWidth="276.0" style="-fx-background-color: #077C50;" text="AutoFill Book based on ISBN" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
+            <Button fx:id="addAuthorButton" layoutX="187.0" layoutY="253.0" mnemonicParsing="false" onAction="#addAuthorComboBox" prefHeight="49.0" prefWidth="51.0" text="+">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="RemoveAuthorButton" layoutX="250.0" layoutY="253.0" mnemonicParsing="false" onAction="#removeAuthorComboBox" prefHeight="49.0" prefWidth="51.0" text="-">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Button>
+            <HBox fx:id="authorsContainer" layoutX="185.0" layoutY="323.0" prefHeight="51.0" prefWidth="582.0" spacing="10.0">
+               <children>
+                  <ComboBox fx:id="authorComboBox" prefHeight="51.0" prefWidth="215.0">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </ComboBox>
+               </children>
+            </HBox>
          </children>
       </Pane>
    </children>

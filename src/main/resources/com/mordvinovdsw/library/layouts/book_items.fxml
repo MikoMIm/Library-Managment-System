@@ -32,7 +32,7 @@
             <Insets left="10.0" />
          </VBox.margin>
       </Label>
-      <Label fx:id="genreLabel1" maxWidth="1.7976931348623157E308" text="Author - " textFill="WHITE" wrapText="true">
+      <Label fx:id="authorLabel" maxWidth="1.7976931348623157E308" text="Author - " textFill="WHITE" wrapText="true">
          <font>
             <Font size="18.0" />
          </font>

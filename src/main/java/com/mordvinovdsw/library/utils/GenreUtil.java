@@ -5,10 +5,7 @@ import com.mordvinovdsw.library.Database.Genre;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class GenreUtil {
     public static ObservableList<Genre> getGenresFromDatabase() {
@@ -30,4 +27,31 @@ public class GenreUtil {
 
         return genres;
     }
+
+    public static int addNewGenreToDatabase(String genreName) {
+        String sql = "INSERT INTO Genres (Genre_Name) VALUES (?)";
+        int genreId = -1;
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            pstmt.setString(1, genreName);
+            int affectedRows = pstmt.executeUpdate();
+
+            if (affectedRows > 0) {
+                try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        genreId = generatedKeys.getInt(1);
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            ErrorMessages.showError("Database error: " + e.getMessage());
+            return -1;
+        }
+
+        return genreId;
+    }
 }
+
