@@ -104,7 +104,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button fx:id="AutoFillButton" layoutX="468.0" layoutY="508.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="276.0" style="-fx-background-color: #077C50;" text="AutoFill Book based on ISBN" textFill="WHITE">
+            <Button fx:id="AutoFillButton" layoutX="468.0" layoutY="508.0" mnemonicParsing="false" onAction="#autoFill" prefHeight="43.0" prefWidth="276.0" style="-fx-background-color: #077C50;" text="AutoFill Book based on ISBN" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -123,7 +123,7 @@
                   </Button>
                </children>
             </HBox>
-            <HBox fx:id="authorsContainer" layoutX="185.0" layoutY="323.0" prefHeight="51.0" prefWidth="582.0" spacing="10.0">
+            <HBox fx:id="authorComboBoxContainer" layoutX="185.0" layoutY="323.0" prefHeight="51.0" prefWidth="582.0" spacing="10.0">
                <children>
                   <ComboBox fx:id="authorComboBox" prefHeight="51.0" prefWidth="215.0">
                      <HBox.margin>

@@ -40,7 +40,6 @@ public class BookItemController {
     private Label authorLabel;
 
 
-
     public void setBook(Book book) {
         this.book = book;
         idLabel.setText("Book ID: " + book.getBookID());
@@ -73,44 +72,50 @@ public class BookItemController {
     @FXML
     private void removeData() {
         String deleteBookGenresSql = "DELETE FROM Book_Genres WHERE Book_Id = ?";
+        String deleteBookAuthorsSql = "DELETE FROM Book_Authors WHERE Book_Id = ?";
         String deleteBookSql = "DELETE FROM Book_List WHERE Book_Id = ?";
         Connection conn = null;
         PreparedStatement pstmtDeleteBookGenres = null;
+        PreparedStatement pstmtDeleteBookAuthors = null;
         PreparedStatement pstmtDeleteBook = null;
 
         try {
             conn = DBConnection.getConnection();
             conn.setAutoCommit(false);
 
-
+            // Delete book genres
             pstmtDeleteBookGenres = conn.prepareStatement(deleteBookGenresSql);
             pstmtDeleteBookGenres.setInt(1, book.getBookID());
             pstmtDeleteBookGenres.executeUpdate();
 
+            // Delete book authors
+            pstmtDeleteBookAuthors = conn.prepareStatement(deleteBookAuthorsSql);
+            pstmtDeleteBookAuthors.setInt(1, book.getBookID());
+            pstmtDeleteBookAuthors.executeUpdate();
 
+            // Delete the book itself
             pstmtDeleteBook = conn.prepareStatement(deleteBookSql);
             pstmtDeleteBook.setInt(1, book.getBookID());
             pstmtDeleteBook.executeUpdate();
 
-
+            // Commit all changes
             conn.commit();
         } catch (SQLException e) {
             if (conn != null) {
                 try {
-
-                    conn.rollback();
+                    conn.rollback(); // Rollback the transaction on error
                 } catch (SQLException ex) {
                     ErrorMessages.showError("Error rolling back: " + ex.getMessage());
                 }
             }
             ErrorMessages.showError("Database error: " + e.getMessage());
         } finally {
-
             try {
                 if (pstmtDeleteBookGenres != null) pstmtDeleteBookGenres.close();
+                if (pstmtDeleteBookAuthors != null) pstmtDeleteBookAuthors.close();
                 if (pstmtDeleteBook != null) pstmtDeleteBook.close();
                 if (conn != null) {
-                    conn.setAutoCommit(true);
+                    conn.setAutoCommit(true); // Reset to default auto-commit mode
                     conn.close();
                 }
             } catch (SQLException ex) {

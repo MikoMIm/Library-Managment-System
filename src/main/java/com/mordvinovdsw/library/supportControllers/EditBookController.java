@@ -6,10 +6,12 @@ import com.mordvinovdsw.library.dataManager.BookDataManager;
 import com.mordvinovdsw.library.dataManager.DataEntryManager;
 import com.mordvinovdsw.library.models.Author;
 import com.mordvinovdsw.library.models.Book;
+import com.mordvinovdsw.library.models.BookData;
 import com.mordvinovdsw.library.models.Genre;
 import com.mordvinovdsw.library.dataManager.AuthorUtil;
 import com.mordvinovdsw.library.utils.ErrorMessages;
 import com.mordvinovdsw.library.dataManager.GenreUtil;
+import com.mordvinovdsw.library.utils.GoogleBooksApiUtil;
 import com.mordvinovdsw.library.utils.TextFieldLimitUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -26,7 +28,7 @@ public class EditBookController {
     @FXML
     private TextField bookTitleField, bookNumberField, ISBN10Field, ISBN13Field;
     @FXML
-    private HBox genreComboBoxContainer, authorsContainer;
+    private HBox genreComboBoxContainer, authorComboBoxContainer;
     @FXML
     private ComboBox<Genre> genreComboBox;
     @FXML
@@ -42,6 +44,7 @@ public class EditBookController {
     private AuthorDAO AuthorDAO = new AuthorDAO();
 
     private GenreDAO GenreDAO = new GenreDAO();
+
     @FXML
     private void initialize() {
         setupComboBoxes();
@@ -116,7 +119,7 @@ public class EditBookController {
 
     @FXML
     private void removeGenreComboBox() {
-        if (genreComboBoxes.size()> 1) {
+        if (genreComboBoxes.size() > 1) {
             ComboBox<Genre> lastComboBox = genreComboBoxes.remove(genreComboBoxes.size() - 1);
             genreComboBoxContainer.getChildren().remove(lastComboBox);
             removeGenreButton.setDisable(genreComboBoxes.size() <= 1);
@@ -134,16 +137,17 @@ public class EditBookController {
             newComboBox.setItems(authorComboBox.getItems());
             newComboBox.setCellFactory(authorComboBox.getCellFactory());
             authorComboBoxes.add(newComboBox);
-            authorsContainer.getChildren().add(newComboBox);
+            authorComboBoxContainer.getChildren().add(newComboBox);
             removeAuthorButton.setDisable(false);
         }
         addAuthorButton.setDisable(authorComboBoxes.size() >= 3);
     }
+
     @FXML
     private void removeAuthorComboBox() {
         if (authorComboBoxes.size() > 1) {
             ComboBox<Author> lastComboBox = authorComboBoxes.remove(authorComboBoxes.size() - 1);
-            authorsContainer.getChildren().remove(lastComboBox);
+            authorComboBoxContainer.getChildren().remove(lastComboBox);
             removeAuthorButton.setDisable(authorComboBoxes.size() <= 1);
         }
         addAuthorButton.setDisable(authorComboBoxes.size() >= 3);
@@ -239,6 +243,7 @@ public class EditBookController {
             ErrorMessages.showError("Please select a valid genre.");
         }
     }
+
     private List<Author> extractSelectedAuthors() {
         List<Author> selectedAuthors = new ArrayList<>();
         for (ComboBox<Author> authorComboBox : authorComboBoxes) {
@@ -270,6 +275,7 @@ public class EditBookController {
         }
         return selectedGenres;
     }
+
     @FXML
     private void cancel() {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
@@ -300,5 +306,65 @@ public class EditBookController {
         bookNumberField.setText(String.valueOf(book.getBookNumber()));
         ISBN10Field.setText(book.getISBN10());
         ISBN13Field.setText(book.getISBN13());
+    }
+
+
+    @FXML
+    private void autoFill() {
+        String isbn = ISBN13Field.getText().trim(); // Assuming you're using ISBN13 for autofill
+        if (isbn.isEmpty()) {
+            ErrorMessages.showError("Please enter an ISBN number.");
+            return;
+        }
+
+        try {
+            BookData bookData = GoogleBooksApiUtil.fetchBookDataByISBN(isbn);
+            if (bookData != null) {
+                System.out.println("Title: " + bookData.getTitle());
+                System.out.println("Authors: " + String.join(", ", bookData.getAuthors()));
+                System.out.println("Genres: " + String.join(", ", bookData.getGenres()));
+                System.out.println("ISBN-10: " + bookData.getIsbn10());
+                System.out.println("ISBN-13: " + bookData.getIsbn13());
+
+                bookTitleField.setText(bookData.getTitle());
+                populateComboBoxes(bookData);
+
+                ISBN10Field.setText(bookData.getIsbn10());
+                ISBN13Field.setText(bookData.getIsbn13());
+            } else {
+                ErrorMessages.showError("No data found for this ISBN.");
+            }
+        } catch (Exception e) {
+            ErrorMessages.showError("Error fetching data: " + e.getMessage());
+        }
+    }
+
+    private void populateComboBoxes(BookData bookData) {
+        genreComboBox.setValue(null);
+        authorComboBox.setValue(null);
+
+        clearAdditionalComboBoxes(genreComboBoxContainer, genreComboBoxes);
+        clearAdditionalComboBoxes(authorComboBoxContainer, authorComboBoxes);
+
+        if (!bookData.getAuthors().isEmpty()) {
+            authorComboBox.setValue(AuthorUtil.findAuthorByName(bookData.getAuthors().get(0)));
+        }
+        if (!bookData.getGenres().isEmpty()) {
+            genreComboBox.setValue(GenreUtil.findGenreByName(bookData.getGenres().get(0)));
+        }
+
+        for (int i = 1; i < bookData.getAuthors().size(); i++) {
+            addAuthorComboBox();
+            authorComboBoxes.get(i).setValue(AuthorUtil.findAuthorByName(bookData.getAuthors().get(i)));
+        }
+
+        for (int i = 1; i < bookData.getGenres().size(); i++) {
+            addGenreComboBox();
+            genreComboBoxes.get(i).setValue(GenreUtil.findGenreByName(bookData.getGenres().get(i)));
+        }
+    }
+    private void clearAdditionalComboBoxes(HBox container, List<? extends ComboBox<?>> comboBoxes) {
+        container.getChildren().removeIf(node -> container.getChildren().indexOf(node) != 0);
+        comboBoxes.subList(1, comboBoxes.size()).clear();
     }
 }

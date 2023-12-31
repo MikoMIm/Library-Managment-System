@@ -3,6 +3,8 @@ module com.mordvinovdsw.library {
     requires javafx.fxml;
     requires java.sql;
     requires org.xerial.sqlitejdbc;
+    requires org.json;
+
 
     opens com.mordvinovdsw.library.itemControllers to javafx.fxml;
     opens com.mordvinovdsw.library to javafx.fxml;
