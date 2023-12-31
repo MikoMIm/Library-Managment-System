@@ -1,7 +1,8 @@
-package com.mordvinovdsw.library.utils;
+package com.mordvinovdsw.library.dataManager;
 
-import com.mordvinovdsw.library.Database.Author;
+import com.mordvinovdsw.library.models.Author;
 import com.mordvinovdsw.library.Database.DBConnection;
+import com.mordvinovdsw.library.utils.ErrorMessages;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

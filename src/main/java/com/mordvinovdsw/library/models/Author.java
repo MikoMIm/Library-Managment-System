@@ -1,5 +1,4 @@
-package com.mordvinovdsw.library.Database;
-
+package com.mordvinovdsw.library.models;
 
 public class Author {
     private int authorID;

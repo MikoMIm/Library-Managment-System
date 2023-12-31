@@ -1,11 +1,13 @@
-package com.mordvinovdsw.library.utils;
+package com.mordvinovdsw.library.dataManager;
 
 import com.mordvinovdsw.library.Database.DBConnection;
-import com.mordvinovdsw.library.Database.Genre;
+import com.mordvinovdsw.library.models.Genre;
+import com.mordvinovdsw.library.utils.ErrorMessages;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
+import java.util.Optional;
 
 public class GenreUtil {
     public static ObservableList<Genre> getGenresFromDatabase() {
@@ -28,10 +30,8 @@ public class GenreUtil {
         return genres;
     }
 
-    public static int addNewGenreToDatabase(String genreName) {
+    public static Genre addNewGenreToDatabase(String genreName) {
         String sql = "INSERT INTO Genres (Genre_Name) VALUES (?)";
-        int genreId = -1;
-
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -41,17 +41,33 @@ public class GenreUtil {
             if (affectedRows > 0) {
                 try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
-                        genreId = generatedKeys.getInt(1);
+                        int newGenreId = generatedKeys.getInt(1);
+                        return new Genre(newGenreId, genreName);
                     }
                 }
             }
-
         } catch (SQLException e) {
             ErrorMessages.showError("Database error: " + e.getMessage());
-            return -1;
         }
 
-        return genreId;
+        return null;
+    }
+
+    public static Genre findGenreByName(String genreName) {
+        String sql = "SELECT * FROM Genres WHERE Genre_Name = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, genreName);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Genre(rs.getInt("Genre_Id"), rs.getString("Genre_Name"));
+                }
+            }
+        } catch (SQLException e) {
+            ErrorMessages.showError("Database error: " + e.getMessage());
+        }
+        return null; // Return null if the genre is not found
     }
 }
 

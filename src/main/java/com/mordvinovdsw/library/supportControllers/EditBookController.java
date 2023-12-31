@@ -1,276 +1,286 @@
 package com.mordvinovdsw.library.supportControllers;
 
-import com.mordvinovdsw.library.Database.Book;
-import com.mordvinovdsw.library.Database.DBConnection;
-import com.mordvinovdsw.library.Database.Genre;
+import com.mordvinovdsw.library.Database.*;
+
+import com.mordvinovdsw.library.dataManager.BookDataManager;
+import com.mordvinovdsw.library.dataManager.DataEntryManager;
+import com.mordvinovdsw.library.models.Author;
+import com.mordvinovdsw.library.models.Book;
+import com.mordvinovdsw.library.models.Genre;
+import com.mordvinovdsw.library.dataManager.AuthorUtil;
 import com.mordvinovdsw.library.utils.ErrorMessages;
-import com.mordvinovdsw.library.utils.GenreUtil;
+import com.mordvinovdsw.library.dataManager.GenreUtil;
 import com.mordvinovdsw.library.utils.TextFieldLimitUtil;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 public class EditBookController {
 
     @FXML
-    private TextField bookTitleField;
+    private TextField bookTitleField, bookNumberField, ISBN10Field, ISBN13Field;
     @FXML
-    private HBox  mainContainer1;
+    private HBox genreComboBoxContainer, authorsContainer;
     @FXML
-    private ComboBox<Genre> genreComboBox1;
+    private ComboBox<Genre> genreComboBox;
     @FXML
-    private Button removeGenreButton;
+    private ComboBox<Author> authorComboBox;
     @FXML
-    private Button addGenreButton;
-    @FXML
-    private TextField bookNumberField;
-    @FXML
-    private TextField ISBN10Field;
-    @FXML
-    private TextField ISBN13Field;
-    @FXML
-    private Button addButton;
-    @FXML
-    private Button saveButton;
-    @FXML
-    private Button cancelButton;
+    private Button removeGenreButton, addGenreButton, removeAuthorButton, addAuthorButton, addButton, saveButton, cancelButton;
 
     private List<ComboBox<Genre>> genreComboBoxes = new ArrayList<>();
+    private List<ComboBox<Author>> authorComboBoxes = new ArrayList<>();
     private int currentBookId;
+    private BookDataManager bookDataManager = new BookDataManager();
+    private DataEntryManager dataEntryManager = new DataEntryManager();
+    private AuthorDAO AuthorDAO = new AuthorDAO();
 
+    private GenreDAO GenreDAO = new GenreDAO();
+    @FXML
+    private void initialize() {
+        setupComboBoxes();
+        setupTextFieldLimiters();
+    }
 
+    private void setupComboBoxes() {
+        setupGenreComboBox(genreComboBox);
+        setupAuthorComboBox(authorComboBox);
+    }
 
-    public void initialize() {
-        genreComboBoxes.add(genreComboBox1);
-        initializeGenreComboBox(genreComboBox1);
-
-        List<Genre> genres = GenreUtil.getGenresFromDatabase();
-        genres.sort(Comparator.comparing(Genre::getGenreName));
-        genreComboBox1.setItems(FXCollections.observableArrayList(genres));
-
-
-        genreComboBox1.setCellFactory(new Callback<ListView<Genre>, ListCell<Genre>>() {
+    private void setupGenreComboBox(ComboBox<Genre> comboBox) {
+        genreComboBoxes.add(comboBox);
+        comboBox.setEditable(true);
+        comboBox.setItems(GenreUtil.getGenresFromDatabase());
+        comboBox.setCellFactory(lv -> new ListCell<>() {
             @Override
-            public ListCell<Genre> call(ListView<Genre> param) {
-                return new ListCell<Genre>() {
-                    @Override
-                    protected void updateItem(Genre item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (item != null && !empty) {
-                            setText(item.getGenreName());
-                        } else {
-                            setText(null);
-                        }
-                    }
-                };
+            protected void updateItem(Genre item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty ? "" : item.getGenreName());
             }
         });
+        comboBox.getEditor().setOnAction(event -> handleNewGenreEntry(comboBox.getEditor().getText()));
+    }
+
+    private void setupAuthorComboBox(ComboBox<Author> comboBox) {
+        authorComboBoxes.add(comboBox);
+        comboBox.setEditable(true);
+        comboBox.setItems(AuthorUtil.getAuthorsFromDatabase());
+        comboBox.getEditor().setOnAction(event -> handleNewAuthorEntry(comboBox.getEditor().getText()));
+    }
+
+    private void setupTextFieldLimiters() {
         TextFieldLimitUtil.limitTextFieldLength(ISBN10Field, 10);
         TextFieldLimitUtil.limitTextFieldLength(ISBN13Field, 13);
     }
 
-    private void initializeGenreComboBox(ComboBox<Genre> comboBox) {
-        List<Genre> genres = GenreUtil.getGenresFromDatabase();
-        comboBox.setItems(FXCollections.observableArrayList(genres));
+    private void handleNewAuthorEntry(String authorName) {
+        Optional<Author> authorOpt = dataEntryManager.handleNewAuthorEntry(authorName);
+        authorOpt.ifPresentOrElse(author -> {
+            authorComboBox.getItems().add(author);
+            authorComboBox.setValue(author);
+        }, () -> {
+        });
     }
+
+    private void handleNewGenreEntry(String genreName) {
+        Optional<Genre> genreOpt = dataEntryManager.handleNewGenreEntry(genreName);
+        if (genreOpt.isPresent()) {
+            Genre genre = genreOpt.get();
+            genreComboBox.getItems().add(genre);
+            genreComboBox.setValue(genre);
+        }
+    }
+
+    @FXML
+    private void addGenreComboBox() {
+        if (genreComboBoxes.size() < 4) {
+            ComboBox<Genre> newComboBox = new ComboBox<>();
+            newComboBox.setEditable(true);
+            newComboBox.setPrefWidth(genreComboBox.getPrefWidth());
+            newComboBox.setPrefHeight(genreComboBox.getPrefHeight());
+            newComboBox.setItems(genreComboBox.getItems());
+            newComboBox.setCellFactory(genreComboBox.getCellFactory());
+
+            genreComboBoxContainer.getChildren().add(newComboBox);
+            genreComboBoxes.add(newComboBox);
+            removeGenreButton.setDisable(false);
+        }
+        addGenreButton.setDisable(genreComboBoxes.size() >= 4);
+    }
+
+    @FXML
+    private void removeGenreComboBox() {
+        if (genreComboBoxes.size()> 1) {
+            ComboBox<Genre> lastComboBox = genreComboBoxes.remove(genreComboBoxes.size() - 1);
+            genreComboBoxContainer.getChildren().remove(lastComboBox);
+            removeGenreButton.setDisable(genreComboBoxes.size() <= 1);
+        }
+        addGenreButton.setDisable(genreComboBoxes.size() >= 4);
+    }
+
+    @FXML
+    private void addAuthorComboBox() {
+        if (authorComboBoxes.size() < 3) {
+            ComboBox<Author> newComboBox = new ComboBox<>();
+            newComboBox.setEditable(true);
+            newComboBox.setPrefWidth(authorComboBox.getPrefWidth());
+            newComboBox.setPrefHeight(authorComboBox.getPrefHeight());
+            newComboBox.setItems(authorComboBox.getItems());
+            newComboBox.setCellFactory(authorComboBox.getCellFactory());
+            authorComboBoxes.add(newComboBox);
+            authorsContainer.getChildren().add(newComboBox);
+            removeAuthorButton.setDisable(false);
+        }
+        addAuthorButton.setDisable(authorComboBoxes.size() >= 3);
+    }
+    @FXML
+    private void removeAuthorComboBox() {
+        if (authorComboBoxes.size() > 1) {
+            ComboBox<Author> lastComboBox = authorComboBoxes.remove(authorComboBoxes.size() - 1);
+            authorsContainer.getChildren().remove(lastComboBox);
+            removeAuthorButton.setDisable(authorComboBoxes.size() <= 1);
+        }
+        addAuthorButton.setDisable(authorComboBoxes.size() >= 3);
+    }
+
     public void prepareEdit(Book book) {
         fillForm(book);
         currentBookId = book.getBookID();
-        List<Genre> bookGenres = fetchBookGenres(currentBookId);
+        loadBookGenres();
+        loadBookAuthors();
+        saveButton.setVisible(true);
+        addButton.setVisible(false);
+    }
+
+
+    public void prepareAdd() {
+        bookTitleField.clear();
+        bookNumberField.clear();
+        ISBN10Field.clear();
+        ISBN13Field.clear();
+        saveButton.setVisible(false);
+        addButton.setVisible(true);
+    }
+
+    private void loadBookGenres() {
+        List<Genre> bookGenres = GenreDAO.fetchBookGenres(currentBookId);
         if (!bookGenres.isEmpty()) {
-            genreComboBox1.setValue(bookGenres.get(0));
+            genreComboBox.setValue(bookGenres.get(0));
         }
         for (int i = 1; i < bookGenres.size(); i++) {
             addGenreComboBox();
             genreComboBoxes.get(i).setValue(bookGenres.get(i));
         }
-        saveButton.setVisible(true);
-        addButton.setVisible(false);
     }
 
-    private List<Genre> fetchBookGenres(int bookId) {
-        List<Genre> genres = new ArrayList<>();
-        String sql = "SELECT g.Genre_Id, g.Genre_Name FROM Genres g "
-                + "JOIN Book_Genres bg ON g.Genre_Id = bg.Genre_Id "
-                + "WHERE bg.Book_Id = ?";
-
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setInt(1, bookId);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    int id = rs.getInt("Genre_Id");
-                    String name = rs.getString("Genre_Name");
-                    genres.add(new Genre(id, name));
-                }
-            }
-        } catch (SQLException e) {
-            ErrorMessages.showError("Database error: " + e.getMessage());
+    private void loadBookAuthors() {
+        List<Author> bookAuthors = AuthorDAO.fetchBookAuthors(currentBookId);
+        if (!bookAuthors.isEmpty()) {
+            authorComboBox.setValue(bookAuthors.get(0));
         }
-        return genres;
-    }
-
-    @FXML
-    private void removeGenreComboBox() {
-        if (genreComboBoxes.size() > 1) {
-            ComboBox<Genre> lastComboBox = genreComboBoxes.remove(genreComboBoxes.size() - 1);
-            mainContainer1.getChildren().remove(lastComboBox);
-            removeGenreButton.setDisable(genreComboBoxes.size() <= 1);
+        for (int i = 1; i < bookAuthors.size(); i++) {
+            addAuthorComboBox();
+            authorComboBoxes.get(i).setValue(bookAuthors.get(i));
         }
-        addGenreButton.setDisable(genreComboBoxes.size() >= 4);
     }
-    public void prepareAdd() {
-        clearForm();
-        saveButton.setVisible(false);
-        addButton.setVisible(true);
-    }
-
-    private void clearForm() {
-        bookTitleField.clear();
-        bookNumberField.clear();
-        ISBN10Field.clear();
-        ISBN13Field.clear();
-    }
-    public void fillForm(Book book) {
-        bookTitleField.setText(book.getBookTitle());
-        bookNumberField.setText(String.valueOf(book.getBookNumber()));
-        ISBN10Field.setText(book.getISBN10());
-        ISBN13Field.setText(book.getISBN13());
-    }
-    @FXML
-    private void addGenreComboBox() {
-        if (genreComboBoxes.size() < 4) {
-            ComboBox<Genre> newComboBox = new ComboBox<>();
-            initializeGenreComboBox(newComboBox);
-
-            newComboBox.setPrefWidth(genreComboBox1.getPrefWidth());
-            newComboBox.setPrefHeight(genreComboBox1.getPrefHeight());
-
-            mainContainer1.getChildren().add(newComboBox);
-            genreComboBoxes.add(newComboBox);
-
-            removeGenreButton.setDisable(false);
-        }
-
-        addGenreButton.setDisable(genreComboBoxes.size() >= 4);
-    }
-
-
-
 
     @FXML
     private void addData() {
         if (!validateInput()) {
             return;
         }
+        try {
+            int bookId = bookDataManager.insertBook(bookTitleField.getText(),
+                    Integer.parseInt(bookNumberField.getText()),
+                    ISBN10Field.getText(),
+                    ISBN13Field.getText());
 
-        String sqlInsertBook = "INSERT INTO Book_List (Book_Title, Book_Numbers, ISBN_10, ISBN_13) VALUES (?, ?, ?, ?)";
-        String sqlInsertGenre = "INSERT INTO Book_Genres (Book_id, Genre_Id) VALUES (?, ?)";
-
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmtInsertBook = conn.prepareStatement(sqlInsertBook, Statement.RETURN_GENERATED_KEYS);
-             PreparedStatement pstmtInsertGenre = conn.prepareStatement(sqlInsertGenre)) {
-
-            // Insert the book details
-            pstmtInsertBook.setString(1, bookTitleField.getText());
-            pstmtInsertBook.setInt(2, Integer.parseInt(bookNumberField.getText()));
-            pstmtInsertBook.setString(3, ISBN10Field.getText());
-            pstmtInsertBook.setString(4, ISBN13Field.getText());
-            int affectedRows = pstmtInsertBook.executeUpdate();
-
-            if (affectedRows == 0) {
-                throw new SQLException("Creating book failed, no rows affected.");
-            }
-
-
-            try (ResultSet generatedKeys = pstmtInsertBook.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    int lastInsertedId = generatedKeys.getInt(1);
-
-
-                    for (ComboBox<Genre> genreComboBox : genreComboBoxes) {
-                        Genre selectedGenre = genreComboBox.getValue();
-                        if (selectedGenre != null) {
-                            pstmtInsertGenre.setInt(1, lastInsertedId);
-                            pstmtInsertGenre.setInt(2, selectedGenre.getGenreID());
-                            pstmtInsertGenre.executeUpdate();
-                        }
-                    }
-                } else {
-                    throw new SQLException("Creating book failed, no ID obtained.");
-                }
-            }
-
-        } catch (SQLException e) {
+            bookDataManager.insertGenresForBook(bookId, genreComboBoxes);
+            bookDataManager.insertAuthorsForBook(bookId, authorComboBoxes);
+        } catch (SQLException | NumberFormatException e) {
             ErrorMessages.showError("Database error: " + e.getMessage());
-        } catch (NumberFormatException e) {
-            ErrorMessages.showError("Invalid input format: " + e.getMessage());
         }
     }
 
     @FXML
     private void saveData() {
-        String sqlUpdateBook = "UPDATE Book_List SET Book_Title = ?, Book_numbers = ?, ISBN_10 = ?, ISBN_13 = ? WHERE Book_Id = ?";
-        String sqlDeleteGenres = "DELETE FROM Book_Genres WHERE Book_id = ?";
-        String sqlInsertGenre = "INSERT INTO Book_Genres (Book_id, Genre_Id) VALUES (?, ?)";
+        try {
+            bookDataManager.updateBook(currentBookId, bookTitleField.getText(),
+                    Integer.parseInt(bookNumberField.getText()), ISBN10Field.getText(), ISBN13Field.getText());
 
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmtUpdateBook = conn.prepareStatement(sqlUpdateBook);
-             PreparedStatement pstmtDeleteGenres = conn.prepareStatement(sqlDeleteGenres);
-             PreparedStatement pstmtInsertGenre = conn.prepareStatement(sqlInsertGenre)) {
+            List<Author> selectedAuthors = extractSelectedAuthors();
+            bookDataManager.updateAuthorsForBook(currentBookId, selectedAuthors);
 
-
-            pstmtUpdateBook.setString(1, bookTitleField.getText());
-            pstmtUpdateBook.setInt(2, Integer.parseInt(bookNumberField.getText()));
-            pstmtUpdateBook.setString(3, ISBN10Field.getText());
-            pstmtUpdateBook.setString(4, ISBN13Field.getText());
-            pstmtUpdateBook.setInt(5, currentBookId);
-            pstmtUpdateBook.executeUpdate();
-
-            pstmtDeleteGenres.setInt(1, currentBookId);
-            pstmtDeleteGenres.executeUpdate();
-
+            List<Genre> selectedGenres = new ArrayList<>();
             for (ComboBox<Genre> genreComboBox : genreComboBoxes) {
-                Genre selectedGenre = genreComboBox.getValue();
-                if (selectedGenre != null) {
-                    pstmtInsertGenre.setInt(1, currentBookId);
-                    pstmtInsertGenre.setInt(2, selectedGenre.getGenreID());
-                    pstmtInsertGenre.executeUpdate();
+                Object value = genreComboBox.getValue();
+                if (value instanceof Genre) {
+                    selectedGenres.add((Genre) value);
+                } else if (value instanceof String) {
+                    // Find the Genre by name or create a new one
+                    String genreName = (String) value;
+                    Genre genre = GenreUtil.findGenreByName(genreName);
+                    if (genre == null) {
+                        genre = GenreUtil.addNewGenreToDatabase(genreName);
+                    }
+                    selectedGenres.add(genre);
                 }
             }
-
-        } catch (SQLException e) {
+            bookDataManager.updateGenresForBook(currentBookId, selectedGenres);
+        } catch (SQLException | NumberFormatException e) {
             ErrorMessages.showError("Database error: " + e.getMessage());
-        } catch (NumberFormatException e) {
-            ErrorMessages.showError("Invalid input format: " + e.getMessage());
+        } catch (ClassCastException e) {
+            ErrorMessages.showError("Please select a valid genre.");
         }
     }
+    private List<Author> extractSelectedAuthors() {
+        List<Author> selectedAuthors = new ArrayList<>();
+        for (ComboBox<Author> authorComboBox : authorComboBoxes) {
+            Object selectedItem = authorComboBox.getValue();
+            if (selectedItem instanceof Author) {
+                selectedAuthors.add((Author) selectedItem);
+            } else if (selectedItem instanceof String) {
+                Optional<Author> authorOpt = dataEntryManager.handleNewAuthorEntry(selectedItem.toString());
+                authorOpt.ifPresent(selectedAuthors::add);
+            }
+        }
+        return selectedAuthors;
+    }
 
+    private List<Genre> extractSelectedGenres() {
+        List<Genre> selectedGenres = new ArrayList<>();
+        for (ComboBox<Genre> genreComboBox : genreComboBoxes) {
+            Object selectedItem = genreComboBox.getValue();
+            if (selectedItem instanceof Genre) {
+                selectedGenres.add((Genre) selectedItem);
+            } else if (selectedItem instanceof String) {
+                Optional<Genre> genreOpt = dataEntryManager.handleNewGenreEntry(selectedItem.toString());
+                if (genreOpt.isPresent()) {
+                    selectedGenres.add(genreOpt.get());
+                } else {
+                    // Handle the case where no valid Genre is found or created
+                }
+            }
+        }
+        return selectedGenres;
+    }
     @FXML
     private void cancel() {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
 
-
     private boolean validateInput() {
-
         if (bookTitleField.getText().trim().isEmpty() ||
                 bookNumberField.getText().trim().isEmpty() ||
                 ISBN10Field.getText().trim().isEmpty() ||
                 ISBN13Field.getText().trim().isEmpty()) {
-
             ErrorMessages.showError("All fields are required.");
             return false;
         }
@@ -285,4 +295,10 @@ public class EditBookController {
         return true;
     }
 
+    public void fillForm(Book book) {
+        bookTitleField.setText(book.getBookTitle());
+        bookNumberField.setText(String.valueOf(book.getBookNumber()));
+        ISBN10Field.setText(book.getISBN10());
+        ISBN13Field.setText(book.getISBN13());
+    }
 }

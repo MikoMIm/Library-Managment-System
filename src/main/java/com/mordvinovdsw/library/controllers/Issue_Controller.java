@@ -6,15 +6,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.io.IOException;
 
-import com.mordvinovdsw.library.Database.Book;
+import com.mordvinovdsw.library.models.Book;
 import com.mordvinovdsw.library.Database.DBConnection;
-import com.mordvinovdsw.library.Database.Issue;
-import com.mordvinovdsw.library.Database.Member;
+import com.mordvinovdsw.library.models.Issue;
+import com.mordvinovdsw.library.models.Member;
 import com.mordvinovdsw.library.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

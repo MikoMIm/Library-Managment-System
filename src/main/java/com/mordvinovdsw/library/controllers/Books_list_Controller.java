@@ -1,13 +1,12 @@
 package com.mordvinovdsw.library.controllers;
 
-import com.mordvinovdsw.library.Database.Book;
+import com.mordvinovdsw.library.models.Book;
 import com.mordvinovdsw.library.Database.DBConnection;
 import com.mordvinovdsw.library.Main;
 import com.mordvinovdsw.library.itemControllers.BookItemController;
 import com.mordvinovdsw.library.supportControllers.EditBookController;
-import com.mordvinovdsw.library.utils.BookSearchUtil;
 import com.mordvinovdsw.library.utils.ComboBoxUtil;
-import com.mordvinovdsw.library.utils.GenreUtil;
+import com.mordvinovdsw.library.utils.ErrorMessages;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,10 +14,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -38,22 +35,12 @@ public class Books_list_Controller implements Initializable {
     private GridPane gridPane;
 
     @FXML
-    private Button exit;
-
-    @FXML
     private TextField searchTextField;
 
     @FXML
     private ComboBox<String> searchComboBox;
     @FXML
     private ComboBox<String> sortComboBox;
-
-    @FXML
-    private Button searchButton;
-
-    @FXML
-    private Button sortButton;
-
     private List<Book> books;
 
     @Override
@@ -63,11 +50,9 @@ public class Books_list_Controller implements Initializable {
         books = getBooksFromDatabase();
         populateGridWithBooks(books);
         sortData();
-
         searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             handleSearchAction(newValue);
         });
-
         searchComboBox.setOnAction(event -> {
             handleSearchAction(searchTextField.getText());
         });
@@ -101,8 +86,7 @@ public class Books_list_Controller implements Initializable {
                 books.add(new Book(id, title, number, isbn10, isbn13, genres, authors));
             }
         } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
-            e.printStackTrace();
+            ErrorMessages.showError("Database Error: " + e.getMessage());
         }
         return books;
     }
@@ -126,8 +110,7 @@ public class Books_list_Controller implements Initializable {
                     row++;
                 }
             } catch (IOException e) {
-                System.err.println("Error: " + e.getMessage());
-                e.printStackTrace();
+                ErrorMessages.showError("IO Error: " + e.getMessage());
             }
         }
     }
@@ -149,7 +132,7 @@ public class Books_list_Controller implements Initializable {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            ErrorMessages.showError("IO Error: " + e.getMessage());
         }
     }
 
@@ -188,21 +171,18 @@ public class Books_list_Controller implements Initializable {
                     if (searchCriterion == null || searchCriterion.isEmpty()) {
                         return true;
                     }
-                    switch (searchCriterion) {
-                        case "Book ID":
-                            return String.valueOf(book.getBookID()).contains(lowerCaseSearchText);
-                        case "Book Name":
-                            return book.getBookTitle().toLowerCase().contains(lowerCaseSearchText);
-                        case "Book Genre":
+                    return switch (searchCriterion) {
+                        case "Book ID" -> String.valueOf(book.getBookID()).contains(lowerCaseSearchText);
+                        case "Book Name" -> book.getBookTitle().toLowerCase().contains(lowerCaseSearchText);
+                        case "Book Genre" ->
                             // Check if the genre is not null and not empty before calling toLowerCase()
-                            return book.getGenre() != null && !book.getGenre().trim().isEmpty() &&
-                                    book.getGenre().toLowerCase().contains(lowerCaseSearchText);
-                        case "Book ISBN":
-                            return (book.getISBN10() != null && book.getISBN10().toLowerCase().contains(lowerCaseSearchText)) ||
-                                    (book.getISBN13() != null && book.getISBN13().toLowerCase().contains(lowerCaseSearchText));
-                        default:
-                            return true;
-                    }
+                                book.getGenre() != null && !book.getGenre().trim().isEmpty() &&
+                                        book.getGenre().toLowerCase().contains(lowerCaseSearchText);
+                        case "Book ISBN" ->
+                                (book.getISBN10() != null && book.getISBN10().toLowerCase().contains(lowerCaseSearchText)) ||
+                                        (book.getISBN13() != null && book.getISBN13().toLowerCase().contains(lowerCaseSearchText));
+                        default -> true;
+                    };
                 })
                 .collect(Collectors.toList());
 

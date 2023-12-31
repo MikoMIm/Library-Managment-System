@@ -1,7 +1,6 @@
 package com.mordvinovdsw.library.controllers;
 
-import com.mordvinovdsw.library.Database.Book;
-import com.mordvinovdsw.library.Database.Member;
+import com.mordvinovdsw.library.models.Member;
 
 import java.net.URL;
 import java.sql.*;
@@ -14,7 +13,6 @@ import com.mordvinovdsw.library.Database.DBConnection;
 import com.mordvinovdsw.library.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;

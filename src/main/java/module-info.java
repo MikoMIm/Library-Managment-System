@@ -13,4 +13,6 @@ module com.mordvinovdsw.library {
     opens com.mordvinovdsw.library.Database to javafx.fxml;
     exports com.mordvinovdsw.library.supportControllers;
     opens com.mordvinovdsw.library.supportControllers to javafx.fxml;
+    exports com.mordvinovdsw.library.models;
+    opens com.mordvinovdsw.library.models to javafx.fxml;
 }

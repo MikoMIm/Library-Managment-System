@@ -1,4 +1,4 @@
-package com.mordvinovdsw.library.Database;
+package com.mordvinovdsw.library.models;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;

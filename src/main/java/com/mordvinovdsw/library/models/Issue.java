@@ -1,11 +1,8 @@
-package com.mordvinovdsw.library.Database;
+package com.mordvinovdsw.library.models;
 
 
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class Issue {
     private SimpleIntegerProperty issueID;
@@ -15,7 +12,7 @@ public class Issue {
     private SimpleStringProperty dateReturn;
     private SimpleStringProperty status;
 
-    // Constructor
+
     public Issue(int issueID, int bookID, int memberID, String dateIssue, String dateReturn, String status) {
         this.issueID = new SimpleIntegerProperty(issueID);
         this.bookID = new SimpleIntegerProperty(bookID);
