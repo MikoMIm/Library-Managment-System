@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -30,7 +31,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Books_list_Controller implements Initializable {
-
+    @FXML
+    private ScrollPane scrollPane;
     @FXML
     private GridPane gridPane;
 
@@ -42,11 +44,11 @@ public class Books_list_Controller implements Initializable {
     @FXML
     private ComboBox<String> sortComboBox;
     private List<Book> books;
-
+    //private BookLoaderForGrid bookLoader;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ComboBoxUtil.fillBookSearchOptions(searchComboBox);
-
+        //bookLoader = new BookLoaderForGrid(gridPane);
         books = getBooksFromDatabase();
         populateGridWithBooks(books);
         sortData();
@@ -57,6 +59,8 @@ public class Books_list_Controller implements Initializable {
             handleSearchAction(searchTextField.getText());
         });
     }
+
+
 
     private List<Book> getBooksFromDatabase() {
         List<Book> books = new ArrayList<>();

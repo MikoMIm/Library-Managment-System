@@ -346,21 +346,34 @@ public class EditBookController {
         clearAdditionalComboBoxes(genreComboBoxContainer, genreComboBoxes);
         clearAdditionalComboBoxes(authorComboBoxContainer, authorComboBoxes);
 
-        if (!bookData.getAuthors().isEmpty()) {
-            authorComboBox.setValue(AuthorUtil.findAuthorByName(bookData.getAuthors().get(0)));
+        Author firstAuthor = AuthorUtil.findAuthorByName(bookData.getAuthors().get(0));
+        if (firstAuthor == null && !bookData.getAuthors().get(0).isEmpty()) {
+            firstAuthor = AuthorUtil.addNewAuthorToDatabase(bookData.getAuthors().get(0));
         }
-        if (!bookData.getGenres().isEmpty()) {
-            genreComboBox.setValue(GenreUtil.findGenreByName(bookData.getGenres().get(0)));
+        authorComboBox.setValue(firstAuthor);
+
+        Genre firstGenre = GenreUtil.findGenreByName(bookData.getGenres().get(0));
+        if (firstGenre == null && !bookData.getGenres().get(0).isEmpty()) {
+            firstGenre = GenreUtil.addNewGenreToDatabase(bookData.getGenres().get(0));
         }
+        genreComboBox.setValue(firstGenre);
 
         for (int i = 1; i < bookData.getAuthors().size(); i++) {
             addAuthorComboBox();
-            authorComboBoxes.get(i).setValue(AuthorUtil.findAuthorByName(bookData.getAuthors().get(i)));
+            Author author = AuthorUtil.findAuthorByName(bookData.getAuthors().get(i));
+            if (author == null) {
+                author = AuthorUtil.addNewAuthorToDatabase(bookData.getAuthors().get(i));
+            }
+            authorComboBoxes.get(i).setValue(author);
         }
 
         for (int i = 1; i < bookData.getGenres().size(); i++) {
             addGenreComboBox();
-            genreComboBoxes.get(i).setValue(GenreUtil.findGenreByName(bookData.getGenres().get(i)));
+            Genre genre = GenreUtil.findGenreByName(bookData.getGenres().get(i));
+            if (genre == null) {
+                genre = GenreUtil.addNewGenreToDatabase(bookData.getGenres().get(i));
+            }
+            genreComboBoxes.get(i).setValue(genre);
         }
     }
     private void clearAdditionalComboBoxes(HBox container, List<? extends ComboBox<?>> comboBoxes) {

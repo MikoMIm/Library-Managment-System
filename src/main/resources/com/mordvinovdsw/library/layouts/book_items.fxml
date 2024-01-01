@@ -75,6 +75,9 @@
             <HBox.margin>
                <Insets bottom="10.0" right="10.0" />
             </HBox.margin></Button>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
       </HBox>
    </children>
    <stylesheets>

@@ -67,7 +67,8 @@ public class GenreUtil {
         } catch (SQLException e) {
             ErrorMessages.showError("Database error: " + e.getMessage());
         }
-        return null; // Return null if the genre is not found
+        return null;
     }
+
 }
 
