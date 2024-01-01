@@ -23,7 +23,7 @@
                   <Font size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="bookNumberField" layoutX="181.0" layoutY="381.0" prefHeight="49.0" prefWidth="63.0">
+            <TextField fx:id="bookNumberField" layoutX="187.0" layoutY="387.0" prefHeight="49.0" prefWidth="63.0">
                <font>
                   <Font size="18.0" />
                </font>
@@ -48,7 +48,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
-            <TextField fx:id="ISBN10Field" layoutX="182.0" layoutY="444.0" prefHeight="49.0" prefWidth="276.0">
+            <TextField fx:id="ISBN10Field" layoutX="187.0" layoutY="444.0" prefHeight="49.0" prefWidth="270.0">
                <font>
                   <Font size="18.0" />
                </font>
@@ -58,7 +58,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="ISBN13Field" layoutX="185.0" layoutY="505.0" prefHeight="49.0" prefWidth="270.0">
+            <TextField fx:id="ISBN13Field" layoutX="187.0" layoutY="505.0" prefHeight="49.0" prefWidth="270.0">
                <font>
                   <Font size="18.0" />
                </font>

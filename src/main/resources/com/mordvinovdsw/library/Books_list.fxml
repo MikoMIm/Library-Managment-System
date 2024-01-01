@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="rootAnchorPane" prefHeight="173.0" prefWidth="1037.0" style="-fx-background-color: #242425;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mordvinovdsw.library.controllers.Books_list_Controller">
@@ -31,22 +30,8 @@
                <Font size="14.0" />
             </font>
          </Button>
-         <VBox prefHeight="30.0" prefWidth="119.0" spacing="10.0">
-            <children>
-               <Button fx:id="Genre" mnemonicParsing="false" prefHeight="30.0" prefWidth="116.0" style="-fx-background-color: #E09406; -fx-text-fill: white;" text="Genres">
-                  <font>
-                     <Font size="14.0" />
-                  </font>
-               </Button>
-                  <Button fx:id="Authors" mnemonicParsing="false" prefHeight="30.0" prefWidth="117.0" style="-fx-background-color: #E09406; -fx-text-fill: white;" text="Authors">
-                  <font>
-                     <Font size="14.0" />
-                  </font>
-               </Button>
-            </children>
-         </VBox>
         </HBox>
-        <ScrollPane fx:id="scrollPane" fitToHeight="false" fitToWidth="true" layoutY="100.0" prefHeight="34.0" prefWidth="1017.0" style="-fx-background-color: #242425; -fx-border-color: #077C50; -fx-border-width: 2;" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="100.0">
+        <ScrollPane fx:id="scrollPane" fitToHeight="false" fitToWidth="true" layoutY="100.0" prefHeight="34.0" prefWidth="1017.0" style="-fx-background-color: transparent; -fx-border-color: #077C50; -fx-border-width: 2;" styleClass="scroll-bar" stylesheets="@../../../Stylesheet/Style_fastMenu.css" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="100.0">
             <content>
                 <GridPane fx:id="gridPane" alignment="CENTER" hgap="10" style="-fx-background-color: #242425; -fx-border-color: #077C50; -fx-border-width: 2;" vgap="10">
                     <columnConstraints>

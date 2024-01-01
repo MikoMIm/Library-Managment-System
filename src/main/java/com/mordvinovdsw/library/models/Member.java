@@ -4,13 +4,13 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Member{
-    private SimpleIntegerProperty Id;
-    private SimpleStringProperty Name;
-    private SimpleStringProperty Phone;
-    private SimpleStringProperty Email;
-    private SimpleStringProperty RegisterDate;
-    private SimpleStringProperty ExpairDate;
-    private SimpleStringProperty Status;
+    final private SimpleIntegerProperty Id;
+    final private SimpleStringProperty Name;
+    final private SimpleStringProperty Phone;
+    final private SimpleStringProperty Email;
+    final private SimpleStringProperty RegisterDate;
+    final private SimpleStringProperty ExpairDate;
+    final private SimpleStringProperty Status;
 
         public Member(int id, String name, String phone, String email, String registerDate, String expairDate, String status) {
             this.Id = new SimpleIntegerProperty(id);

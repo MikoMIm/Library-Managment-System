@@ -15,8 +15,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -31,8 +31,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Books_list_Controller implements Initializable {
-    @FXML
-    private ScrollPane scrollPane;
+    public AnchorPane rootAnchorPane;
     @FXML
     private GridPane gridPane;
 
@@ -44,22 +43,16 @@ public class Books_list_Controller implements Initializable {
     @FXML
     private ComboBox<String> sortComboBox;
     private List<Book> books;
-    //private BookLoaderForGrid bookLoader;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ComboBoxUtil.fillBookSearchOptions(searchComboBox);
-        //bookLoader = new BookLoaderForGrid(gridPane);
         books = getBooksFromDatabase();
         populateGridWithBooks(books);
         sortData();
-        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            handleSearchAction(newValue);
-        });
-        searchComboBox.setOnAction(event -> {
-            handleSearchAction(searchTextField.getText());
-        });
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> handleSearchAction(newValue));
+        searchComboBox.setOnAction(event -> handleSearchAction(searchTextField.getText()));
     }
-
 
 
     private List<Book> getBooksFromDatabase() {
@@ -143,23 +136,27 @@ public class Books_list_Controller implements Initializable {
     @FXML
     private void sortData() {
         ObservableList<String> options = FXCollections.observableArrayList(
-                "Book ID", "Book Title", "Book Price", "Book Quantity"
+                "Book ID", "Book Title", "Book Quantity"
         );
         sortComboBox.setItems(options);
 
         sortComboBox.setOnAction(event -> {
             String selectedOption = sortComboBox.getValue();
             switch (selectedOption) {
+                case "Book ID":
+                    books.sort(Comparator.comparingInt(Book::getBookID));
+                    break;
                 case "Book Title":
                     books.sort(Comparator.comparing(Book::getBookTitle));
                     break;
                 case "Book Quantity":
-                    books.sort(Comparator.comparing(Book::getBookNumber));
+                    books.sort(Comparator.comparingInt(Book::getBookNumber));
                     break;
             }
             populateGridWithBooks(books);
         });
     }
+
     @FXML
     private void handleSearchAction(String searchText) {
         if (searchText == null || searchText.trim().isEmpty()) {
@@ -178,13 +175,12 @@ public class Books_list_Controller implements Initializable {
                     return switch (searchCriterion) {
                         case "Book ID" -> String.valueOf(book.getBookID()).contains(lowerCaseSearchText);
                         case "Book Name" -> book.getBookTitle().toLowerCase().contains(lowerCaseSearchText);
-                        case "Book Genre" ->
-                            // Check if the genre is not null and not empty before calling toLowerCase()
-                                book.getGenre() != null && !book.getGenre().trim().isEmpty() &&
-                                        book.getGenre().toLowerCase().contains(lowerCaseSearchText);
-                        case "Book ISBN" ->
-                                (book.getISBN10() != null && book.getISBN10().toLowerCase().contains(lowerCaseSearchText)) ||
-                                        (book.getISBN13() != null && book.getISBN13().toLowerCase().contains(lowerCaseSearchText));
+                        case "Book Genre" -> book.getGenre() != null && !book.getGenre().trim().isEmpty() &&
+                                book.getGenre().toLowerCase().contains(lowerCaseSearchText);
+                        case "Book ISBN" -> (book.getISBN10() != null && book.getISBN10().toLowerCase().contains(lowerCaseSearchText)) ||
+                                (book.getISBN13() != null && book.getISBN13().toLowerCase().contains(lowerCaseSearchText));
+                        case "Book Author" -> book.getAuthors() != null && !book.getAuthors().trim().isEmpty() &&
+                                book.getAuthors().toLowerCase().contains(lowerCaseSearchText);
                         default -> true;
                     };
                 })

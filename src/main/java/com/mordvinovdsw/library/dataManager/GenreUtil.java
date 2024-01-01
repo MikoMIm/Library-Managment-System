@@ -7,7 +7,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
-import java.util.Optional;
 
 public class GenreUtil {
     public static ObservableList<Genre> getGenresFromDatabase() {

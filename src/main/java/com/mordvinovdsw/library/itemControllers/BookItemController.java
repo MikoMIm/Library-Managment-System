@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
@@ -33,10 +33,6 @@ public class BookItemController {
     @FXML
     private Label genreLabel;
     @FXML
-    private Button edit;
-    @FXML
-    private Button remove;
-    @FXML
     private Label authorLabel;
 
 
@@ -48,7 +44,7 @@ public class BookItemController {
         titleLabel.setText("Book Title: " + book.getBookTitle());
         quantityLabel.setText("Number of Books: " + book.getBookNumber());
         genreLabel.setText("Genre: " + book.getGenre());
-        authorLabel.setText("Author: " + book.getAuthors()); // Assuming getAuthors() returns a String
+        authorLabel.setText("Author: " + book.getAuthors());
     }
 
 
@@ -103,7 +99,7 @@ public class BookItemController {
         } catch (SQLException e) {
             if (conn != null) {
                 try {
-                    conn.rollback(); // Rollback the transaction on error
+                    conn.rollback();
                 } catch (SQLException ex) {
                     ErrorMessages.showError("Error rolling back: " + ex.getMessage());
                 }
@@ -115,7 +111,7 @@ public class BookItemController {
                 if (pstmtDeleteBookAuthors != null) pstmtDeleteBookAuthors.close();
                 if (pstmtDeleteBook != null) pstmtDeleteBook.close();
                 if (conn != null) {
-                    conn.setAutoCommit(true); // Reset to default auto-commit mode
+                    conn.setAutoCommit(true);
                     conn.close();
                 }
             } catch (SQLException ex) {

@@ -5,12 +5,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Issue {
-    private SimpleIntegerProperty issueID;
-    private SimpleIntegerProperty bookID;
-    private SimpleIntegerProperty memberID;
-    private SimpleStringProperty dateIssue;
-    private SimpleStringProperty dateReturn;
-    private SimpleStringProperty status;
+    final private SimpleIntegerProperty issueID;
+    final private SimpleIntegerProperty bookID;
+    final private SimpleIntegerProperty memberID;
+    final private SimpleStringProperty dateIssue;
+    final private SimpleStringProperty dateReturn;
+    final private SimpleStringProperty status;
 
 
     public Issue(int issueID, int bookID, int memberID, String dateIssue, String dateReturn, String status) {

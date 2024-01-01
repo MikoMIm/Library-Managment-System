@@ -4,8 +4,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Genre {
-    private SimpleIntegerProperty genreID;
-    private SimpleStringProperty genreName;
+    final private SimpleIntegerProperty genreID;
+    final private SimpleStringProperty genreName;
 
 
 

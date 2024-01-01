@@ -46,3 +46,7 @@
     -fx-padding: 10;
     -fx-alignment: center;
 }
+
+.scroll-pane > .viewport {
+   -fx-background-color: transparent;
+}

@@ -36,14 +36,14 @@ public class EditBookController {
     @FXML
     private Button removeGenreButton, addGenreButton, removeAuthorButton, addAuthorButton, addButton, saveButton, cancelButton;
 
-    private List<ComboBox<Genre>> genreComboBoxes = new ArrayList<>();
-    private List<ComboBox<Author>> authorComboBoxes = new ArrayList<>();
+    final private List<ComboBox<Genre>> genreComboBoxes = new ArrayList<>();
+    final private List<ComboBox<Author>> authorComboBoxes = new ArrayList<>();
     private int currentBookId;
-    private BookDataManager bookDataManager = new BookDataManager();
-    private DataEntryManager dataEntryManager = new DataEntryManager();
-    private AuthorDAO AuthorDAO = new AuthorDAO();
+    final private BookDataManager bookDataManager = new BookDataManager();
+    final private DataEntryManager dataEntryManager = new DataEntryManager();
+    final private AuthorDAO AuthorDAO = new AuthorDAO();
 
-    private GenreDAO GenreDAO = new GenreDAO();
+    final private GenreDAO GenreDAO = new GenreDAO();
 
     @FXML
     private void initialize() {
@@ -257,25 +257,6 @@ public class EditBookController {
         }
         return selectedAuthors;
     }
-
-    private List<Genre> extractSelectedGenres() {
-        List<Genre> selectedGenres = new ArrayList<>();
-        for (ComboBox<Genre> genreComboBox : genreComboBoxes) {
-            Object selectedItem = genreComboBox.getValue();
-            if (selectedItem instanceof Genre) {
-                selectedGenres.add((Genre) selectedItem);
-            } else if (selectedItem instanceof String) {
-                Optional<Genre> genreOpt = dataEntryManager.handleNewGenreEntry(selectedItem.toString());
-                if (genreOpt.isPresent()) {
-                    selectedGenres.add(genreOpt.get());
-                } else {
-                    // Handle the case where no valid Genre is found or created
-                }
-            }
-        }
-        return selectedGenres;
-    }
-
     @FXML
     private void cancel() {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
@@ -311,7 +292,7 @@ public class EditBookController {
 
     @FXML
     private void autoFill() {
-        String isbn = ISBN13Field.getText().trim(); // Assuming you're using ISBN13 for autofill
+        String isbn = ISBN13Field.getText().trim();
         if (isbn.isEmpty()) {
             ErrorMessages.showError("Please enter an ISBN number.");
             return;

@@ -4,13 +4,13 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Book {
-    private SimpleIntegerProperty bookID;
-    private SimpleStringProperty bookTitle;
-    private SimpleIntegerProperty bookNumber;
-    private SimpleStringProperty ISBN10;
-    private SimpleStringProperty ISBN13;
-    private SimpleStringProperty genre;
-    private SimpleStringProperty authors;
+    final private SimpleIntegerProperty bookID;
+    final private SimpleStringProperty bookTitle;
+    final private SimpleIntegerProperty bookNumber;
+    final private SimpleStringProperty ISBN10;
+    final private SimpleStringProperty ISBN13;
+    final private SimpleStringProperty genre;
+    final private SimpleStringProperty authors;
 
     public Book(int bookID, String bookTitle, int bookNumber, String ISBN10, String ISBN13, String genre, String authors) {
         this.bookID = new SimpleIntegerProperty(bookID);
@@ -41,6 +41,8 @@ public class Book {
     public int getBookNumber() {
         return bookNumber.get();
     }
+
+
 
     public String getISBN10() {return ISBN10.get();}
 
