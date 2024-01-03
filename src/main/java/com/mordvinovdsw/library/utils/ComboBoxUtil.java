@@ -13,8 +13,10 @@ public class ComboBoxUtil {
         ));
     }
 
-    public static <T> void fillComboBoxWithObjects(ComboBox<T> comboBox, List<T> items) {
-        ObservableList<T> options = FXCollections.observableArrayList(items);
-        comboBox.setItems(options);
+    public static void fillMemberSearchOptions(ComboBox<String> comboBox) {
+        comboBox.setItems(FXCollections.observableArrayList(
+                "Member ID", "Member Name", "Member Phone Number", "Member Email",
+                "Registration Date", "Date Expire", "Status"
+        ));
     }
 }

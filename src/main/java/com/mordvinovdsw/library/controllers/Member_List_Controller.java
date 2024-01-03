@@ -1,242 +1,201 @@
 package com.mordvinovdsw.library.controllers;
 
+import com.mordvinovdsw.library.itemControllers.MemberItemController;
 import com.mordvinovdsw.library.models.Member;
 
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.io.IOException;
+import java.util.stream.Collectors;
+
 import com.mordvinovdsw.library.Database.DBConnection;
 
 import com.mordvinovdsw.library.Main;
+import com.mordvinovdsw.library.supportControllers.EditBookController;
+import com.mordvinovdsw.library.supportControllers.EditMemberController;
+import com.mordvinovdsw.library.utils.ComboBoxUtil;
+import com.mordvinovdsw.library.utils.ErrorMessages;
+import com.mordvinovdsw.library.utils.MemberStatusChecker;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class Member_List_Controller implements Initializable {
+    public AnchorPane rootAnchorPane;
+    @FXML
+    private GridPane gridPane;
 
     @FXML
-    private TableView<Member> memberTable;
+    private TextField searchTextField;
 
     @FXML
-    private TableColumn<Member, Integer> idColumn;
-
+    private ComboBox<String> searchComboBox;
     @FXML
-    private TableColumn<Member, String> nameColumn;
-
-    @FXML
-    private TableColumn<Member, String> phoneColumn;
-
-    @FXML
-    private TableColumn<Member, String> emailColumn;
-
-    @FXML
-    private TableColumn<Member, String> registerDateColumn;
-
-    @FXML
-    private TableColumn<Member, String> expairDateColumn;
-
-    @FXML
-    private TableColumn<Member, String> statusColumn;
-
-
-    @FXML
-    private TextField nameField;
-
-    @FXML
-    private TextField phoneField;
-
-    @FXML
-    private TextField emailField;
-
-    @FXML
-    private DatePicker registerDateField;
-
-    @FXML
-    private DatePicker expairDateField;
-
-    @FXML
-    private ComboBox<String> statusField;
-
-    private ObservableList<Member> members = FXCollections.observableArrayList();
+    private ComboBox<String> sortComboBox;
+    private List<Member> members;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        statusField.getItems().add("Active");
-        statusField.getItems().add("Inactive");
-
-
-
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-        registerDateColumn.setCellValueFactory(new PropertyValueFactory<>("registerDate"));
-        expairDateColumn.setCellValueFactory(new PropertyValueFactory<>("expairDate"));
-        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
-
-
-        loadData();
+        ComboBoxUtil.fillMemberSearchOptions(searchComboBox);
+        members = getMembersFromDatabase();
+        populateGridWithMembers(members);
+        sortData();
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> handleSearchAction(newValue));
+        searchComboBox.setOnAction(event -> handleSearchAction(searchTextField.getText()));
+        MemberStatusChecker statusChecker = new MemberStatusChecker(members, this);
+        statusChecker.checkOverdueMembers();
     }
 
-    private void loadData() {
-        members.clear();
+    public List<Member> getMembersFromDatabase() {
+        List<Member> members = new ArrayList<>();
+        String sql = "SELECT Member_ID, Member_Name, Phone_Number, Email_adress, Register_Date, Date_Expair, Member_Status FROM Members";
 
-        try (Connection connection = DBConnection.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT * FROM Members")){
-        while (resultSet.next()) {
-                int Id = resultSet.getInt("Member_ID");
-                String Name = resultSet.getString("Member_Name");
-                String Phone = resultSet.getString("Phone_Number");
-                String Email = resultSet.getString("Email_Adress");
-                String RegisterDate = resultSet.getString("Register_Date");
-                String ExpairDate = resultSet.getString("Date_Expair");
-                String Status = resultSet.getString("Member_Status");
-                members.add(new Member(Id, Name, Phone, Email, RegisterDate, ExpairDate, Status));
-                clearFields();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                int id = rs.getInt("Member_ID");
+                String name = rs.getString("Member_Name");
+                String phone = rs.getString("Phone_Number");
+                String email = rs.getString("Email_adress");
+                String registerDate = rs.getString("Register_Date");
+                String expairDate = rs.getString("Date_Expair");
+                String status = rs.getString("Member_Status");
+
+                Member member = new Member(id, name, phone, email, registerDate, expairDate, status);
+                members.add(member);
             }
-            memberTable.setItems(members);
         } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
         }
-        memberTable.setItems(members);
+
+        return members;
     }
 
-    @FXML
-    private void MCK() {
+    public void populateGridWithMembers(List<Member> members) {
+        gridPane.getChildren().clear();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        memberTable.setOnMouseClicked(event -> {
-            Member selectedMember = memberTable.getSelectionModel().getSelectedItem();
-            if (selectedMember != null) {
-                nameField.setText(selectedMember.getName());
-                phoneField.setText(selectedMember.getPhone());
-                emailField.setText(selectedMember.getEmail());
-                registerDateField.setValue(LocalDate.parse(selectedMember.getRegisterDate(), formatter));
-                expairDateField.setValue(LocalDate.parse(selectedMember.getExpairDate(), formatter));
-                statusField.setValue(selectedMember.getStatus());
-            }
-        });
-    }
+        final int maxColumn = 3;
+        int row = 0, column = 0;
+        for (Member member : members) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mordvinovdsw/library/layouts/member_items.fxml"));
+                VBox memberItemPane = loader.load();
+                MemberItemController itemController = loader.getController();
+                itemController.setMember(member);
 
-    @FXML
-    private void addMember() {
-        try (Connection connection = DBConnection.getConnection()) {
-            String maxIdQuery = "SELECT MAX(Member_ID) AS max_id FROM Members";
-            int memberId = 1;
-
-            try (PreparedStatement maxIdStatement = connection.prepareStatement(maxIdQuery)) {
-                ResultSet resultSet = maxIdStatement.executeQuery();
-                if (resultSet.next()) {
-                    int maxId = resultSet.getInt("max_id");
-                    if (!resultSet.wasNull()) {
-                        memberId = maxId + 1;
-                    }
+                gridPane.add(memberItemPane, column, row);
+                column++;
+                if (column == maxColumn) {
+                    column = 0;
+                    row++;
                 }
+            } catch (IOException e) {
+                ErrorMessages.showError("IO Error: " + e.getMessage());
             }
-            Member newMember = new Member(
-                    memberId,
-                    nameField.getText(),
-                    phoneField.getText(),
-                    emailField.getText(),
-                    registerDateField.getEditor().getText(),
-                    expairDateField.getEditor().getText(),
-                    statusField.getSelectionModel().getSelectedItem().toString()
-            );
-            String query = "INSERT INTO Members(Member_ID, Member_Name, Phone_Number, Email_Adress, Register_Date, Date_Expair, Member_Status) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setInt(1, memberId);
-                statement.setString(2, newMember.getName());
-                statement.setString(3, newMember.getPhone());
-                statement.setString(4, newMember.getEmail());
-                statement.setString(5, newMember.getRegisterDate());
-                statement.setString(6, newMember.getExpairDate());
-                statement.setString(7, newMember.getStatus());
-                statement.execute();
-
-                members.add(newMember);
-                memberTable.refresh();
-            }
-        } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
-        } finally {
-            clearFields();
         }
     }
-
-    private void clearFields() {
-        nameField.clear();
-        phoneField.clear();
-        emailField.clear();
-        registerDateField.setValue(null);
-        expairDateField.setValue(null);
-        statusField.setValue(null);
-    }
-
-    @FXML
-    private void clearFieldsb() {
-        nameField.clear();
-        phoneField.clear();
-        emailField.clear();
-        registerDateField.setValue(null);
-        expairDateField.setValue(null);
-        statusField.setValue(null);
-    }
-
 
     @FXML
     private void exit() throws IOException {
         Main.changeScene();
-
     }
 
     @FXML
-    private void delete() {
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement("DELETE FROM Members WHERE Member_ID = ?")) {
-
-            Member selectedMember = memberTable.getSelectionModel().getSelectedItem();
-            statement.setInt(1, selectedMember.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
+    private void addNew() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mordvinovdsw/library/support_layouts/Edit_Add_Member.fxml"));
+            Parent root = loader.load();
+            EditMemberController editController = loader.getController();
+            editController.prepareAdd();
+            Stage stage = new Stage();
+            stage.setTitle("Add New Book");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            ErrorMessages.showError("IO Error: " + e.getMessage());
         }
-        loadData();
     }
 
     @FXML
-    private void updateData() {
-        String name = nameField.getText();
-        String phone = phoneField.getText();
-        String email = emailField.getText();
-        String Rdate = registerDateField.getEditor().getText();
-        String Dateexpair = expairDateField.getEditor().getText();
-        String Status = statusField.getSelectionModel().getSelectedItem().toString();
+    private void sortData() {
+        ObservableList<String> options = FXCollections.observableArrayList(
+                "Member ID", "Member Name", "Member Phone Number", "Member Email",
+                "Registration Date", "Date Expire", "Status"
+        );
+        sortComboBox.setItems(options);
 
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement("UPDATE Members SET Member_Name = ?, Phone_Number= ?, Email_adress = ?, Register_date = ?, Date_Expair = ?, Member_Status = ? WHERE Member_ID = ?")) {
-
-            statement.setString(1, name);
-            statement.setString(2, phone);
-            statement.setString(3, email);
-            statement.setString(4, Rdate );
-            statement.setString(5, Dateexpair);
-            statement.setString(6, Status );
-
-            int result = statement.executeUpdate();
-            if (result == 1) {
-                loadData();
-                clearFields();
+        sortComboBox.setOnAction(event -> {
+            String selectedOption = sortComboBox.getValue();
+            switch (selectedOption) {
+                case "Member ID":
+                    members.sort(Comparator.comparingInt(Member::getId));
+                    break;
+                case "Member Name":
+                    members.sort(Comparator.comparing(Member::getName));
+                    break;
+                case "Member Phone Number":
+                    members.sort(Comparator.comparing(Member::getPhone));
+                    break;
+                case "Member Email":
+                    members.sort(Comparator.comparing(Member::getEmail));
+                    break;
+                case "Registration Date":
+                    members.sort(Comparator.comparing(Member::getRegisterDate));
+                    break;
+                case "Date Expire":
+                    members.sort(Comparator.comparing(Member::getExpairDate));
+                    break;
+                case "Status":
+                    members.sort(Comparator.comparing(Member::getStatus));
+                    break;
             }
-        } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
+            populateGridWithMembers(members);
+        });
     }
 
+    @FXML
+    private void handleSearchAction(String searchText) {
+        if (searchText == null || searchText.trim().isEmpty()) {
+            populateGridWithMembers(members);
+            return;
+        }
+
+        String lowerCaseSearchText = searchText.toLowerCase();
+        String searchCriterion = searchComboBox.getValue();
+
+        List<Member> filteredMembers = members.stream()
+                .filter(member -> {
+                    if (searchCriterion == null || searchCriterion.isEmpty()) {
+                        return true;
+                    }
+                    return switch (searchCriterion) {
+                        case "Member ID" -> String.valueOf(member.getId()).contains(lowerCaseSearchText);
+                        case "Member Name" -> member.getName().toLowerCase().contains(lowerCaseSearchText);
+                        case "Member Phone Number" -> member.getPhone().toLowerCase().contains(lowerCaseSearchText);
+                        case "Member Email" -> member.getEmail().toLowerCase().contains(lowerCaseSearchText);
+                        case "Registration Date" -> member.getRegisterDate().contains(lowerCaseSearchText);
+                        case "Date Expire" -> member.getExpairDate().contains(lowerCaseSearchText);
+                        case "Status" -> member.getStatus().toLowerCase().contains(lowerCaseSearchText);
+                        default -> true;
+                    };
+                })
+                .collect(Collectors.toList());
+
+        populateGridWithMembers(filteredMembers);
+    }
 }
