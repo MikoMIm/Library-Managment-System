@@ -14,11 +14,7 @@ public class MainMenu_controller {
     }
 
     public void pressed_Issue_button(ActionEvent event) throws IOException {
-       try{
         Main.IssueList();
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
     }
 
     public void logout(ActionEvent event) throws IOException {
@@ -26,12 +22,7 @@ public class MainMenu_controller {
     }
 
     public void pressed_memberList_button(ActionEvent event) throws IOException {
-    try{
-    Main.MemberList();
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-
+        Main.MemberList();
     }
 
 }

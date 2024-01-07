@@ -57,6 +57,7 @@ public class Member_List_Controller implements Initializable {
         searchComboBox.setOnAction(event -> handleSearchAction(searchTextField.getText()));
         MemberStatusChecker statusChecker = new MemberStatusChecker(members, this);
         statusChecker.checkOverdueMembers();
+
     }
 
     public List<Member> getMembersFromDatabase() {

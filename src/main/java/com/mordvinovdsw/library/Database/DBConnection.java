@@ -13,7 +13,7 @@ public class DBConnection {
         try {
             Class.forName(DRIVER);
             connection = DriverManager.getConnection(DB_URL);
-            System.out.println("Connected to the SQLite database.");
+            System.out.println("Successfully connected to the SQLite database.");
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }

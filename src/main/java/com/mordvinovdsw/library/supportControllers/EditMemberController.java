@@ -37,6 +37,7 @@ public class EditMemberController {
         memberStatusComboBox.setItems(FXCollections.observableArrayList("Active", "Inactive", "Suspended", "Expired"));
     }
 
+
     public void prepareEdit(Member member) {
         fillForm(member);
         currentMemberId = member.getId();

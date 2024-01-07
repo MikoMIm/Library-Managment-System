@@ -25,7 +25,7 @@
             <TextField fx:id="searchTextField" prefHeight="34.0" prefWidth="327.0" HBox.hgrow="ALWAYS" />
             <ComboBox fx:id="searchComboBox" prefHeight="33.0" prefWidth="150.0" promptText="Search Filter" />
             <ComboBox fx:id="sortComboBox" prefHeight="33.0" prefWidth="150.0" promptText="Sort Filter" />
-         <Button fx:id="AddButton" mnemonicParsing="false" onAction="#addNew" prefHeight="30.0" prefWidth="117.0" style="-fx-background-color: #077C50; -fx-text-fill: white;" text="Add New Book">
+         <Button fx:id="AddButton" mnemonicParsing="false" onAction="#addNew" prefHeight="30.0" prefWidth="147.0" style="-fx-background-color: #077C50; -fx-text-fill: white;" text="Add New Member">
             <font>
                <Font size="14.0" />
             </font>

@@ -46,7 +46,7 @@ public class Main extends Application {
     public static void Log_out() throws IOException {
         {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("hello-view.fxml"));
-            Scene scene_start = new Scene(fxmlLoader.load(), 1150, 650);
+            Scene scene_start = new Scene(fxmlLoader.load(), 1150, 1000);
             stg.setScene(scene_start);
             stg.show();
 
@@ -65,7 +65,7 @@ public class Main extends Application {
     public static void MemberList() throws IOException {
         {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Member_list.fxml"));
-            Scene scene_blist = new Scene(fxmlLoader.load(), 1566, 613);
+            Scene scene_blist = new Scene(fxmlLoader.load(), 1500, 1000);
             stg.setScene(scene_blist);
             StageUtils.centerStageOnScreen(stg, scene_blist);
             stg.show();
@@ -76,17 +76,13 @@ public class Main extends Application {
     public static void IssueList() throws IOException {
         {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Issue_list.fxml"));
-            Scene scene_blist = new Scene(fxmlLoader.load(), 1096, 676);
+            Scene scene_blist = new Scene(fxmlLoader.load(), 1500, 1000);
             stg.setScene(scene_blist);
             StageUtils.centerStageOnScreen(stg, scene_blist);
             stg.show();
 
         }
     }
-
-
-
-
     public static void main(String[] args) {
         launch();
     }
