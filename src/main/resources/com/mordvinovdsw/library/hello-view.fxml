@@ -13,14 +13,14 @@
 <HBox style="-fx-background-color: #242425;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mordvinovdsw.library.controllers.LogIn_Controller">
    <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
       <ImageView fx:id="IMG" preserveRatio="true">
-         <Image url="@../../../IMG/Logo2.png"/>
+         <Image url="@../../../IMG/Logo2.png" />
       </ImageView>
    </VBox>
 
 
    <VBox alignment="CENTER" spacing="20" HBox.hgrow="ALWAYS">
       <ImageView>
-         <Image url="@../../../IMG/lock.png"/>
+         <Image url="@../../../IMG/lock.png" />
       </ImageView>
       <Label style="-fx-font-size: 20px;" text="User ID" textFill="WHITE" />
       <TextField fx:id="userID" maxWidth="1.7976931348623157E308" prefHeight="47.0" prefWidth="180.0" promptText="User ID" style="-fx-font-size: 14px;">
@@ -29,7 +29,7 @@
          </VBox.margin></TextField>
       <Label style="-fx-font-size: 20px;" text="Password" textFill="WHITE" />
       <PasswordField fx:id="password" maxWidth="1.7976931348623157E308" prefHeight="47.0" prefWidth="180.0" promptText="Password" style="-fx-font-size: 14px;" />
-      <Button fx:id="button" maxWidth="1.7976931348623157E308" onAction="#userLogin" style="-fx-background-color: #8a8a8a; -fx-font-size: 18px;" text="Log in" textFill="WHITE" />
+      <Button fx:id="button" maxWidth="1.7976931348623157E308" onAction="#handleLogin" style="-fx-background-color: #8a8a8a; -fx-font-size: 18px;" text="Log in" textFill="WHITE" />
       <Label fx:id="wrongLogin" style="-fx-font-size: 18px;" textFill="#ff0505" />
       <Label style="-fx-font-size: 18px;" text="User ID: Admin" textFill="WHITE" />
       <Label style="-fx-font-size: 18px;" text="Password: 1234" textFill="WHITE" />

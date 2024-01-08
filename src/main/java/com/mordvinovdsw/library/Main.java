@@ -46,7 +46,7 @@ public class Main extends Application {
     public static void Log_out() throws IOException {
         {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("hello-view.fxml"));
-            Scene scene_start = new Scene(fxmlLoader.load(), 1150, 1000);
+            Scene scene_start = new Scene(fxmlLoader.load(), 901, 708);
             stg.setScene(scene_start);
             stg.show();
 

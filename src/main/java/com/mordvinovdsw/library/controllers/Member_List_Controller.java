@@ -34,6 +34,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Member_List_Controller implements Initializable {
+
     public AnchorPane rootAnchorPane;
     @FXML
     private GridPane gridPane;

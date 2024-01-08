@@ -4,6 +4,7 @@ module com.mordvinovdsw.library {
     requires java.sql;
     requires org.xerial.sqlitejdbc;
     requires org.json;
+    requires jbcrypt;
 
 
     opens com.mordvinovdsw.library.itemControllers to javafx.fxml;
