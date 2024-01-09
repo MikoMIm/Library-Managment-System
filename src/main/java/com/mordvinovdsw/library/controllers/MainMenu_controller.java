@@ -1,5 +1,6 @@
 package com.mordvinovdsw.library.controllers;
 import com.mordvinovdsw.library.Main;
+import com.mordvinovdsw.library.utils.ScreenSizeConstants;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,20 +10,23 @@ import java.io.IOException;
 public class MainMenu_controller {
 
 
-    public void pressed_bookList_button(ActionEvent event) throws IOException {
-        Main.BookList();
+    public void openBookList(ActionEvent event) throws IOException {
+        Main.getSceneController().setScene("/com/mordvinovdsw/library/Books_list.fxml", ScreenSizeConstants.MainControllerSize);
     }
 
-    public void pressed_Issue_button(ActionEvent event) throws IOException {
-        Main.IssueList();
+    public void openIssueList(ActionEvent event) throws IOException {
+        Main.getSceneController().setScene("/com/mordvinovdsw/library/Issue_list.fxml",ScreenSizeConstants.MainControllerSize);
     }
 
     public void logout(ActionEvent event) throws IOException {
-        Main.Log_out();
+        Main.getSceneController().setScene("/com/mordvinovdsw/library/hello-view.fxml",ScreenSizeConstants.MainControllerSize);
     }
 
-    public void pressed_memberList_button(ActionEvent event) throws IOException {
-        Main.MemberList();
+    public void openMemberList(ActionEvent event) throws IOException {
+        Main.getSceneController().setScene("/com/mordvinovdsw/library/Member_list.fxml",ScreenSizeConstants.MainControllerSize);
     }
 
+    public void openAdminSettings(ActionEvent event) throws IOException {
+        Main.getSceneController().setScene("/com/mordvinovdsw/library/Users_list.fxml",ScreenSizeConstants.MainControllerSize);
+    }
 }

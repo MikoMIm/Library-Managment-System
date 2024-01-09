@@ -7,6 +7,8 @@ import com.mordvinovdsw.library.itemControllers.BookItemController;
 import com.mordvinovdsw.library.supportControllers.EditBookController;
 import com.mordvinovdsw.library.utils.ComboBoxUtil;
 import com.mordvinovdsw.library.utils.ErrorMessages;
+import com.mordvinovdsw.library.utils.ScreenSizeConstants;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -114,7 +116,7 @@ public class Books_list_Controller implements Initializable {
 
     @FXML
     private void exit() throws IOException {
-        Main.changeScene();
+        Main.getSceneController().setScene("/com/mordvinovdsw/library/MainMenu.fxml", ScreenSizeConstants.MainControllerSize);
     }
 
     @FXML

@@ -24,6 +24,8 @@ import com.mordvinovdsw.library.supportControllers.EditIssueController;
 import com.mordvinovdsw.library.utils.ComboBoxUtil;
 import com.mordvinovdsw.library.utils.ErrorMessages;
 import com.mordvinovdsw.library.utils.IssueStatusChecker;
+import com.mordvinovdsw.library.utils.ScreenSizeConstants;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -126,7 +128,7 @@ public class Issue_Controller implements Initializable {
 
     @FXML
     private void exit() throws IOException {
-        Main.changeScene();
+        Main.getSceneController().setScene("/com/mordvinovdsw/library/MainMenu.fxml", ScreenSizeConstants.MainControllerSize);
     }
     @FXML
     private void addNew() {
