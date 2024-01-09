@@ -16,6 +16,7 @@
    <columnConstraints>
       <ColumnConstraints hgrow="ALWAYS" percentWidth="50" />
       <ColumnConstraints hgrow="ALWAYS" percentWidth="50" />
+      <ColumnConstraints hgrow="ALWAYS" percentWidth="50" prefWidth="100.0" />
    </columnConstraints>
 
    <rowConstraints>
@@ -25,7 +26,7 @@
 
    <children>
       <StackPane GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.vgrow="ALWAYS">
-         <Button fx:id="memberListButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#pressed_memberList_button" styleClass="menu-button">
+         <Button fx:id="memberListButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#openMemberList" styleClass="menu-button">
             <graphic>
                <VBox alignment="CENTER" spacing="10">
                   <ImageView fitHeight="133.0" fitWidth="198.0" preserveRatio="true">
@@ -41,12 +42,12 @@
                </VBox>
             </graphic>
             <StackPane.margin>
-               <Insets left="10.0" top="10.0" />
+               <Insets left="10.0" right="5.0" top="10.0" />
             </StackPane.margin>
          </Button>
       </StackPane>
-      <StackPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.vgrow="ALWAYS">
-         <Button fx:id="issueListButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#pressed_Issue_button" styleClass="menu-button">
+      <StackPane GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.vgrow="ALWAYS">
+         <Button fx:id="issueListButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#openIssueList" styleClass="menu-button">
             <graphic>
                <VBox alignment="CENTER" spacing="10">
                   <ImageView fitHeight="137.0" fitWidth="143.0" preserveRatio="true">
@@ -66,42 +67,104 @@
             </StackPane.margin>
          </Button>
       </StackPane>
-      <StackPane GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
-         <Button fx:id="bookListButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#pressed_bookList_button" styleClass="menu-button">
+      <StackPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+         <Button fx:id="bookListButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#openBookList" styleClass="menu-button">
             <graphic>
                <VBox alignment="CENTER" spacing="10">
                   <ImageView fitHeight="143.0" fitWidth="156.0" preserveRatio="true">
                      <Image url="@../../../IMG/books_list.png" />
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
                   </ImageView>
-                  <Label styleClass="menu-label" text="List of books" />
+                  <Label styleClass="menu-label" text="List of books">
+                     <VBox.margin>
+                        <Insets bottom="-30.0" />
+                     </VBox.margin></Label>
                </VBox>
             </graphic>
             <StackPane.margin>
-               <Insets bottom="10.0" left="10.0" />
+               <Insets top="10.0" />
             </StackPane.margin>
          </Button>
       </StackPane>
 
       <StackPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
-         <Button fx:id="logoutButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#logout" styleClass="menu-button">
+         <Button maxHeight="Infinity" maxWidth="Infinity" styleClass="menu-button">
             <graphic>
                <VBox alignment="CENTER" spacing="10">
                   <ImageView fitHeight="142.0" fitWidth="155.0" preserveRatio="true">
-                     <Image url="@../../../IMG/logout.png" />
+                     <Image url="@../../../IMG/upload.png" />
                      <VBox.margin>
-                        <Insets left="20.0" top="20.0" />
+                        <Insets top="20.0" />
                      </VBox.margin>
                   </ImageView>
-                  <Label styleClass="menu-label" text="Log out">
+                  <Label styleClass="menu-label" text="Import/Export">
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin></Label>
                </VBox>
             </graphic>
             <StackPane.margin>
-               <Insets bottom="10.0" right="10.0" />
+               <Insets bottom="10.0" />
             </StackPane.margin>
          </Button>
+      </StackPane>
+      <StackPane GridPane.rowIndex="1">
+         <children>
+            <Button fx:id="AdminSettings" maxHeight="Infinity" maxWidth="Infinity" onAction="#openAdminSettings" styleClass="menu-button">
+               <graphic>
+                  <VBox alignment="CENTER" spacing="10">
+                     <children>
+                        <ImageView fitHeight="142.0" fitWidth="155.0" preserveRatio="true">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <image>
+                              <Image url="@../../../IMG/Administrator.png" />
+                           </image>
+                        </ImageView>
+                        <Label styleClass="menu-label" text="Admin Settings">
+                           <VBox.margin>
+                              <Insets bottom="-10.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+               </graphic>
+               <StackPane.margin>
+                  <Insets bottom="10.0" left="10.0" />
+               </StackPane.margin>
+            </Button>
+         </children>
+      </StackPane>
+      <StackPane GridPane.columnIndex="2" GridPane.rowIndex="1">
+         <children>
+            <Button fx:id="logoutButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#logout" styleClass="menu-button">
+               <graphic>
+                  <VBox alignment="CENTER" spacing="10">
+                     <children>
+                        <ImageView fitHeight="142.0" fitWidth="155.0" preserveRatio="true">
+                           <VBox.margin>
+                              <Insets left="20.0" top="20.0" />
+                           </VBox.margin>
+                           <image>
+                              <Image url="@../../../IMG/logout.png" />
+                           </image>
+                        </ImageView>
+                        <Label styleClass="menu-label" text="Log out">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+               </graphic>
+               <StackPane.margin>
+                  <Insets bottom="10.0" right="10.0" />
+               </StackPane.margin>
+            </Button>
+         </children>
       </StackPane>
    </children>
 </GridPane>

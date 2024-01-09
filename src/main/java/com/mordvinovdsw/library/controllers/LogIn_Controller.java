@@ -1,5 +1,6 @@
 package com.mordvinovdsw.library.controllers;
 import com.mordvinovdsw.library.AuthenticationService;
+import com.mordvinovdsw.library.supportControllers.LoginUserController;
 import com.mordvinovdsw.library.utils.ErrorMessages;
 import com.mordvinovdsw.library.utils.StageUtils;
 import javafx.event.Event;
@@ -73,6 +74,10 @@ public class LogIn_Controller {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mordvinovdsw/library/support_layouts/Login_Warning.fxml"));
             Parent root = loader.load();
+
+            LoginUserController warningController = loader.getController();
+            warningController.prepareAdd();
+
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("Login Required");
