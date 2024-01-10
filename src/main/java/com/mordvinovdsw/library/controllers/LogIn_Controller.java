@@ -1,9 +1,9 @@
 package com.mordvinovdsw.library.controllers;
 import com.mordvinovdsw.library.AuthenticationService;
 import com.mordvinovdsw.library.supportControllers.LoginUserController;
-import com.mordvinovdsw.library.utils.ErrorMessages;
+import com.mordvinovdsw.library.utils.DatabaseUtils;
+import com.mordvinovdsw.library.utils.DialogUtil;
 import com.mordvinovdsw.library.utils.StageUtils;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,6 +16,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 
 
 public class LogIn_Controller {
@@ -32,8 +33,32 @@ public class LogIn_Controller {
     private AuthenticationService authService;
 
     public void initialize() {
-        if (!authService.doesUserExist()) {
-            showLoginWarning();
+        System.out.println("Looking for DB at: " + Paths.get("library.db").toAbsolutePath());
+
+        if (!DatabaseUtils.doesDatabaseExist("library.db")) {
+            DialogUtil.showError("Database not found. Import or create a database.");
+            openImportExportScene();
+        } else {
+            if (!authService.doesUserExist()) {
+                showLoginWarning();
+            }
+        }
+    }
+
+
+    private void openImportExportScene() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mordvinovdsw/library/support_layouts/ImportExport_layout.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Import or Create Database");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (IOException e) {
+            DialogUtil.showError("Failed to open the Import/Export scene.");
+            e.printStackTrace();
         }
     }
 
@@ -64,7 +89,7 @@ public class LogIn_Controller {
             currentStage.setTitle("Main Menu");
             currentStage.show();
         } catch (IOException e) {
-            ErrorMessages.showError("Failed to load the main scene.");
+            DialogUtil.showError("Failed to load the main scene.");
             wrongLogin.setText("Failed to load the main scene.");
         }
     }
@@ -74,18 +99,15 @@ public class LogIn_Controller {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mordvinovdsw/library/support_layouts/Login_Warning.fxml"));
             Parent root = loader.load();
-
             LoginUserController warningController = loader.getController();
-            warningController.prepareAdd();
-
+            warningController.prepareFirstAdd();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("Login Required");
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setOnCloseRequest(Event::consume);
             stage.showAndWait();
         } catch (IOException e) {
-            ErrorMessages.showError("Failed to display login warning.");
+            DialogUtil.showError("Failed to display login warning.");
             e.printStackTrace();
         }
     }
