@@ -2,28 +2,29 @@ package com.mordvinovdsw.library;
 
 import com.mordvinovdsw.library.utils.SceneController;
 import com.mordvinovdsw.library.utils.ScreenSizeConstants;
-import com.mordvinovdsw.library.utils.StageUtils;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main extends Application {
 
+    private static final List<Stage> openStages = new ArrayList<>();
     private static SceneController sceneController;
+    private static Stage primaryStage;
+
 
     @Override
     public void start(Stage stage) throws IOException {
+        primaryStage = stage;
         sceneController = new SceneController(stage);
         sceneController.setScene("/com/mordvinovdsw/library/hello-view.fxml", ScreenSizeConstants.MainControllerSize);
         stage.setTitle("Just Lib System");
+        openStages.add(stage);
+        stage.show();
     }
 
     public static SceneController getSceneController() {
@@ -31,7 +32,11 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
+    }
+
+    public static void addStage(Stage stage) {
+        openStages.add(stage);
     }
 }
 

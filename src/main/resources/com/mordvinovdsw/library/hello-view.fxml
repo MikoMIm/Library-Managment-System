@@ -31,8 +31,6 @@
       <PasswordField fx:id="password" maxWidth="1.7976931348623157E308" prefHeight="47.0" prefWidth="180.0" promptText="Password" style="-fx-font-size: 14px;" />
       <Button fx:id="button" maxWidth="1.7976931348623157E308" onAction="#handleLogin" style="-fx-background-color: #8a8a8a; -fx-font-size: 18px;" text="Log in" textFill="WHITE" />
       <Label fx:id="wrongLogin" style="-fx-font-size: 18px;" textFill="#ff0505" />
-      <Label style="-fx-font-size: 18px;" text="User ID: Admin" textFill="WHITE" />
-      <Label style="-fx-font-size: 18px;" text="Password: 1234" textFill="WHITE" />
       <HBox.margin>
          <Insets right="20.0" />
       </HBox.margin>

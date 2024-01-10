@@ -10,6 +10,9 @@ public class SceneController {
 
     private final Stage stage;
 
+    public Stage getStage() {
+        return stage;
+    }
     public SceneController(Stage stage) {
         this.stage = stage;
     }

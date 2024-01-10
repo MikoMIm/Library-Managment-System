@@ -76,6 +76,12 @@ public class LoginUserController {
         }
     }
 
+    public void prepareFirstAdd() {
+        LoginField.setText("");
+        PasswordField.setText("");
+        CreateButton.setVisible(true);
+        SaveButton.setVisible(false);
+    }
     public void prepareAdd() {
         LoginField.setText("");
         PasswordField.setText("");

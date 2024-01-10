@@ -90,7 +90,7 @@
       </StackPane>
 
       <StackPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
-         <Button maxHeight="Infinity" maxWidth="Infinity" styleClass="menu-button">
+         <Button fx:id="ImportExportButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#openImportExport" styleClass="menu-button">
             <graphic>
                <VBox alignment="CENTER" spacing="10">
                   <ImageView fitHeight="142.0" fitWidth="155.0" preserveRatio="true">
