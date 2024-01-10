@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -15,27 +14,22 @@ import java.io.IOException;
 import java.util.stream.Collectors;
 
 import com.mordvinovdsw.library.itemControllers.IssueItemController;
-import com.mordvinovdsw.library.models.Book;
 import com.mordvinovdsw.library.Database.DBConnection;
 import com.mordvinovdsw.library.models.Issue;
-import com.mordvinovdsw.library.models.Member;
 import com.mordvinovdsw.library.Main;
 import com.mordvinovdsw.library.supportControllers.EditIssueController;
 import com.mordvinovdsw.library.utils.ComboBoxUtil;
-import com.mordvinovdsw.library.utils.ErrorMessages;
+import com.mordvinovdsw.library.utils.DialogUtil;
 import com.mordvinovdsw.library.utils.IssueStatusChecker;
 import com.mordvinovdsw.library.utils.ScreenSizeConstants;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -142,7 +136,7 @@ public class Issue_Controller implements Initializable {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            ErrorMessages.showError("IO Error: " + e.getMessage());
+            DialogUtil.showError("IO Error: " + e.getMessage());
         }
     }
     private void handleIssueSearchAction(String searchText) {

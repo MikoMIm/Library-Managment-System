@@ -11,7 +11,6 @@ public class User {
         this.password = password;
     }
 
-    // Getters and setters
     public int getId() {
         return id;
     }
@@ -24,6 +23,5 @@ public class User {
         return password;
     }
 
-    // Add other necessary methods
 }
 

@@ -5,8 +5,6 @@ import com.mordvinovdsw.library.models.Member;
 
 import java.net.URL;
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.io.IOException;
 import java.util.stream.Collectors;
@@ -14,13 +12,11 @@ import java.util.stream.Collectors;
 import com.mordvinovdsw.library.Database.DBConnection;
 
 import com.mordvinovdsw.library.Main;
-import com.mordvinovdsw.library.supportControllers.EditBookController;
 import com.mordvinovdsw.library.supportControllers.EditMemberController;
 import com.mordvinovdsw.library.utils.ComboBoxUtil;
-import com.mordvinovdsw.library.utils.ErrorMessages;
+import com.mordvinovdsw.library.utils.DialogUtil;
 import com.mordvinovdsw.library.utils.MemberStatusChecker;
 import com.mordvinovdsw.library.utils.ScreenSizeConstants;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -29,7 +25,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -109,7 +104,7 @@ public class Member_List_Controller implements Initializable {
                     row++;
                 }
             } catch (IOException e) {
-                ErrorMessages.showError("IO Error: " + e.getMessage());
+                DialogUtil.showError("IO Error: " + e.getMessage());
             }
         }
     }
@@ -131,7 +126,7 @@ public class Member_List_Controller implements Initializable {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            ErrorMessages.showError("IO Error: " + e.getMessage());
+            DialogUtil.showError("IO Error: " + e.getMessage());
         }
     }
 

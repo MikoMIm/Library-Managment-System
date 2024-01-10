@@ -2,7 +2,7 @@ package com.mordvinovdsw.library.supportControllers;
 
 import com.mordvinovdsw.library.dataManager.MemberDataManager;
 import com.mordvinovdsw.library.models.Member;
-import com.mordvinovdsw.library.utils.ErrorMessages;
+import com.mordvinovdsw.library.utils.DialogUtil;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -81,7 +81,7 @@ public class EditMemberController {
                     memberStatusComboBox.getValue()
             );
         } catch (SQLException e) {
-            ErrorMessages.showError("Database error: " + e.getMessage());
+            DialogUtil.showError("Database error: " + e.getMessage());
         }
     }
 
@@ -101,7 +101,7 @@ public class EditMemberController {
                     memberStatusComboBox.getValue()
             );
         } catch (SQLException e) {
-            ErrorMessages.showError("Database error: " + e.getMessage());
+            DialogUtil.showError("Database error: " + e.getMessage());
         }
     }
 
@@ -118,17 +118,17 @@ public class EditMemberController {
                 memberRegisterComboBox.getValue() == null ||
                 MemberExpiryComboBox.getValue() == null ||
                 memberStatusComboBox.getValue() == null || memberStatusComboBox.getValue().trim().isEmpty()) {
-            ErrorMessages.showError("All fields are required.");
+            DialogUtil.showError("All fields are required.");
             return false;
         }
 
         if (!memberEmailField.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
-            ErrorMessages.showError("Email format is invalid.");
+            DialogUtil.showError("Email format is invalid.");
             return false;
         }
 
         if (!memberNumberField.getText().matches("\\+?\\d+")) {
-            ErrorMessages.showError("Phone number must contain only digits.");
+            DialogUtil.showError("Phone number must contain only digits.");
             return false;
         }
 

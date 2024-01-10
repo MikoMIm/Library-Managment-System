@@ -1,6 +1,5 @@
 package com.mordvinovdsw.library;
 import com.mordvinovdsw.library.Database.DBConnection;
-import com.mordvinovdsw.library.utils.ErrorMessages;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.*;

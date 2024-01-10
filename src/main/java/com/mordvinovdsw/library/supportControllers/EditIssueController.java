@@ -1,25 +1,18 @@
 package com.mordvinovdsw.library.supportControllers;
 
-import com.mordvinovdsw.library.Database.DBConnection;
 import com.mordvinovdsw.library.dataManager.IssueDataManager;
-import com.mordvinovdsw.library.models.Book;
 import com.mordvinovdsw.library.models.IdentifiableItem;
 import com.mordvinovdsw.library.models.Issue;
-import com.mordvinovdsw.library.models.Member;
 import com.mordvinovdsw.library.utils.ComboBoxUtil;
-import com.mordvinovdsw.library.utils.ErrorMessages;
+import com.mordvinovdsw.library.utils.DialogUtil;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -120,7 +113,7 @@ public class EditIssueController {
                 if (issue != null && issue.getIssueId() > 0) {
                     issueDataManager.updateIssue(issue.getIssueId(), bookId, memberId, issueDate, returnDate, status);
                 } else {
-                    ErrorMessages.showError("Error: Invalid issue data for update.");
+                    DialogUtil.showError("Error: Invalid issue data for update.");
                     return;
                 }
             } else {
@@ -128,7 +121,7 @@ public class EditIssueController {
             }
             cancel();
         } catch (SQLException e) {
-            ErrorMessages.showError("Database error: " + e.getMessage());
+            DialogUtil.showError("Database error: " + e.getMessage());
         }
     }
 
@@ -154,7 +147,7 @@ public class EditIssueController {
             int issueId = issueDataManager.insertIssue(bookId, memberId, issueDate, returnDate, status);
             clearForm();
         } catch (SQLException e) {
-            ErrorMessages.showError("Database error: " + e.getMessage());
+            DialogUtil.showError("Database error: " + e.getMessage());
         }
     }
 
@@ -169,26 +162,26 @@ public class EditIssueController {
 
     private boolean validateInput() {
             if (memberComboBox.getSelectionModel().getSelectedItem() == null) {
-                ErrorMessages.showError("Please select a member.");
+                DialogUtil.showError("Please select a member.");
                 return false;
             }
             if (bookComboBox.getSelectionModel().getSelectedItem() == null) {
-                ErrorMessages.showError("Please select a book.");
+                DialogUtil.showError("Please select a book.");
                 return false;
             }
             if (issueDatePicker.getValue() == null) {
-                ErrorMessages.showError("Please enter an issue date.");
+                DialogUtil.showError("Please enter an issue date.");
                 return false;
             } else if (issueDatePicker.getValue().isAfter(LocalDate.now())) {
-                ErrorMessages.showError("Issue date cannot be in the future.");
+                DialogUtil.showError("Issue date cannot be in the future.");
                 return false;
             }
             if (returnDatePicker.getValue() != null && returnDatePicker.getValue().isBefore(issueDatePicker.getValue())) {
-                ErrorMessages.showError("Return date cannot be before the issue date.");
+                DialogUtil.showError("Return date cannot be before the issue date.");
                 return false;
             }
             if (statusComboBox.getValue() == null || statusComboBox.getValue().trim().isEmpty()) {
-                ErrorMessages.showError("Please select a status.");
+                DialogUtil.showError("Please select a status.");
                 return false;
             }
             return true;

@@ -2,7 +2,7 @@ package com.mordvinovdsw.library.dataManager;
 
 import com.mordvinovdsw.library.models.Author;
 import com.mordvinovdsw.library.Database.DBConnection;
-import com.mordvinovdsw.library.utils.ErrorMessages;
+import com.mordvinovdsw.library.utils.DialogUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -23,7 +23,7 @@ public class AuthorUtil {
             }
 
         } catch (SQLException e) {
-            ErrorMessages.showError("Database error: " + e.getMessage());
+            DialogUtil.showError("Database error: " + e.getMessage());
         }
 
         return authors;
@@ -41,7 +41,7 @@ public class AuthorUtil {
                 }
             }
         } catch (SQLException e) {
-            ErrorMessages.showError("Database error: " + e.getMessage());
+            DialogUtil.showError("Database error: " + e.getMessage());
         }
         return null;
     }
@@ -62,7 +62,7 @@ public class AuthorUtil {
                 }
             }
         } catch (SQLException e) {
-            ErrorMessages.showError("Database error: " + e.getMessage());
+            DialogUtil.showError("Database error: " + e.getMessage());
         }
         return null;
     }

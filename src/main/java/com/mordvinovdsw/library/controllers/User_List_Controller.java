@@ -5,7 +5,7 @@ import com.mordvinovdsw.library.Main;
 import com.mordvinovdsw.library.itemControllers.UserItemController;
 import com.mordvinovdsw.library.models.User;
 import com.mordvinovdsw.library.supportControllers.LoginUserController;
-import com.mordvinovdsw.library.utils.ErrorMessages;
+import com.mordvinovdsw.library.utils.DialogUtil;
 import com.mordvinovdsw.library.utils.ScreenSizeConstants;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,12 +31,10 @@ public class User_List_Controller implements Initializable {
     @FXML
     private GridPane gridPane;
 
-    private List<User> Administrators;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Administrators = getUsersFromDatabase();
-        populateGridWithUsers(Administrators);
+        List<User> administrators = getUsersFromDatabase();
+        populateGridWithUsers(administrators);
     }
 
     public List<User> getUsersFromDatabase() {
@@ -53,7 +51,7 @@ public class User_List_Controller implements Initializable {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            ErrorMessages.showError("Database error: " + e.getMessage());
+            DialogUtil.showError("Database error: " + e.getMessage());
         }
 
         return users;
@@ -79,7 +77,7 @@ public class User_List_Controller implements Initializable {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                ErrorMessages.showError("IO Error: " + e.getMessage());
+                DialogUtil.showError("IO Error: " + e.getMessage());
             }
         }
     }

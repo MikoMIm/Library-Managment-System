@@ -9,7 +9,7 @@ import com.mordvinovdsw.library.models.Book;
 import com.mordvinovdsw.library.models.BookData;
 import com.mordvinovdsw.library.models.Genre;
 import com.mordvinovdsw.library.dataManager.AuthorUtil;
-import com.mordvinovdsw.library.utils.ErrorMessages;
+import com.mordvinovdsw.library.utils.DialogUtil;
 import com.mordvinovdsw.library.dataManager.GenreUtil;
 import com.mordvinovdsw.library.utils.GoogleBooksApiUtil;
 import com.mordvinovdsw.library.utils.TextFieldLimitUtil;
@@ -208,7 +208,7 @@ public class EditBookController {
             bookDataManager.insertGenresForBook(bookId, genreComboBoxes);
             bookDataManager.insertAuthorsForBook(bookId, authorComboBoxes);
         } catch (SQLException | NumberFormatException e) {
-            ErrorMessages.showError("Database error: " + e.getMessage());
+            DialogUtil.showError("Database error: " + e.getMessage());
         }
     }
 
@@ -227,7 +227,6 @@ public class EditBookController {
                 if (value instanceof Genre) {
                     selectedGenres.add((Genre) value);
                 } else if (value instanceof String) {
-                    // Find the Genre by name or create a new one
                     String genreName = (String) value;
                     Genre genre = GenreUtil.findGenreByName(genreName);
                     if (genre == null) {
@@ -238,9 +237,9 @@ public class EditBookController {
             }
             bookDataManager.updateGenresForBook(currentBookId, selectedGenres);
         } catch (SQLException | NumberFormatException e) {
-            ErrorMessages.showError("Database error: " + e.getMessage());
+            DialogUtil.showError("Database error: " + e.getMessage());
         } catch (ClassCastException e) {
-            ErrorMessages.showError("Please select a valid genre.");
+            DialogUtil.showError("Please select a valid genre.");
         }
     }
 
@@ -268,14 +267,14 @@ public class EditBookController {
                 bookNumberField.getText().trim().isEmpty() ||
                 ISBN10Field.getText().trim().isEmpty() ||
                 ISBN13Field.getText().trim().isEmpty()) {
-            ErrorMessages.showError("All fields are required.");
+            DialogUtil.showError("All fields are required.");
             return false;
         }
 
         try {
             Integer.parseInt(bookNumberField.getText().trim());
         } catch (NumberFormatException e) {
-            ErrorMessages.showError("Book Numbers must be valid numbers.");
+            DialogUtil.showError("Book Numbers must be valid numbers.");
             return false;
         }
 
@@ -294,7 +293,7 @@ public class EditBookController {
     private void autoFill() {
         String isbn = ISBN13Field.getText().trim();
         if (isbn.isEmpty()) {
-            ErrorMessages.showError("Please enter an ISBN number.");
+            DialogUtil.showError("Please enter an ISBN number.");
             return;
         }
 
@@ -313,10 +312,10 @@ public class EditBookController {
                 ISBN10Field.setText(bookData.getIsbn10());
                 ISBN13Field.setText(bookData.getIsbn13());
             } else {
-                ErrorMessages.showError("No data found for this ISBN.");
+                DialogUtil.showError("No data found for this ISBN.");
             }
         } catch (Exception e) {
-            ErrorMessages.showError("Error fetching data: " + e.getMessage());
+            DialogUtil.showError("Error fetching data: " + e.getMessage());
         }
     }
 

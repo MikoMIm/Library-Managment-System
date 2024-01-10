@@ -1,18 +1,14 @@
 package com.mordvinovdsw.library.models;
 
 
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-
 public class Issue {
-    private int issueId;
-    private int bookId;
-    private int memberId;
-    private String issueDate;
-    private String returnDate;
+    private final int issueId;
+    private final int bookId;
+    private final int memberId;
+    private final String issueDate;
+    private final String returnDate;
     private String status;
 
-    // Constructor, getters, and setters
     public Issue(int issueId, int bookId, int memberId, String issueDate, String returnDate, String status) {
         this.issueId = issueId;
         this.bookId = bookId;
@@ -44,27 +40,6 @@ public class Issue {
 
     public String getStatus() {
         return status;
-    }
-
-    // Setters
-    public void setIssueId(int issueId) {
-        this.issueId = issueId;
-    }
-
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
-    }
-
-    public void setMemberId(int memberId) {
-        this.memberId = memberId;
-    }
-
-    public void setIssueDate(String issueDate) {
-        this.issueDate = issueDate;
-    }
-
-    public void setReturnDate(String returnDate) {
-        this.returnDate = returnDate;
     }
 
     public void setStatus(String status) {

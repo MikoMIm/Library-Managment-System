@@ -6,9 +6,8 @@ import com.mordvinovdsw.library.Main;
 import com.mordvinovdsw.library.itemControllers.BookItemController;
 import com.mordvinovdsw.library.supportControllers.EditBookController;
 import com.mordvinovdsw.library.utils.ComboBoxUtil;
-import com.mordvinovdsw.library.utils.ErrorMessages;
+import com.mordvinovdsw.library.utils.DialogUtil;
 import com.mordvinovdsw.library.utils.ScreenSizeConstants;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -85,7 +84,7 @@ public class Books_list_Controller implements Initializable {
                 books.add(new Book(id, title, number, isbn10, isbn13, genres, authors));
             }
         } catch (SQLException e) {
-            ErrorMessages.showError("Database Error: " + e.getMessage());
+            DialogUtil.showError("Database Error: " + e.getMessage());
         }
         return books;
     }
@@ -109,7 +108,7 @@ public class Books_list_Controller implements Initializable {
                     row++;
                 }
             } catch (IOException e) {
-                ErrorMessages.showError("IO Error: " + e.getMessage());
+                DialogUtil.showError("IO Error: " + e.getMessage());
             }
         }
     }
@@ -131,7 +130,7 @@ public class Books_list_Controller implements Initializable {
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            ErrorMessages.showError("IO Error: " + e.getMessage());
+            DialogUtil.showError("IO Error: " + e.getMessage());
         }
     }
 

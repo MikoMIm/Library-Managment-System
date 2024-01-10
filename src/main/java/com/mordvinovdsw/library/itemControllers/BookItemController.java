@@ -3,7 +3,7 @@ package com.mordvinovdsw.library.itemControllers;
 import com.mordvinovdsw.library.models.Book;
 import com.mordvinovdsw.library.Database.DBConnection;
 import com.mordvinovdsw.library.supportControllers.EditBookController;
-import com.mordvinovdsw.library.utils.ErrorMessages;
+import com.mordvinovdsw.library.utils.DialogUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -101,10 +101,10 @@ public class BookItemController {
                 try {
                     conn.rollback();
                 } catch (SQLException ex) {
-                    ErrorMessages.showError("Error rolling back: " + ex.getMessage());
+                    DialogUtil.showError("Error rolling back: " + ex.getMessage());
                 }
             }
-            ErrorMessages.showError("Database error: " + e.getMessage());
+            DialogUtil.showError("Database error: " + e.getMessage());
         } finally {
             try {
                 if (pstmtDeleteBookGenres != null) pstmtDeleteBookGenres.close();
@@ -115,7 +115,7 @@ public class BookItemController {
                     conn.close();
                 }
             } catch (SQLException ex) {
-                ErrorMessages.showError("Error closing connections: " + ex.getMessage());
+                DialogUtil.showError("Error closing connections: " + ex.getMessage());
             }
         }
     }

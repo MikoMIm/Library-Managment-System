@@ -1,7 +1,7 @@
 package com.mordvinovdsw.library.Database;
 
 import com.mordvinovdsw.library.models.Genre;
-import com.mordvinovdsw.library.utils.ErrorMessages;
+import com.mordvinovdsw.library.utils.DialogUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,7 +29,7 @@ public class GenreDAO {
                 }
             }
         } catch (SQLException e) {
-            ErrorMessages.showError("Database error: " + e.getMessage());
+            DialogUtil.showError("Database error: " + e.getMessage());
         }
         return genres;
     }
