@@ -3,6 +3,7 @@ import com.mordvinovdsw.library.AuthenticationService;
 import com.mordvinovdsw.library.supportControllers.LoginUserController;
 import com.mordvinovdsw.library.utils.DatabaseUtils;
 import com.mordvinovdsw.library.utils.DialogUtil;
+import com.mordvinovdsw.library.utils.LoginWarning;
 import com.mordvinovdsw.library.utils.StageUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,11 +37,12 @@ public class LogIn_Controller {
         System.out.println("Looking for DB at: " + Paths.get("library.db").toAbsolutePath());
 
         if (!DatabaseUtils.doesDatabaseExist("library.db")) {
-            DialogUtil.showError("Database not found. Import or create a database.");
+            DialogUtil.showDialog("Database not found", "Database not found. Import or create a database.");
             openImportExportScene();
         } else {
             if (!authService.doesUserExist()) {
-                showLoginWarning();
+                LoginWarning loginWarning = new LoginWarning();
+                loginWarning.showLoginWarning();
             }
         }
     }
@@ -91,24 +93,6 @@ public class LogIn_Controller {
         } catch (IOException e) {
             DialogUtil.showError("Failed to load the main scene.");
             wrongLogin.setText("Failed to load the main scene.");
-        }
-    }
-
-
-    private void showLoginWarning() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mordvinovdsw/library/support_layouts/Login_Warning.fxml"));
-            Parent root = loader.load();
-            LoginUserController warningController = loader.getController();
-            warningController.prepareFirstAdd();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Login Required");
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-        } catch (IOException e) {
-            DialogUtil.showError("Failed to display login warning.");
-            e.printStackTrace();
         }
     }
 }

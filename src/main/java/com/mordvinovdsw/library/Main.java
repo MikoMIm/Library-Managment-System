@@ -38,5 +38,8 @@ public class Main extends Application {
     public static void addStage(Stage stage) {
         openStages.add(stage);
     }
-}
 
+    public static Stage getPrimaryStage() {
+        return primaryStage;
+    }
+}

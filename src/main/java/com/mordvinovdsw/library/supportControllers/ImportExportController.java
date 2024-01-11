@@ -1,14 +1,21 @@
 package com.mordvinovdsw.library.supportControllers;
 
+import com.mordvinovdsw.library.Main;
 import com.mordvinovdsw.library.utils.DialogUtil;
 import com.mordvinovdsw.library.utils.ExportImportUtil;
 import com.mordvinovdsw.library.utils.LoginScreenUtil;
+import com.mordvinovdsw.library.utils.LoginWarning;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 
 public class ImportExportController {
-
-
+    @FXML
+    private AnchorPane rootAnchorPane;
     private final ExportImportUtil exportImportUtil;
 
     public ImportExportController() {
@@ -18,9 +25,9 @@ public class ImportExportController {
     @FXML
     private void importDataBase() {
         System.out.println("Import button clicked");
-        String destinationFilePath = "library.db"; // Path to the destination database
+        String destinationFilePath = "library.db";
         exportImportUtil.importDatabase(destinationFilePath);
-        restartApplicationWithConfirmation();
+        closeImportExportController();
     }
 
     @FXML
@@ -34,14 +41,13 @@ public class ImportExportController {
     private void createDataBase() {
         String databasePath = "library.db";
         exportImportUtil.createNewDatabase(databasePath);
-        restartApplicationWithConfirmation();
+        closeImportExportController();
     }
 
-    private void restartApplicationWithConfirmation() {
-        boolean confirm = DialogUtil.showConfirmationDialog("Restart Required",
-                "The application needs to restart to apply changes. Restart now?");
-        if (confirm) {
-            LoginScreenUtil.openLoginScreen();
-        }
+    private void closeImportExportController() {
+        Stage currentStage = (Stage) rootAnchorPane.getScene().getWindow();
+        currentStage.close();
+        LoginWarning loginWarning = new LoginWarning();
+        loginWarning.showLoginWarning();
     }
 }

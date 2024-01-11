@@ -88,8 +88,8 @@ public class ExportImportUtil {
         if (selectedFile != null) {
             if (checkDatabaseStructure(selectedFile.getAbsolutePath())) {
                 replaceDatabaseFile(selectedFile, new File(destinationFilePath));
-                DialogUtil.showDialog("Restart Required", "The application will now restart to apply changes.");
-                LoginScreenUtil.openLoginScreen();
+                DialogUtil.showDialog("Restart Required", "The application will be closed. Please reopen the application to apply the changes.");
+                System.exit(0);
             } else {
                 System.out.println("The database structure of the file to be imported does not match the expected structure.");
             }
@@ -134,7 +134,8 @@ public class ExportImportUtil {
                                 stmt.execute(sql);
                             }
                         }
-                        DialogUtil.showDialog("Success", "New database created successfully at " + filePath);
+                        DialogUtil.showDialog("Restart Required", "Success, New database created successfully. Please reopen the application to apply the changes.");
+                        System.exit(0);
                     }
                 }
             }
