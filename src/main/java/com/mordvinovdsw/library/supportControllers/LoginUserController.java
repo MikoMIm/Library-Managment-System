@@ -13,8 +13,11 @@ import org.mindrot.jbcrypt.BCrypt;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LoginUserController {
+    private static final Logger LOGGER = Logger.getLogger(LoginUserController.class.getName());
     @FXML
     private TextField LoginField;
 
@@ -70,7 +73,7 @@ public class LoginUserController {
             int affectedRows = pstmt.executeUpdate();
             return affectedRows > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Database error: ", e);
             headerLabel.setText("Database error: " + e.getMessage());
             return false;
         }
@@ -132,7 +135,7 @@ public class LoginUserController {
             int affectedRows = pstmt.executeUpdate();
             return affectedRows > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Database error: ", e);
             headerLabel.setText("Database error: " + e.getMessage());
             return false;
         }

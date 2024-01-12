@@ -18,6 +18,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,7 @@ public class EditBookController {
         setupGenreComboBox(genreComboBox);
         setupAuthorComboBox(authorComboBox);
     }
+
 
     private void setupGenreComboBox(ComboBox<Genre> comboBox) {
         genreComboBoxes.add(comboBox);

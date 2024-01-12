@@ -14,27 +14,27 @@ import java.io.IOException;
 public class MainMenu_controller {
 
 
-    public void openBookList(ActionEvent event) throws IOException {
+    public void openBookList() throws IOException {
         Main.getSceneController().setScene("/com/mordvinovdsw/library/Books_list.fxml", ScreenSizeConstants.MainControllerSize);
     }
 
-    public void openIssueList(ActionEvent event) throws IOException {
+    public void openIssueList() throws IOException {
         Main.getSceneController().setScene("/com/mordvinovdsw/library/Issue_list.fxml",ScreenSizeConstants.MainControllerSize);
     }
 
-    public void logout(ActionEvent event) throws IOException {
+    public void logout() throws IOException {
         Main.getSceneController().setScene("/com/mordvinovdsw/library/hello-view.fxml",ScreenSizeConstants.MainControllerSize);
     }
 
-    public void openMemberList(ActionEvent event) throws IOException {
+    public void openMemberList() throws IOException {
         Main.getSceneController().setScene("/com/mordvinovdsw/library/Member_list.fxml",ScreenSizeConstants.MainControllerSize);
     }
 
-    public void openAdminSettings(ActionEvent event) throws IOException {
+    public void openAdminSettings() throws IOException {
         Main.getSceneController().setScene("/com/mordvinovdsw/library/Users_list.fxml",ScreenSizeConstants.MainControllerSize);
     }
 
-    public void openImportExport(ActionEvent event) throws IOException {
+    public void openImportExport() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mordvinovdsw/library/support_layouts/ImportExport_layout.fxml"));
         Parent root = loader.load();
         Stage stage = new Stage();

@@ -33,7 +33,7 @@ public class EditIssueController {
     private ComboBox<IdentifiableItem> bookComboBox;
     @FXML
     private ComboBox<String> statusComboBox;
-    private IssueDataManager issueDataManager = new IssueDataManager();
+    private final IssueDataManager issueDataManager = new IssueDataManager();
     private boolean isEditMode = false;
     private Issue issue;
 
@@ -48,7 +48,7 @@ public class EditIssueController {
         setupComboBoxCellFactory(bookComboBox);
     }
     private void setupComboBoxCellFactory(ComboBox<IdentifiableItem> comboBox) {
-        comboBox.setCellFactory(lv -> new ListCell<IdentifiableItem>() {
+        comboBox.setCellFactory(lv -> new ListCell<>() {
             @Override
             protected void updateItem(IdentifiableItem item, boolean empty) {
                 super.updateItem(item, empty);
@@ -56,7 +56,7 @@ public class EditIssueController {
             }
         });
 
-        comboBox.setConverter(new StringConverter<IdentifiableItem>() {
+        comboBox.setConverter(new StringConverter<>() {
             @Override
             public String toString(IdentifiableItem object) {
                 return object == null ? null : String.valueOf(object.getId());
@@ -64,10 +64,18 @@ public class EditIssueController {
 
             @Override
             public IdentifiableItem fromString(String string) {
-                return comboBox.getItems().stream()
-                        .filter(item -> item.getId() == Integer.parseInt(string))
-                        .findFirst()
-                        .orElse(null);
+                if (string == null || string.isEmpty()) {
+                    return null;
+                }
+                try {
+                    int id = Integer.parseInt(string);
+                    return comboBox.getItems().stream()
+                            .filter(item -> item.getId() == id)
+                            .findFirst()
+                            .orElse(null);
+                } catch (NumberFormatException e) {
+                    return null;
+                }
             }
         });
     }
@@ -99,7 +107,7 @@ public class EditIssueController {
 
     @FXML
     private void saveData() {
-        if (!validateInput()) {
+        if (validateInput()) {
             return;
         }
         try {
@@ -134,7 +142,7 @@ public class EditIssueController {
 
     @FXML
     private void addData() {
-        if (!validateInput()) {
+        if (validateInput()) {
             return;
         }
 
@@ -163,30 +171,29 @@ public class EditIssueController {
     private boolean validateInput() {
             if (memberComboBox.getSelectionModel().getSelectedItem() == null) {
                 DialogUtil.showError("Please select a member.");
-                return false;
+                return true;
             }
             if (bookComboBox.getSelectionModel().getSelectedItem() == null) {
                 DialogUtil.showError("Please select a book.");
-                return false;
+                return true;
             }
             if (issueDatePicker.getValue() == null) {
                 DialogUtil.showError("Please enter an issue date.");
-                return false;
+                return true;
             } else if (issueDatePicker.getValue().isAfter(LocalDate.now())) {
                 DialogUtil.showError("Issue date cannot be in the future.");
-                return false;
+                return true;
             }
             if (returnDatePicker.getValue() != null && returnDatePicker.getValue().isBefore(issueDatePicker.getValue())) {
                 DialogUtil.showError("Return date cannot be before the issue date.");
-                return false;
+                return true;
             }
             if (statusComboBox.getValue() == null || statusComboBox.getValue().trim().isEmpty()) {
                 DialogUtil.showError("Please select a status.");
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
-
 
 
     public void prepareEdit(Issue issue) {

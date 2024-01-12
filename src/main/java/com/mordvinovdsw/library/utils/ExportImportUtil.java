@@ -16,9 +16,11 @@ import java.sql.*;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ExportImportUtil {
-
+    private static final Logger LOGGER = Logger.getLogger(ExportImportUtil.class.getName());
     private static final String EXPECTED_STRUCTURE =
             "CREATE TABLE Authors (Author_Id INTEGER PRIMARY KEY AUTOINCREMENT, Author_Name TEXT NOT NULL);" +
                     "CREATE TABLE Book_Authors (Book_Id INTEGER, Author_Id INTEGER, PRIMARY KEY (Book_Id, Author_Id), FOREIGN KEY (Book_Id) REFERENCES Book_List (Book_Id), FOREIGN KEY (Author_Id) REFERENCES Authors (Author_Id));" +
@@ -60,22 +62,22 @@ public class ExportImportUtil {
             return actualTables.equals(expectedTables);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error fetching book data by ISBN", e);
             return false;
         }
     }
 
     private void copyFile(String sourceFilePath, String destinationFilePath) {
-        File sourceFile = new File(sourceFilePath);
-        File destinationFile = new File(destinationFilePath);
+        try (FileInputStream fis = new FileInputStream(sourceFilePath);
+             FileChannel sourceChannel = fis.getChannel();
+             FileOutputStream fos = new FileOutputStream(destinationFilePath);
+             FileChannel destChannel = fos.getChannel()) {
 
-        try (FileChannel sourceChannel = new FileInputStream(sourceFile).getChannel();
-             FileChannel destChannel = new FileOutputStream(destinationFile).getChannel()) {
             destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
-            System.out.println("Database exported successfully to " + destinationFilePath);
+            LOGGER.log(Level.INFO, "Database exported successfully to " + destinationFilePath);
+
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error exporting database");
+            LOGGER.log(Level.SEVERE, "Error exporting database to " + destinationFilePath, e);
         }
     }
 
@@ -135,13 +137,14 @@ public class ExportImportUtil {
                             }
                         }
                         DialogUtil.showDialog("Restart Required", "Success, New database created successfully. Please reopen the application to apply the changes.");
+                        LOGGER.log(Level.INFO, "New database created successfully at " + filePath);
                         System.exit(0);
                     }
                 }
             }
         } catch (IOException | SQLException e) {
             DialogUtil.showError("Error creating new database: " + e.getMessage());
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error creating new database at " + filePath, e);
         }
     }
 }

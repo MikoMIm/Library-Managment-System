@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -21,8 +20,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class IssueItemController {
+    private static final Logger LOGGER = Logger.getLogger(IssueItemController.class.getName());
     private Issue issue;
 
     @FXML
@@ -84,7 +86,7 @@ public class IssueItemController {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "SQL Error fetching book title for Book ID: " + bookID, e);
         }
         return title;
     }
@@ -102,7 +104,7 @@ public class IssueItemController {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "SQL Error fetching member name for Member ID: " + memberID, e);
         }
         return name;
     }
@@ -119,7 +121,7 @@ public class IssueItemController {
             editStage.setScene(new Scene(root));
             editStage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error opening edit window for Issue ID: " + issue.getIssueId(), e);
         }
     }
 
@@ -129,7 +131,7 @@ public class IssueItemController {
             IssueDataManager issueDataManager = new IssueDataManager();
             issueDataManager.removeIssue(issue.getIssueId());
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "SQL Error in removeData for Issue ID: " + issue.getIssueId(), e);
         }
     }
 }

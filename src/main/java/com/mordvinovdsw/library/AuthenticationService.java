@@ -3,9 +3,11 @@ import com.mordvinovdsw.library.Database.DBConnection;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AuthenticationService {
-
+    private static final Logger LOGGER = Logger.getLogger(AuthenticationService.class.getName());
     public boolean validateCredentials(String username, String password) {
         String sql = "SELECT password FROM Users WHERE login = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -19,7 +21,7 @@ public class AuthenticationService {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "SQL Error in validateCredentials", e);
         }
         return false;
     }
@@ -32,7 +34,7 @@ public class AuthenticationService {
 
             return rs.next() && rs.getInt("user_count") > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "SQL Error in validateCredentials", e);
         }
         return false;
     }

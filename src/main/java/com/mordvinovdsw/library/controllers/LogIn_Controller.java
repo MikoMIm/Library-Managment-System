@@ -1,6 +1,5 @@
 package com.mordvinovdsw.library.controllers;
 import com.mordvinovdsw.library.AuthenticationService;
-import com.mordvinovdsw.library.supportControllers.LoginUserController;
 import com.mordvinovdsw.library.utils.DatabaseUtils;
 import com.mordvinovdsw.library.utils.DialogUtil;
 import com.mordvinovdsw.library.utils.LoginWarning;
@@ -12,16 +11,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.event.ActionEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class LogIn_Controller {
-
+    private static final Logger LOGGER = Logger.getLogger(LogIn_Controller.class.getName());
     public LogIn_Controller() {
         authService = new AuthenticationService();
     }
@@ -31,7 +31,7 @@ public class LogIn_Controller {
     private TextField userID;
     @FXML
     private PasswordField password;
-    private AuthenticationService authService;
+    private final AuthenticationService authService;
 
     public void initialize() {
         System.out.println("Looking for DB at: " + Paths.get("library.db").toAbsolutePath());
@@ -60,12 +60,12 @@ public class LogIn_Controller {
             stage.showAndWait();
         } catch (IOException e) {
             DialogUtil.showError("Failed to open the Import/Export scene.");
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to open the Import/Export scene: ", e);
         }
     }
 
     @FXML
-    public void handleLogin(ActionEvent event) {
+    public void handleLogin() {
         String username = userID.getText();
         String pwd = password.getText();
 

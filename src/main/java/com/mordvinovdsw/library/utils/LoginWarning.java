@@ -1,5 +1,6 @@
 package com.mordvinovdsw.library.utils;
 
+
 import com.mordvinovdsw.library.supportControllers.LoginUserController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,8 +9,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LoginWarning {
+    private static final Logger LOGGER = Logger.getLogger(LoginWarning.class.getName());
     public void showLoginWarning() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mordvinovdsw/library/support_layouts/Login_Warning.fxml"));
@@ -23,7 +27,7 @@ public class LoginWarning {
             stage.showAndWait();
         } catch (IOException e) {
             DialogUtil.showError("Failed to display login warning.");
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to display login warning.", e);
         }
     }
 }

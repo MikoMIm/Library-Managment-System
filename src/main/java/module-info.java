@@ -6,7 +6,7 @@ module com.mordvinovdsw.library {
     requires org.json;
     requires jbcrypt;
 
-
+    exports com.mordvinovdsw.library.utils;
     opens com.mordvinovdsw.library.itemControllers to javafx.fxml;
     opens com.mordvinovdsw.library to javafx.fxml;
     exports com.mordvinovdsw.library;

@@ -18,8 +18,11 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MemberItemController {
+    private static final Logger LOGGER = Logger.getLogger(MemberItemController.class.getName());
     private Member member;
 
     @FXML
@@ -87,7 +90,7 @@ public class MemberItemController {
             editStage.setScene(new Scene(root));
             editStage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error opening edit window for Member ID: " + member.getId(), e);
         }
     }
 
@@ -101,7 +104,7 @@ public class MemberItemController {
             pstmtDeleteMember.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "SQL Error in removeData for Member ID: " + member.getId(), e);
         }
     }
 }

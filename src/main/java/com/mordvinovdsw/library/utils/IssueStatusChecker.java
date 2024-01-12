@@ -12,10 +12,13 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class IssueStatusChecker {
-    private List<Issue> issues;
-    private Issue_Controller controller;
+    private static final Logger LOGGER = Logger.getLogger(IssueStatusChecker.class.getName());
+    private final List<Issue> issues;
+    private final Issue_Controller controller;
 
     public IssueStatusChecker(List<Issue> issues, Issue_Controller controller) {
         this.issues = issues;
@@ -49,7 +52,7 @@ public class IssueStatusChecker {
             pstmtUpdateStatus.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to update Issue Status", e);
         }
     }
 }

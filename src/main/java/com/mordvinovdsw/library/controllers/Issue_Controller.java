@@ -11,6 +11,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import com.mordvinovdsw.library.itemControllers.IssueItemController;
@@ -30,13 +32,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Issue_Controller implements Initializable {
-    @FXML private AnchorPane rootAnchorPane;
+    private static final Logger LOGGER = Logger.getLogger(LogIn_Controller.class.getName());
     @FXML private GridPane gridPane;
     @FXML private TextField searchTextField;
     @FXML private ComboBox<String> searchComboBox;
@@ -92,7 +93,7 @@ public class Issue_Controller implements Initializable {
                 issues.add(issue);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "SQL error when fetching issues from the database", e);
         }
         return issues;
     }
@@ -115,7 +116,7 @@ public class Issue_Controller implements Initializable {
                     row++;
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.SEVERE, "IO Error when populating issues in the grid", e);
             }
         }
     }

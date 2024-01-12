@@ -7,6 +7,8 @@ import java.net.URL;
 import java.sql.*;
 import java.util.*;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import com.mordvinovdsw.library.Database.DBConnection;
@@ -31,7 +33,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Member_List_Controller implements Initializable {
-
+    private static final Logger LOGGER = Logger.getLogger(Member_List_Controller.class.getName());
     public AnchorPane rootAnchorPane;
     @FXML
     private GridPane gridPane;
@@ -79,7 +81,7 @@ public class Member_List_Controller implements Initializable {
                 members.add(member);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Database error: ", e);
         }
 
         return members;

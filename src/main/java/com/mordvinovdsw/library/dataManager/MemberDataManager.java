@@ -5,7 +5,7 @@ import com.mordvinovdsw.library.Database.DBConnection;
 import java.sql.*;
 
 public class MemberDataManager {
-    public int insertMember(String name, String phoneNumber, String email, String registerDate, String expairDate, String status) throws SQLException {
+    public void insertMember(String name, String phoneNumber, String email, String registerDate, String expairDate, String status) throws SQLException {
         String sqlInsertMember = "INSERT INTO Members (Member_Name, Phone_Number, Email_adress, Register_Date, Date_Expair, Member_Status) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sqlInsertMember, Statement.RETURN_GENERATED_KEYS)) {
@@ -24,7 +24,7 @@ public class MemberDataManager {
 
             try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    return generatedKeys.getInt(1);
+                    generatedKeys.getInt(1);
                 } else {
                     throw new SQLException("Creating member failed, no ID obtained.");
                 }

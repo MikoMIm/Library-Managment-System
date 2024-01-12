@@ -26,7 +26,7 @@ public class EditMemberController {
     private Button addButton, saveButton, cancelButton;
 
     private int currentMemberId;
-    private MemberDataManager memberDataManager = new MemberDataManager();
+    private final MemberDataManager memberDataManager = new MemberDataManager();
 
     @FXML
     private void initialize() {
@@ -68,7 +68,7 @@ public class EditMemberController {
 
     @FXML
     private void addData() {
-        if (!validateInput()) {
+        if (validateInput()) {
             return;
         }
         try {
@@ -87,7 +87,7 @@ public class EditMemberController {
 
     @FXML
     private void saveData() {
-        if (!validateInput()) {
+        if (validateInput()) {
             return;
         }
         try {
@@ -119,19 +119,19 @@ public class EditMemberController {
                 MemberExpiryComboBox.getValue() == null ||
                 memberStatusComboBox.getValue() == null || memberStatusComboBox.getValue().trim().isEmpty()) {
             DialogUtil.showError("All fields are required.");
-            return false;
+            return true;
         }
 
         if (!memberEmailField.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
             DialogUtil.showError("Email format is invalid.");
-            return false;
+            return true;
         }
 
         if (!memberNumberField.getText().matches("\\+?\\d+")) {
             DialogUtil.showError("Phone number must contain only digits.");
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 }

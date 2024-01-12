@@ -25,9 +25,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class User_List_Controller implements Initializable {
-
+    private static final Logger LOGGER = Logger.getLogger(User_List_Controller.class.getName());
     @FXML
     private GridPane gridPane;
 
@@ -50,7 +52,7 @@ public class User_List_Controller implements Initializable {
                 users.add(user);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Database error: ", e);
             DialogUtil.showError("Database error: " + e.getMessage());
         }
 
@@ -76,7 +78,7 @@ public class User_List_Controller implements Initializable {
                     row++;
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.SEVERE, "IO Error: ", e);
                 DialogUtil.showError("IO Error: " + e.getMessage());
             }
         }
@@ -100,7 +102,7 @@ public class User_List_Controller implements Initializable {
             newStage.setScene(newScene);
             newStage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error adding new user: ", e);
         }
     }
 }

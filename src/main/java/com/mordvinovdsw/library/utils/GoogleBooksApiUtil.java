@@ -2,11 +2,14 @@ package com.mordvinovdsw.library.utils;
 
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.mordvinovdsw.library.models.BookData;
 import org.json.JSONArray;
@@ -14,16 +17,16 @@ import org.json.JSONObject;
 
 public class GoogleBooksApiUtil {
 
+    private static final Logger LOGGER = Logger.getLogger(GoogleBooksApiUtil.class.getName());
+
     public static BookData fetchBookDataByISBN(String isbn) {
         BookData bookData = new BookData();
-        HttpURLConnection connection = null;
-        BufferedReader reader = null;
         try {
             String jsonResponse = makeApiRequest(isbn);
             JSONObject jsonObject = new JSONObject(jsonResponse);
             JSONArray items = jsonObject.getJSONArray("items");
 
-            if (items.length() > 0) {
+            if (!items.isEmpty()) {
                 JSONObject volumeInfo = items.getJSONObject(0).getJSONObject("volumeInfo");
                 JSONArray industryIdentifiers = volumeInfo.getJSONArray("industryIdentifiers");
 
@@ -43,39 +46,32 @@ public class GoogleBooksApiUtil {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-                if (connection != null) {
-                    connection.disconnect();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            LOGGER.log(Level.SEVERE, "Error fetching book data by ISBN", e);
         }
         return bookData;
     }
 
-    private static String makeApiRequest(String isbn) throws Exception {
+    private static String makeApiRequest(String isbn) throws IOException {
         String urlString = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn;
-        URL url = new URL(urlString);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
+        HttpURLConnection connection = null;
+        try {
+            URL url = new URL(urlString);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
 
-        StringBuilder response = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                response.append(line);
+            StringBuilder response = new StringBuilder();
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
             }
+            return response.toString();
         } finally {
-            connection.disconnect();
+            if (connection != null) {
+                connection.disconnect();
+            }
         }
-
-        return response.toString();
     }
 
     private static List<String> jsonArrayToList(JSONArray jsonArray) {

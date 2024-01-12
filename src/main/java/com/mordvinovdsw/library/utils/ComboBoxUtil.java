@@ -1,21 +1,20 @@
 package com.mordvinovdsw.library.utils;
 
 import com.mordvinovdsw.library.Database.DBConnection;
-import com.mordvinovdsw.library.models.Book;
 import com.mordvinovdsw.library.models.IdentifiableItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListCell;
-import javafx.scene.paint.Color;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ComboBoxUtil {
+    private static final Logger LOGGER = Logger.getLogger(ComboBoxUtil.class.getName());
     public static void fillBookSearchOptions(ComboBox<String> comboBox) {
         comboBox.setItems(FXCollections.observableArrayList(
                 "Book ID", "Book Name", "Book Genre", "Book ISBN"
@@ -49,7 +48,7 @@ public class ComboBoxUtil {
                 members.add(new IdentifiableItem(memberId, memberName));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "SQL Error in fillMemberComboBox", e);
         }
 
         comboBox.setItems(members);
@@ -66,10 +65,13 @@ public class ComboBoxUtil {
             while (rs.next()) {
                 int bookId = rs.getInt("Book_Id");
                 String bookTitle = rs.getString("Book_Title");
-                items.add(new IdentifiableItem(bookId, bookTitle));
+                int bookNumbers = rs.getInt("Book_Numbers");
+                if (bookNumbers > 0) {
+                    items.add(new IdentifiableItem(bookId, bookTitle));
+                }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "SQL Error in fillBookComboBox", e);
         }
 
         comboBox.setItems(items);

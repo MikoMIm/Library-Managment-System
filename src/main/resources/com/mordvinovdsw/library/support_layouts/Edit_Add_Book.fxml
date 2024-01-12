@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -12,7 +13,7 @@
 
 <AnchorPane prefHeight="519.0" prefWidth="424.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mordvinovdsw.library.supportControllers.EditBookController">
    <children>
-      <Pane layoutX="-6.0" prefHeight="709.0" prefWidth="801.0" style="-fx-background-color: #242425;">
+      <Pane layoutX="-3.0" layoutY="-14.0" prefHeight="709.0" prefWidth="838.0" style="-fx-background-color: #242425;">
          <children>
             <Button fx:id="saveButton" layoutX="524.0" layoutY="596.0" mnemonicParsing="false" onAction="#saveData" prefHeight="72.0" prefWidth="185.0" style="-fx-background-color: #077C50;" text="Save" textFill="WHITE">
                <font>
@@ -28,12 +29,12 @@
                   <Font size="18.0" />
                </font>
             </TextField>
-            <Label layoutX="63.0" layoutY="71.0" text="Book Title" textFill="WHITE">
+            <Label layoutX="68.0" layoutY="71.0" text="Book Title" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label layoutX="58.0" layoutY="394.0" text="Quantity" textFill="WHITE">
+            <Label layoutX="70.0" layoutY="394.0" text="Quantity" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
@@ -63,7 +64,7 @@
                   <Font size="18.0" />
                </font>
             </TextField>
-            <Label layoutX="67.0" layoutY="512.0" text="ISBN (13)" textFill="WHITE">
+            <Label layoutX="72.0" layoutY="512.0" text="ISBN (13)" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
@@ -104,10 +105,17 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button fx:id="AutoFillButton" layoutX="468.0" layoutY="508.0" mnemonicParsing="false" onAction="#autoFill" prefHeight="43.0" prefWidth="276.0" style="-fx-background-color: #077C50;" text="AutoFill Book based on ISBN" textFill="WHITE">
+            <Button fx:id="AutoFillButton" layoutX="468.0" layoutY="508.0" mnemonicParsing="false" onAction="#autoFill" prefHeight="43.0" prefWidth="276.0" style="-fx-background-color: #077C50;" text="AutoFill " textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
+               <tooltip>
+                  <Tooltip text="Automatic filling of book information based on ISBN">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip>
             </Button>
             <HBox layoutX="187.0" layoutY="253.0" prefHeight="51.0" prefWidth="582.0" spacing="10.0">
                <children>

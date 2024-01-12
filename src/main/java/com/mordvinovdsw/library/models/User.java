@@ -1,9 +1,9 @@
 package com.mordvinovdsw.library.models;
 
 public class User {
-    private int id;
-    private String login;
-    private String password;
+    private final int id;
+    private final String login;
+    final private String password;
 
     public User(int id, String login, String password) {
         this.id = id;
@@ -19,9 +19,6 @@ public class User {
         return login;
     }
 
-    public String getPassword() {
-        return password;
-    }
 
 }
 
