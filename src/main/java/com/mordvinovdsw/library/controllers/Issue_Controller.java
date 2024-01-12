@@ -200,4 +200,11 @@ public class Issue_Controller implements Initializable {
         }
         populateGridWithIssues(issues);
     }
+
+    @FXML
+    private void refreshGrid() {
+        issues = getIssuesFromDatabase();
+        populateGridWithIssues(issues);
+        LOGGER.log(Level.INFO, "Grid has been refreshed with updated issue data.");
+    }
 }

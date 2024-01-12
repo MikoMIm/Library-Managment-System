@@ -105,6 +105,12 @@ public class User_List_Controller implements Initializable {
             LOGGER.log(Level.SEVERE, "Error adding new user: ", e);
         }
     }
+    @FXML
+    private void refreshGrid() {
+        List<User> administrators = getUsersFromDatabase();
+        populateGridWithUsers(administrators);
+        LOGGER.log(Level.INFO, "User grid has been refreshed.");
+    }
 }
 
 

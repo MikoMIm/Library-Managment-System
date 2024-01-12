@@ -189,4 +189,10 @@ public class Books_list_Controller implements Initializable {
 
         populateGridWithBooks(filteredBooks);
     }
+
+    @FXML
+    private void refreshGrid() {
+        books = getBooksFromDatabase();
+        populateGridWithBooks(books);
+    }
 }

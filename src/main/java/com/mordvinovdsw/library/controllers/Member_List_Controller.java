@@ -199,4 +199,11 @@ public class Member_List_Controller implements Initializable {
 
         populateGridWithMembers(filteredMembers);
     }
+
+    @FXML
+    private void refreshGrid() {
+        members = getMembersFromDatabase();
+        populateGridWithMembers(members);
+        LOGGER.log(Level.INFO, "Grid has been refreshed");
+    }
 }
