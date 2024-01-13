@@ -6,141 +6,172 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="519.0" prefWidth="424.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mordvinovdsw.library.supportControllers.EditBookController">
-   <children>
-      <Pane layoutX="-3.0" layoutY="-14.0" prefHeight="709.0" prefWidth="838.0" style="-fx-background-color: #242425;">
+<VBox prefHeight="695.0" prefWidth="835.0" style="-fx-background-color: #242425;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mordvinovdsw.library.supportControllers.EditBookController">
+   <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+      <VBox.margin>
+         <Insets left="30.0" top="30.0" />
+      </VBox.margin>
+      <Label text="Book Title" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="bookTitleField" HBox.hgrow="ALWAYS">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <HBox.margin>
+            <Insets right="20.0" />
+         </HBox.margin>
+      </TextField>
+   </HBox>
+   <HBox fx:id="genreButtonContainer" prefHeight="51.0" prefWidth="582.0" spacing="10.0">
+      <VBox.margin>
+         <Insets left="30.0" />
+      </VBox.margin>
+      <Label text="Genre" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="addGenreButton" mnemonicParsing="false" onAction="#addGenreComboBox" prefHeight="49.0" prefWidth="51.0" text="+">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
+      </Button>
+      <Button fx:id="removeGenreButton" mnemonicParsing="false" onAction="#removeGenreComboBox" prefHeight="49.0" prefWidth="51.0" text="-">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Button>
+   </HBox>
+   <HBox fx:id="genreComboBoxContainer" prefHeight="72.0" prefWidth="805.0" spacing="10.0">
+      <VBox.margin>
+         <Insets bottom="20.0" left="30.0" top="20.0" />
+      </VBox.margin>
+      <ComboBox fx:id="genreComboBox" prefHeight="51.0" prefWidth="215.0" styleClass="combo-box-style" stylesheets="@../../../../Stylesheet/Style_fastMenu.css">
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+      </ComboBox>
+   </HBox>
+   <HBox prefHeight="51.0" prefWidth="582.0" spacing="10.0">
+      <VBox.margin>
+         <Insets left="30.0" />
+      </VBox.margin>
+      <Label text="Author" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="addAuthorButton" mnemonicParsing="false" onAction="#addAuthorComboBox" prefHeight="49.0" prefWidth="51.0" text="+">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="removeAuthorButton" mnemonicParsing="false" onAction="#removeAuthorComboBox" prefHeight="49.0" prefWidth="51.0" text="-">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Button>
+   </HBox>
+   <HBox fx:id="authorComboBoxContainer" prefHeight="72.0" prefWidth="805.0" spacing="10.0">
+      <VBox.margin>
+         <Insets bottom="20.0" left="30.0" top="20.0" />
+      </VBox.margin>
+      <ComboBox fx:id="authorComboBox" prefHeight="51.0" prefWidth="215.0" styleClass="combo-box-style" stylesheets="@../../../../Stylesheet/Style_fastMenu.css">
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+      </ComboBox>
+   </HBox>
+   <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+      <VBox.margin>
+         <Insets left="30.0" />
+      </VBox.margin>
+      <Label text="Quantity" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="bookNumberField" prefHeight="49.0" prefWidth="63.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+   </HBox>
+   <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+      <VBox.margin>
+         <Insets left="30.0" />
+      </VBox.margin>
+      <Label text="ISBN (10)" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="ISBN10Field" prefHeight="49.0" prefWidth="270.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+   </HBox>
+   <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+      <VBox.margin>
+         <Insets left="30.0" />
+      </VBox.margin>
+      <Label text="ISBN (13)" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="ISBN13Field" prefHeight="49.0" prefWidth="270.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <Button fx:id="AutoFillButton" mnemonicParsing="false" onAction="#autoFill" prefHeight="43.0" prefWidth="276.0" style="-fx-background-color: #077C50;" text="AutoFill " textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <tooltip>
+            <Tooltip text="Automatic filling of book information based on ISBN">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Tooltip>
+         </tooltip>
+      </Button>
+   </HBox>
+   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="300.0">
+      <VBox.margin>
+         <Insets bottom="10.0" />
+      </VBox.margin>
+      <StackPane prefHeight="150.0" prefWidth="200.0">
          <children>
-            <Button fx:id="saveButton" layoutX="524.0" layoutY="596.0" mnemonicParsing="false" onAction="#saveData" prefHeight="72.0" prefWidth="185.0" style="-fx-background-color: #077C50;" text="Save" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font></Button>
-            <TextField fx:id="bookTitleField" layoutX="185.0" layoutY="64.0" prefHeight="49.0" prefWidth="582.0">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="bookNumberField" layoutX="187.0" layoutY="387.0" prefHeight="49.0" prefWidth="63.0">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </TextField>
-            <Label layoutX="68.0" layoutY="71.0" text="Book Title" textFill="WHITE">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="70.0" layoutY="394.0" text="Quantity" textFill="WHITE">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Button fx:id="cancelButton" layoutX="82.0" layoutY="596.0" mnemonicParsing="false" onAction="#cancel" prefHeight="72.0" prefWidth="185.0" style="-fx-background-color: #AB1706;" text="Cancel" textFill="WHITE">
+            <Button fx:id="saveButton" alignment="CENTER" mnemonicParsing="false" onAction="#saveData" prefHeight="72.0" prefWidth="185.0" style="-fx-background-color: #077C50;" text="Save" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="addButton" layoutX="524.0" layoutY="596.0" mnemonicParsing="false" onAction="#addData" prefHeight="72.0" prefWidth="185.0" style="-fx-background-color: #077C50;" text="Add" textFill="WHITE" visible="false">
+            <Button fx:id="addButton" mnemonicParsing="false" onAction="#addData" prefHeight="72.0" prefWidth="185.0" style="-fx-background-color: #077C50;" text="Add" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
-            <TextField fx:id="ISBN10Field" layoutX="187.0" layoutY="444.0" prefHeight="49.0" prefWidth="270.0">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </TextField>
-            <Label layoutX="72.0" layoutY="451.0" text="ISBN (10)" textFill="WHITE">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <TextField fx:id="ISBN13Field" layoutX="187.0" layoutY="505.0" prefHeight="49.0" prefWidth="270.0">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </TextField>
-            <Label layoutX="72.0" layoutY="512.0" text="ISBN (13)" textFill="WHITE">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="70.0" layoutY="129.0" text="Genre" textFill="WHITE">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <HBox fx:id="genreButtonContainer" layoutX="187.0" layoutY="122.0" prefHeight="51.0" prefWidth="582.0" spacing="10.0">
-               <children>
-                  <Button fx:id="addGenreButton" mnemonicParsing="false" onAction="#addGenreComboBox" prefHeight="49.0" prefWidth="51.0" text="+">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Button>
-                  <Button fx:id="removeGenreButton" mnemonicParsing="false" onAction="#removeGenreComboBox" prefHeight="49.0" prefWidth="51.0" text="-">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
-                  </Button>
-               </children>
-            </HBox>
-            <HBox fx:id="genreComboBoxContainer" layoutX="187.0" layoutY="191.0" prefHeight="51.0" prefWidth="582.0" spacing="10.0">
-               <children>
-                  <ComboBox fx:id="genreComboBox" prefHeight="51.0" prefWidth="142.0">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </ComboBox>
-               </children>
-            </HBox>
-            <Label layoutX="72.0" layoutY="261.0" text="Author" textFill="WHITE">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Button fx:id="AutoFillButton" layoutX="468.0" layoutY="508.0" mnemonicParsing="false" onAction="#autoFill" prefHeight="43.0" prefWidth="276.0" style="-fx-background-color: #077C50;" text="AutoFill " textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-               <tooltip>
-                  <Tooltip text="Automatic filling of book information based on ISBN">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Tooltip>
-               </tooltip>
-            </Button>
-            <HBox layoutX="187.0" layoutY="253.0" prefHeight="51.0" prefWidth="582.0" spacing="10.0">
-               <children>
-                  <Button fx:id="addAuthorButton" mnemonicParsing="false" onAction="#addAuthorComboBox" prefHeight="49.0" prefWidth="51.0" text="+">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="removeAuthorButton" mnemonicParsing="false" onAction="#removeAuthorComboBox" prefHeight="49.0" prefWidth="51.0" text="-">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
-                  </Button>
-               </children>
-            </HBox>
-            <HBox fx:id="authorComboBoxContainer" layoutX="185.0" layoutY="323.0" prefHeight="51.0" prefWidth="582.0" spacing="10.0">
-               <children>
-                  <ComboBox fx:id="authorComboBox" prefHeight="51.0" prefWidth="215.0">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </ComboBox>
-               </children>
-            </HBox>
          </children>
-      </Pane>
-   </children>
-</AnchorPane>
+      </StackPane>
+      <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancel" prefHeight="72.0" prefWidth="185.0" style="-fx-background-color: #AB1706;" text="Cancel" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+   </HBox>
+</VBox>

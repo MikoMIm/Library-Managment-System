@@ -3,11 +3,15 @@ package com.mordvinovdsw.library.supportControllers;
 import com.mordvinovdsw.library.utils.ExportImportUtil;
 import com.mordvinovdsw.library.utils.LoginWarning;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 
 public class ImportExportController {
+    public Button ImportButton;
+    public Button ExportButton;
+    public Button CreateDataButton;
     @FXML
     private AnchorPane rootAnchorPane;
     private final ExportImportUtil exportImportUtil;

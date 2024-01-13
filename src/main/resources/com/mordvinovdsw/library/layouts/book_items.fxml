@@ -8,79 +8,89 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_LEFT" prefHeight="200.0" prefWidth="200.0" spacing="5" style="-fx-border-color: #077C50; -fx-border-width: 3; -fx-background-color: #242425;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mordvinovdsw.library.itemControllers.BookItemController">
-   <children>
-      <Label fx:id="idLabel" maxWidth="1.7976931348623157E308" text="Book ID -" textFill="WHITE" wrapText="true">
-         <font>
-            <Font size="18.0" />
-         </font>
-         <VBox.margin>
-            <Insets left="10.0" />
-         </VBox.margin></Label>
-      <Label fx:id="titleLabel" maxWidth="1.7976931348623157E308" text="Book Title -" textFill="WHITE" wrapText="true">
-         <font>
-            <Font size="18.0" />
-         </font>
-         <VBox.margin>
-            <Insets left="10.0" />
-         </VBox.margin></Label>
-      <Label fx:id="genreLabel" maxWidth="1.7976931348623157E308" text="Genre - " textFill="WHITE" wrapText="true">
-         <font>
-            <Font size="18.0" />
-         </font>
-         <VBox.margin>
-            <Insets left="10.0" />
-         </VBox.margin>
-      </Label>
-      <Label fx:id="authorLabel" maxWidth="1.7976931348623157E308" text="Author - " textFill="WHITE" wrapText="true">
-         <font>
-            <Font size="18.0" />
-         </font>
-         <VBox.margin>
-            <Insets left="10.0" />
-         </VBox.margin>
-      </Label>
-      <Label fx:id="quantityLabel" maxWidth="1.7976931348623157E308" text="Number of Books -" textFill="WHITE" wrapText="true">
-         <font>
-            <Font size="18.0" />
-         </font>
-         <VBox.margin>
-            <Insets left="10.0" />
-         </VBox.margin></Label>
-      <Label fx:id="ISBNLabel10" maxWidth="1.7976931348623157E308" text="ISBN (10) - " textFill="WHITE" wrapText="true">
-         <font>
-            <Font size="18.0" />
-         </font>
-         <VBox.margin>
-            <Insets left="10.0" />
-         </VBox.margin>
-      </Label>
-      <Label fx:id="ISBNLabel13" maxWidth="1.7976931348623157E308" text="ISBN (13) -" textFill="WHITE" wrapText="true">
-         <font>
-            <Font size="18.0" />
-         </font>
-         <VBox.margin>
-            <Insets left="10.0" />
-         </VBox.margin>
-      </Label>
-      <HBox alignment="BOTTOM_RIGHT" spacing="10" VBox.vgrow="ALWAYS"> <!-- This HBox grows to take up extra space, thus pushing the buttons to the bottom -->
-         <Button fx:id="edit" mnemonicParsing="false" onAction="#openEdit" styleClass="transparent-button" stylesheets="@../../../../Stylesheet/Style_fastMenu.css" text="Edit">
-            <HBox.margin>
-               <Insets bottom="10.0" />
-            </HBox.margin></Button>
-         <Button fx:id="remove" mnemonicParsing="false" onAction="#removeData" styleClass="transparent-button" stylesheets="@../../../../Stylesheet/Style_fastMenu.css" text="Remove">
-            <opaqueInsets>
-               <Insets />
-            </opaqueInsets>
-            <HBox.margin>
-               <Insets bottom="10.0" right="10.0" />
-            </HBox.margin></Button>
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-      </HBox>
-   </children>
+<VBox prefHeight="200.0" prefWidth="200.0" spacing="5"
+      style="-fx-border-color: #077C50; -fx-border-width: 3; -fx-background-color: #242425;"
+      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.mordvinovdsw.library.itemControllers.BookItemController">
    <stylesheets>
-      <URL value="@../../../../Stylesheet/Style_fastMenu.css" />
+      <URL value="@../../../../Stylesheet/Style_fastMenu.css"/>
    </stylesheets>
+   <Label fx:id="idLabel" maxWidth="1.7976931348623157E308" text="Book ID -" textFill="WHITE" wrapText="true">
+      <font>
+         <Font size="18.0"/>
+      </font>
+      <VBox.margin>
+         <Insets left="10.0"/>
+      </VBox.margin>
+   </Label>
+   <Label fx:id="titleLabel" maxWidth="1.7976931348623157E308" text="Book Title -" textFill="WHITE" wrapText="true">
+      <font>
+         <Font size="18.0"/>
+      </font>
+      <VBox.margin>
+         <Insets left="10.0"/>
+      </VBox.margin>
+   </Label>
+   <Label fx:id="genreLabel" maxWidth="1.7976931348623157E308" text="Genre - " textFill="WHITE" wrapText="true">
+      <font>
+         <Font size="18.0"/>
+      </font>
+      <VBox.margin>
+         <Insets left="10.0"/>
+      </VBox.margin>
+   </Label>
+   <Label fx:id="authorLabel" maxWidth="1.7976931348623157E308" text="Author - " textFill="WHITE" wrapText="true">
+      <font>
+         <Font size="18.0"/>
+      </font>
+      <VBox.margin>
+         <Insets left="10.0"/>
+      </VBox.margin>
+   </Label>
+   <Label fx:id="quantityLabel" maxWidth="1.7976931348623157E308" text="Number of Books -" textFill="WHITE"
+          wrapText="true">
+      <font>
+         <Font size="18.0"/>
+      </font>
+      <VBox.margin>
+         <Insets left="10.0"/>
+      </VBox.margin>
+   </Label>
+   <Label fx:id="ISBNLabel10" maxWidth="1.7976931348623157E308" text="ISBN (10) - " textFill="WHITE" wrapText="true">
+      <font>
+         <Font size="18.0"/>
+      </font>
+      <VBox.margin>
+         <Insets left="10.0"/>
+      </VBox.margin>
+   </Label>
+   <Label fx:id="ISBNLabel13" maxWidth="1.7976931348623157E308" text="ISBN (13) -" textFill="WHITE" wrapText="true">
+      <font>
+         <Font size="18.0"/>
+      </font>
+      <VBox.margin>
+         <Insets left="10.0"/>
+      </VBox.margin>
+   </Label>
+   <HBox alignment="BOTTOM_RIGHT" spacing="10"
+         VBox.vgrow="ALWAYS"> <!-- This HBox grows to take up extra space, thus pushing the buttons to the bottom -->
+      <Button fx:id="edit" mnemonicParsing="false" onAction="#openEdit" styleClass="transparent-button"
+              stylesheets="@../../../../Stylesheet/Style_fastMenu.css" text="Edit">
+         <HBox.margin>
+            <Insets bottom="10.0"/>
+         </HBox.margin>
+      </Button>
+      <Button fx:id="remove" mnemonicParsing="false" onAction="#removeData" styleClass="transparent-button"
+              stylesheets="@../../../../Stylesheet/Style_fastMenu.css" text="Remove">
+         <opaqueInsets>
+            <Insets/>
+         </opaqueInsets>
+         <HBox.margin>
+            <Insets bottom="10.0" right="10.0"/>
+         </HBox.margin>
+      </Button>
+      <VBox.margin>
+         <Insets/>
+      </VBox.margin>
+   </HBox>
 </VBox>

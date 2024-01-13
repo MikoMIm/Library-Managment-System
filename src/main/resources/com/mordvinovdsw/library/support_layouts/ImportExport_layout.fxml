@@ -4,83 +4,46 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane fx:id="rootAnchorPane" prefHeight="381.0" prefWidth="717.0" style="-fx-background-color: #242425;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mordvinovdsw.library.supportControllers.ImportExportController">
-   <children>
-      <HBox alignment="CENTER" layoutX="-1.0" prefHeight="381.0" prefWidth="1042.0" spacing="20">
-         <children>
-            <Button fx:id="ImportButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#importDataBase" prefHeight="260.0" prefWidth="260.0" styleClass="menu-button" stylesheets="@../../../../Stylesheet/Style_fastMenu.css">
-               <graphic>
-                  <VBox alignment="CENTER" spacing="10">
-                     <children>
-                        <ImageView fitHeight="142.0" fitWidth="155.0" preserveRatio="true">
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                           <image>
-                              <Image url="@../../../../IMG/import.png" />
-                           </image>
-                        </ImageView>
-                        <Label styleClass="menu-label" text="Import">
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </Label>
-                     </children>
-                  </VBox>
-               </graphic>
-               <HBox.margin>
-                  <Insets bottom="60.0" top="60.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="ExportButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#exportDataBase" prefHeight="260.0" prefWidth="260.0" styleClass="menu-button" stylesheets="@../../../../Stylesheet/Style_fastMenu.css">
-               <graphic>
-                  <VBox alignment="CENTER" spacing="10">
-                     <children>
-                        <ImageView fitHeight="142.0" fitWidth="155.0" preserveRatio="true">
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                           <image>
-                              <Image url="@../../../../IMG/export.png" />
-                           </image>
-                        </ImageView>
-                        <Label styleClass="menu-label" text="Export">
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </Label>
-                     </children>
-                  </VBox>
-               </graphic>
-               <HBox.margin>
-                  <Insets bottom="60.0" top="60.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="CreateDataButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#createDataBase" prefHeight="260.0" prefWidth="260.0" styleClass="menu-button" stylesheets="@../../../../Stylesheet/Style_fastMenu.css">
-               <graphic>
-                  <VBox alignment="CENTER" spacing="10">
-                     <children>
-                        <ImageView fitHeight="142.0" fitWidth="167.0" preserveRatio="true">
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                           <image>
-                              <Image url="@../../../../IMG/createDB.png" />
-                           </image>
-                        </ImageView>
-                        <Label prefHeight="55.0" prefWidth="222.0" styleClass="menu-label" text="Create New DB">
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </Label>
-                     </children>
-                  </VBox>
-               </graphic>
-               <HBox.margin>
-                  <Insets bottom="60.0" top="60.0" />
-               </HBox.margin>
-            </Button>
-         </children>
-      </HBox>
-   </children>
+<AnchorPane fx:id="rootAnchorPane" prefHeight="381.0" prefWidth="717.0" style="-fx-background-color: #242425;"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.mordvinovdsw.library.supportControllers.ImportExportController">
+   <HBox alignment="CENTER" spacing="20" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0"
+         AnchorPane.leftAnchor="0">
+      <padding>
+         <Insets top="60" right="20" bottom="60" left="20"/>
+      </padding>
+      <Button fx:id="ImportButton" onAction="#importDataBase" styleClass="menu-button"
+              stylesheets="@../../../../Stylesheet/Style_fastMenu.css" HBox.hgrow="ALWAYS">
+         <graphic>
+            <VBox alignment="CENTER" spacing="10">
+               <ImageView fitHeight="142.0" fitWidth="155.0" preserveRatio="true" pickOnBounds="true">
+                  <Image url="@../../../../IMG/import.png"/>
+               </ImageView>
+               <Label styleClass="menu-label" text="Import"/>
+            </VBox>
+         </graphic>
+      </Button>
+      <Button fx:id="ExportButton" onAction="#exportDataBase" styleClass="menu-button"
+              stylesheets="@../../../../Stylesheet/Style_fastMenu.css" HBox.hgrow="ALWAYS">
+         <graphic>
+            <VBox alignment="CENTER" spacing="10">
+               <ImageView fitHeight="142.0" fitWidth="155.0" preserveRatio="true" pickOnBounds="true">
+                  <Image url="@../../../../IMG/export.png"/>
+               </ImageView>
+               <Label styleClass="menu-label" text="Export"/>
+            </VBox>
+         </graphic>
+      </Button>
+      <Button fx:id="CreateDataButton" onAction="#createDataBase" styleClass="menu-button"
+              stylesheets="@../../../../Stylesheet/Style_fastMenu.css" HBox.hgrow="ALWAYS">
+         <graphic>
+            <VBox alignment="CENTER" spacing="10">
+               <ImageView fitHeight="142.0" fitWidth="167.0" preserveRatio="true" pickOnBounds="true">
+                  <Image url="@../../../../IMG/createDB.png"/>
+               </ImageView>
+               <Label styleClass="menu-label" text="Create New DB"/>
+            </VBox>
+         </graphic>
+      </Button>
+   </HBox>
 </AnchorPane>

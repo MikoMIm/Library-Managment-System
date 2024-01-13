@@ -5,6 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -13,6 +15,10 @@ import java.io.IOException;
 
 public class MainMenu_controller {
 
+
+    public GridPane mainMenuGrid;
+    public Button memberListButton;
+    public Button issueListButton;
 
     public void openBookList() throws IOException {
         Main.getSceneController().setScene("/com/mordvinovdsw/library/Books_list.fxml", ScreenSizeConstants.MainControllerSize);

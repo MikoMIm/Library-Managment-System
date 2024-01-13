@@ -32,12 +32,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Issue_Controller implements Initializable {
     private static final Logger LOGGER = Logger.getLogger(LogIn_Controller.class.getName());
+
+    public AnchorPane rootAnchorPane;
     @FXML private GridPane gridPane;
     @FXML private TextField searchTextField;
     @FXML private ComboBox<String> searchComboBox;

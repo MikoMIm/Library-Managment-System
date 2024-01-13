@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -23,6 +24,8 @@ import java.util.logging.Logger;
 
 public class MemberItemController {
     private static final Logger LOGGER = Logger.getLogger(MemberItemController.class.getName());
+    public Button remove;
+    public Button edit;
     private Member member;
 
     @FXML

@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
@@ -18,6 +19,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class BookItemController {
+    public Button edit;
+    public Button remove;
     private Book book;
 
     @FXML

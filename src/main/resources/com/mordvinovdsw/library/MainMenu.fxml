@@ -11,160 +11,160 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane fx:id="mainMenuGrid" hgap="10" maxHeight="Infinity" maxWidth="Infinity" style="-fx-background-color: #242425;" stylesheets="@../../../Stylesheet/Style_fastMenu.css" vgap="10" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mordvinovdsw.library.controllers.MainMenu_controller">
+<GridPane fx:id="mainMenuGrid" hgap="10" maxHeight="Infinity" maxWidth="Infinity" style="-fx-background-color: #242425;"
+          stylesheets="@../../../Stylesheet/Style_fastMenu.css" vgap="10" xmlns="http://javafx.com/javafx/21"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mordvinovdsw.library.controllers.MainMenu_controller">
 
    <columnConstraints>
-      <ColumnConstraints hgrow="ALWAYS" percentWidth="50" />
-      <ColumnConstraints hgrow="ALWAYS" percentWidth="50" />
-      <ColumnConstraints hgrow="ALWAYS" percentWidth="50" prefWidth="100.0" />
+      <ColumnConstraints hgrow="ALWAYS" percentWidth="50"/>
+      <ColumnConstraints hgrow="ALWAYS" percentWidth="50"/>
+      <ColumnConstraints hgrow="ALWAYS" percentWidth="50" prefWidth="100.0"/>
    </columnConstraints>
 
    <rowConstraints>
-      <RowConstraints percentHeight="50" vgrow="ALWAYS" />
-      <RowConstraints percentHeight="50" vgrow="ALWAYS" />
+      <RowConstraints percentHeight="50" vgrow="ALWAYS"/>
+      <RowConstraints percentHeight="50" vgrow="ALWAYS"/>
    </rowConstraints>
 
-   <children>
-      <StackPane GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.vgrow="ALWAYS">
-         <Button fx:id="memberListButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#openMemberList" styleClass="menu-button">
-            <graphic>
-               <VBox alignment="CENTER" spacing="10">
-                  <ImageView fitHeight="133.0" fitWidth="198.0" preserveRatio="true">
-                     <Image url="@../../../IMG/members.png" />
-                     <VBox.margin>
-                        <Insets bottom="20.0" />
-                     </VBox.margin>
-                  </ImageView>
-                  <Label styleClass="menu-label" text="List of members">
-                     <VBox.margin>
-                        <Insets bottom="-50.0" />
-                     </VBox.margin></Label>
-               </VBox>
-            </graphic>
-            <StackPane.margin>
-               <Insets left="10.0" right="5.0" top="10.0" />
-            </StackPane.margin>
-         </Button>
-      </StackPane>
-      <StackPane GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.vgrow="ALWAYS">
-         <Button fx:id="issueListButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#openIssueList" styleClass="menu-button">
-            <graphic>
-               <VBox alignment="CENTER" spacing="10">
-                  <ImageView fitHeight="137.0" fitWidth="143.0" preserveRatio="true">
-                     <Image url="@../../../IMG/Books_issued.png" />
-                     <VBox.margin>
-                        <Insets top="30.0" />
-                     </VBox.margin>
-                  </ImageView>
-                  <Label styleClass="menu-label" text="Issued books">
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin></Label>
-               </VBox>
-            </graphic>
-            <StackPane.margin>
-               <Insets right="10.0" top="10.0" />
-            </StackPane.margin>
-         </Button>
-      </StackPane>
-      <StackPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
-         <Button fx:id="bookListButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#openBookList" styleClass="menu-button">
-            <graphic>
-               <VBox alignment="CENTER" spacing="10">
-                  <ImageView fitHeight="143.0" fitWidth="156.0" preserveRatio="true">
-                     <Image url="@../../../IMG/books_list.png" />
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </ImageView>
-                  <Label styleClass="menu-label" text="List of books">
-                     <VBox.margin>
-                        <Insets bottom="-30.0" />
-                     </VBox.margin></Label>
-               </VBox>
-            </graphic>
-            <StackPane.margin>
-               <Insets top="10.0" />
-            </StackPane.margin>
-         </Button>
-      </StackPane>
+   <StackPane GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.vgrow="ALWAYS">
+      <Button fx:id="memberListButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#openMemberList"
+              styleClass="menu-button">
+         <graphic>
+            <VBox alignment="CENTER" spacing="10">
+               <ImageView fitHeight="133.0" fitWidth="198.0" preserveRatio="true">
+                  <Image url="@../../../IMG/members.png"/>
+                  <VBox.margin>
+                     <Insets bottom="20.0"/>
+                  </VBox.margin>
+               </ImageView>
+               <Label styleClass="menu-label" text="List of members">
+                  <VBox.margin>
+                     <Insets bottom="-50.0"/>
+                  </VBox.margin>
+               </Label>
+            </VBox>
+         </graphic>
+         <StackPane.margin>
+            <Insets left="10.0" right="5.0" top="10.0"/>
+         </StackPane.margin>
+      </Button>
+   </StackPane>
+   <StackPane GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.vgrow="ALWAYS">
+      <Button fx:id="issueListButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#openIssueList"
+              styleClass="menu-button">
+         <graphic>
+            <VBox alignment="CENTER" spacing="10">
+               <ImageView fitHeight="137.0" fitWidth="143.0" preserveRatio="true">
+                  <Image url="@../../../IMG/Books_issued.png"/>
+                  <VBox.margin>
+                     <Insets top="30.0"/>
+                  </VBox.margin>
+               </ImageView>
+               <Label styleClass="menu-label" text="Issued books">
+                  <VBox.margin>
+                     <Insets top="5.0"/>
+                  </VBox.margin>
+               </Label>
+            </VBox>
+         </graphic>
+         <StackPane.margin>
+            <Insets right="10.0" top="10.0"/>
+         </StackPane.margin>
+      </Button>
+   </StackPane>
+   <StackPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+      <Button fx:id="bookListButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#openBookList"
+              styleClass="menu-button">
+         <graphic>
+            <VBox alignment="CENTER" spacing="10">
+               <ImageView fitHeight="143.0" fitWidth="156.0" preserveRatio="true">
+                  <Image url="@../../../IMG/books_list.png"/>
+                  <VBox.margin>
+                     <Insets/>
+                  </VBox.margin>
+               </ImageView>
+               <Label styleClass="menu-label" text="List of books">
+                  <VBox.margin>
+                     <Insets bottom="-30.0"/>
+                  </VBox.margin>
+               </Label>
+            </VBox>
+         </graphic>
+         <StackPane.margin>
+            <Insets top="10.0"/>
+         </StackPane.margin>
+      </Button>
+   </StackPane>
 
-      <StackPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
-         <Button fx:id="ImportExportButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#openImportExport" styleClass="menu-button">
-            <graphic>
-               <VBox alignment="CENTER" spacing="10">
+   <StackPane GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+      <Button fx:id="ImportExportButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#openImportExport"
+              styleClass="menu-button">
+         <graphic>
+            <VBox alignment="CENTER" spacing="10">
+               <ImageView fitHeight="142.0" fitWidth="155.0" preserveRatio="true">
+                  <Image url="@../../../IMG/upload.png"/>
+                  <VBox.margin>
+                     <Insets top="20.0"/>
+                  </VBox.margin>
+               </ImageView>
+               <Label styleClass="menu-label" text="Import/Export">
+                  <VBox.margin>
+                     <Insets bottom="10.0"/>
+                  </VBox.margin>
+               </Label>
+            </VBox>
+         </graphic>
+         <StackPane.margin>
+            <Insets bottom="10.0"/>
+         </StackPane.margin>
+      </Button>
+   </StackPane>
+   <StackPane GridPane.rowIndex="1">
+      <Button fx:id="AdminSettings" maxHeight="Infinity" maxWidth="Infinity" onAction="#openAdminSettings"
+              styleClass="menu-button">
+         <graphic>
+            <VBox alignment="CENTER" spacing="10">
+               <children>
                   <ImageView fitHeight="142.0" fitWidth="155.0" preserveRatio="true">
-                     <Image url="@../../../IMG/upload.png" />
                      <VBox.margin>
-                        <Insets top="20.0" />
+                        <Insets/>
                      </VBox.margin>
+                     <Image url="@../../../IMG/Administrator.png"/>
                   </ImageView>
-                  <Label styleClass="menu-label" text="Import/Export">
+                  <Label styleClass="menu-label" text="Admin Settings">
                      <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin></Label>
-               </VBox>
-            </graphic>
-            <StackPane.margin>
-               <Insets bottom="10.0" />
-            </StackPane.margin>
-         </Button>
-      </StackPane>
-      <StackPane GridPane.rowIndex="1">
-         <children>
-            <Button fx:id="AdminSettings" maxHeight="Infinity" maxWidth="Infinity" onAction="#openAdminSettings" styleClass="menu-button">
-               <graphic>
-                  <VBox alignment="CENTER" spacing="10">
-                     <children>
-                        <ImageView fitHeight="142.0" fitWidth="155.0" preserveRatio="true">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <image>
-                              <Image url="@../../../IMG/Administrator.png" />
-                           </image>
-                        </ImageView>
-                        <Label styleClass="menu-label" text="Admin Settings">
-                           <VBox.margin>
-                              <Insets bottom="-10.0" />
-                           </VBox.margin>
-                        </Label>
-                     </children>
-                  </VBox>
-               </graphic>
-               <StackPane.margin>
-                  <Insets bottom="10.0" left="10.0" />
-               </StackPane.margin>
-            </Button>
-         </children>
-      </StackPane>
-      <StackPane GridPane.columnIndex="2" GridPane.rowIndex="1">
-         <children>
-            <Button fx:id="logoutButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#logout" styleClass="menu-button">
-               <graphic>
-                  <VBox alignment="CENTER" spacing="10">
-                     <children>
-                        <ImageView fitHeight="142.0" fitWidth="155.0" preserveRatio="true">
-                           <VBox.margin>
-                              <Insets left="20.0" top="20.0" />
-                           </VBox.margin>
-                           <image>
-                              <Image url="@../../../IMG/logout.png" />
-                           </image>
-                        </ImageView>
-                        <Label styleClass="menu-label" text="Log out">
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </Label>
-                     </children>
-                  </VBox>
-               </graphic>
-               <StackPane.margin>
-                  <Insets bottom="10.0" right="10.0" />
-               </StackPane.margin>
-            </Button>
-         </children>
-      </StackPane>
-   </children>
+                        <Insets bottom="-10.0"/>
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+         </graphic>
+         <StackPane.margin>
+            <Insets bottom="10.0" left="10.0"/>
+         </StackPane.margin>
+      </Button>
+   </StackPane>
+   <StackPane GridPane.columnIndex="2" GridPane.rowIndex="1">
+      <Button fx:id="logoutButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#logout"
+              styleClass="menu-button">
+         <graphic>
+            <VBox alignment="CENTER" spacing="10">
+               <ImageView fitHeight="142.0" fitWidth="155.0" preserveRatio="true">
+                  <VBox.margin>
+                     <Insets left="20.0" top="20.0"/>
+                  </VBox.margin>
+                  <Image url="@../../../IMG/logout.png"/>
+               </ImageView>
+               <Label styleClass="menu-label" text="Log out">
+                  <VBox.margin>
+                     <Insets bottom="10.0"/>
+                  </VBox.margin>
+               </Label>
+            </VBox>
+         </graphic>
+         <StackPane.margin>
+            <Insets bottom="10.0" right="10.0"/>
+         </StackPane.margin>
+      </Button>
+   </StackPane>
 </GridPane>

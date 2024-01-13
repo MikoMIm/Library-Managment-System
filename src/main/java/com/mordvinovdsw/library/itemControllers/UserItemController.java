@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
@@ -20,6 +21,9 @@ import java.util.logging.Logger;
 
 public class UserItemController {
     private static final Logger LOGGER = Logger.getLogger(IssueStatusChecker.class.getName());
+    public Label statusLabel;
+    public Button edit;
+    public Button remove;
     @FXML
     private Label idLabel;
     @FXML

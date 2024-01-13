@@ -26,6 +26,8 @@ import java.util.Optional;
 
 public class EditBookController {
 
+    public HBox genreButtonContainer;
+    public Button AutoFillButton;
     @FXML
     private TextField bookTitleField, bookNumberField, ISBN10Field, ISBN13Field;
     @FXML

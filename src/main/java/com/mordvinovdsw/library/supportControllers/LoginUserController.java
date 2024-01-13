@@ -8,6 +8,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
 import java.sql.Connection;
@@ -18,6 +20,8 @@ import java.util.logging.Logger;
 
 public class LoginUserController {
     private static final Logger LOGGER = Logger.getLogger(LoginUserController.class.getName());
+    public AnchorPane rootAnchorPane;
+    public VBox vboxLayout;
     @FXML
     private TextField LoginField;
 
