@@ -17,7 +17,6 @@ public class Main extends Application {
         sceneController = new SceneController(stage);
         sceneController.setScene("/com/mordvinovdsw/library/hello-view.fxml", ScreenSizeConstants.MainControllerSize);
         stage.setTitle("Just Lib System");
-        stage.show();
     }
 
     public static SceneController getSceneController() {

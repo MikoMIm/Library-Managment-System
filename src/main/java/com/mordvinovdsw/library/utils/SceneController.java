@@ -13,6 +13,7 @@ public class SceneController {
     public Stage getStage() {
         return stage;
     }
+
     public SceneController(Stage stage) {
         this.stage = stage;
     }
@@ -20,10 +21,9 @@ public class SceneController {
     public void setScene(String fxmlPath, double[] size) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
         Parent root = loader.load();
-        Scene scene = new Scene(root, size[0], size[1]);
+        Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setWidth(size[0]);
-        stage.setHeight(size[1]);
+        ScreenSizeConstants.adjustStageSize(stage, size);
         stage.show();
     }
 }
