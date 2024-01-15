@@ -1,6 +1,7 @@
 package com.mordvinovdsw.library.itemControllers;
 
 import com.mordvinovdsw.library.Database.DBConnection;
+import com.mordvinovdsw.library.dataManager.MemberDataManager;
 import com.mordvinovdsw.library.models.Member;
 import com.mordvinovdsw.library.supportControllers.EditMemberController;
 import javafx.fxml.FXML;
@@ -23,6 +24,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MemberItemController {
+    private Runnable refreshCallback;
+    private MemberDataManager memberDataManager = new MemberDataManager();
     private static final Logger LOGGER = Logger.getLogger(MemberItemController.class.getName());
     public Button remove;
     public Button edit;
@@ -42,6 +45,7 @@ public class MemberItemController {
     private Label expiryLabel;
     @FXML
     private Label statusLabel;
+
 
     public void setMember(Member member) {
         this.member = member;
@@ -81,14 +85,20 @@ public class MemberItemController {
         TextFlow statusFlow = new TextFlow(statusText, statusValue);
         statusLabel.setGraphic(statusFlow);
     }
+
+    public void setRefreshCallback(Runnable callback) {
+        this.refreshCallback = callback;
+    }
     @FXML
     private void openEdit() {
         try {
-            Stage editStage = new Stage();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mordvinovdsw/library/support_layouts/Edit_Add_Member.fxml"));
             Parent root = loader.load();
             EditMemberController editController = loader.getController();
             editController.prepareEdit(member);
+            editController.setRefreshCallback(this::refreshData);
+
+            Stage editStage = new Stage();
             editStage.setTitle("Edit Member");
             editStage.setScene(new Scene(root));
             editStage.show();
@@ -105,9 +115,23 @@ public class MemberItemController {
 
             pstmtDeleteMember.setInt(1, member.getId());
             pstmtDeleteMember.executeUpdate();
-
+            finishDataUpdate();
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "SQL Error in removeData for Member ID: " + member.getId(), e);
+        }
+    }
+
+
+    private void refreshData() {
+        Member updatedMember = memberDataManager.fetchMemberById(member.getId());
+        if (updatedMember != null) {
+            setMember(updatedMember);
+        }
+    }
+
+    private void finishDataUpdate() {
+        if (refreshCallback != null) {
+            refreshCallback.run();
         }
     }
 }

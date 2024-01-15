@@ -1,5 +1,6 @@
 package com.mordvinovdsw.library.itemControllers;
 
+import com.mordvinovdsw.library.dataManager.BookDataManager;
 import com.mordvinovdsw.library.models.Book;
 import com.mordvinovdsw.library.Database.DBConnection;
 import com.mordvinovdsw.library.supportControllers.EditBookController;
@@ -19,6 +20,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class BookItemController {
+    private Runnable refreshCallback;
     public Button edit;
     public Button remove;
     private Book book;
@@ -50,7 +52,9 @@ public class BookItemController {
         authorLabel.setText("Author: " + book.getAuthors());
     }
 
-
+    public void setRefreshCallback(Runnable callback) {
+        this.refreshCallback = callback;
+    }
     @FXML
     private void openEdit() {
         try {
@@ -59,6 +63,7 @@ public class BookItemController {
             EditBookController editController = loader.getController();
             editController.fillForm(this.book);
             editController.prepareEdit(this.book);
+            editController.setRefreshCallback(this::refreshData);
             Stage stage = new Stage();
             stage.setTitle("Edit Book");
             stage.setScene(new Scene(root));
@@ -99,6 +104,7 @@ public class BookItemController {
 
             // Commit all changes
             conn.commit();
+            finishDataUpdate();
         } catch (SQLException e) {
             if (conn != null) {
                 try {
@@ -120,6 +126,20 @@ public class BookItemController {
             } catch (SQLException ex) {
                 DialogUtil.showError("Error closing connections: " + ex.getMessage());
             }
+        }
+    }
+    private void refreshData() {
+        Book updatedBook = new BookDataManager().fetchBookById(book.getBookID());
+        if (updatedBook != null) {
+            setBook(updatedBook);
+        } else {
+            DialogUtil.showError("Error fetching updated book data.");
+        }
+    }
+
+    private void finishDataUpdate() {
+        if (refreshCallback != null) {
+            refreshCallback.run();
         }
     }
 }

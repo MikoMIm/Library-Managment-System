@@ -9,13 +9,12 @@ import com.mordvinovdsw.library.models.Book;
 import com.mordvinovdsw.library.models.BookData;
 import com.mordvinovdsw.library.models.Genre;
 import com.mordvinovdsw.library.dataManager.AuthorUtil;
-import com.mordvinovdsw.library.utils.DialogUtil;
+import com.mordvinovdsw.library.utils.*;
 import com.mordvinovdsw.library.dataManager.GenreUtil;
-import com.mordvinovdsw.library.utils.GoogleBooksApiUtil;
-import com.mordvinovdsw.library.utils.TextFieldLimitUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
@@ -25,7 +24,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class EditBookController {
-
+    @FXML
+    private VBox rootVbox;
     public HBox genreButtonContainer;
     public Button AutoFillButton;
     @FXML
@@ -47,11 +47,26 @@ public class EditBookController {
     final private AuthorDAO AuthorDAO = new AuthorDAO();
 
     final private GenreDAO GenreDAO = new GenreDAO();
+    private DataChangeListener dataChangeListener;
+    private Runnable refreshCallback;
+    public void setDataChangeListener(DataChangeListener listener) {
+        this.dataChangeListener = listener;
+    }
 
     @FXML
     private void initialize() {
         setupComboBoxes();
         setupTextFieldLimiters();
+    }
+
+    private void finishDataUpdate() {
+        if (dataChangeListener != null) {
+            dataChangeListener.onDataChange();
+        }
+    }
+
+    public void setRefreshCallback(Runnable callback) {
+        this.refreshCallback = callback;
     }
 
     private void setupComboBoxes() {
@@ -211,6 +226,10 @@ public class EditBookController {
 
             bookDataManager.insertGenresForBook(bookId, genreComboBoxes);
             bookDataManager.insertAuthorsForBook(bookId, authorComboBoxes);
+
+            DialogUtil.showDialog("Success", "Data added successfully.");
+            StageUtils.closeStageOf(rootVbox);
+            finishDataUpdate();
         } catch (SQLException | NumberFormatException e) {
             DialogUtil.showError("Database error: " + e.getMessage());
         }
@@ -240,6 +259,11 @@ public class EditBookController {
                 }
             }
             bookDataManager.updateGenresForBook(currentBookId, selectedGenres);
+            DialogUtil.showDialog("Success", "Data saved successfully.");
+            if (refreshCallback != null) {
+                refreshCallback.run();
+            }
+            StageUtils.closeStageOf(rootVbox);
         } catch (SQLException | NumberFormatException e) {
             DialogUtil.showError("Database error: " + e.getMessage());
         } catch (ClassCastException e) {

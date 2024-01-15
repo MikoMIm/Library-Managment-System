@@ -19,11 +19,9 @@ import com.mordvinovdsw.library.itemControllers.IssueItemController;
 import com.mordvinovdsw.library.Database.DBConnection;
 import com.mordvinovdsw.library.models.Issue;
 import com.mordvinovdsw.library.Main;
+import com.mordvinovdsw.library.models.Member;
 import com.mordvinovdsw.library.supportControllers.EditIssueController;
-import com.mordvinovdsw.library.utils.ComboBoxUtil;
-import com.mordvinovdsw.library.utils.DialogUtil;
-import com.mordvinovdsw.library.utils.IssueStatusChecker;
-import com.mordvinovdsw.library.utils.ScreenSizeConstants;
+import com.mordvinovdsw.library.utils.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -37,7 +35,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class Issue_Controller implements Initializable {
+public class Issue_Controller implements Initializable, DataChangeListener {
     private static final Logger LOGGER = Logger.getLogger(LogIn_Controller.class.getName());
 
     public AnchorPane rootAnchorPane;
@@ -45,8 +43,11 @@ public class Issue_Controller implements Initializable {
     @FXML private TextField searchTextField;
     @FXML private ComboBox<String> searchComboBox;
     @FXML private ComboBox<String> sortComboBox;
-
     private List<Issue> issues;
+    @Override
+    public void onDataChange() {
+        refreshGrid();
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -103,7 +104,6 @@ public class Issue_Controller implements Initializable {
 
     public void populateGridWithIssues(List<Issue> issues) {
         gridPane.getChildren().clear();
-
         final int maxColumn = 3;
         int row = 0, column = 0;
         for (Issue issue : issues) {
@@ -112,6 +112,7 @@ public class Issue_Controller implements Initializable {
                 VBox issueItemBox = loader.load();
                 IssueItemController itemController = loader.getController();
                 itemController.setIssue(issue);
+                itemController.setDataChangeListener(this::refreshGrid);
                 gridPane.add(issueItemBox, column, row);
                 column++;
                 if (column >= maxColumn) {
@@ -124,6 +125,7 @@ public class Issue_Controller implements Initializable {
         }
     }
 
+
     @FXML
     private void exit() throws IOException {
         Main.getSceneController().setScene("/com/mordvinovdsw/library/MainMenu.fxml", ScreenSizeConstants.MainControllerSize);
@@ -135,6 +137,7 @@ public class Issue_Controller implements Initializable {
             Parent root = loader.load();
             EditIssueController editIssueController = loader.getController();
             editIssueController.prepareAdd();
+            editIssueController.setRefreshCallback(this::refreshGrid);
             Stage stage = new Stage();
             stage.setTitle("Add New Issue");
             stage.setScene(new Scene(root));
@@ -208,6 +211,8 @@ public class Issue_Controller implements Initializable {
     private void refreshGrid() {
         issues = getIssuesFromDatabase();
         populateGridWithIssues(issues);
+        List<Issue> updatedMembers= getIssuesFromDatabase();
+        populateGridWithIssues(updatedMembers);
         LOGGER.log(Level.INFO, "Grid has been refreshed with updated issue data.");
     }
 }

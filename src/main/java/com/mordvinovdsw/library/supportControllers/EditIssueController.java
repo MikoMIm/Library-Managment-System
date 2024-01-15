@@ -36,7 +36,23 @@ public class EditIssueController {
     private final IssueDataManager issueDataManager = new IssueDataManager();
     private boolean isEditMode = false;
     private Issue issue;
+    private DataChangeListener dataChangeListener;
+    private Runnable refreshCallback;
 
+    public void setRefreshCallback(Runnable callback) {
+        this.refreshCallback = callback;
+    }
+
+
+    public interface DataChangeListener {
+        void onDataChange();
+    }
+
+    private void finishDataUpdate() {
+        if (dataChangeListener != null) {
+            dataChangeListener.onDataChange();
+        }
+    }
 
     @FXML
     private void initialize() {
@@ -127,6 +143,9 @@ public class EditIssueController {
             } else {
                 issueDataManager.insertIssue(bookId, memberId, issueDate, returnDate, status);
             }
+            if (refreshCallback != null) {
+                refreshCallback.run();
+            }
             cancel();
         } catch (SQLException e) {
             DialogUtil.showError("Database error: " + e.getMessage());
@@ -145,7 +164,6 @@ public class EditIssueController {
         if (validateInput()) {
             return;
         }
-
         try {
             int bookId = bookComboBox.getValue().getId();
             int memberId = memberComboBox.getValue().getId();
@@ -153,11 +171,21 @@ public class EditIssueController {
             String returnDate = (returnDatePicker.getValue() != null) ? returnDatePicker.getValue().toString() : null;
             String status = statusComboBox.getValue();
             int issueId = issueDataManager.insertIssue(bookId, memberId, issueDate, returnDate, status);
+
+            DialogUtil.showDialog("Success", "Issue added successfully.");
+            if (refreshCallback != null) {
+                refreshCallback.run();
+            }
+
+            Stage stage = (Stage) addButton.getScene().getWindow();
+            stage.close();
+
             clearForm();
         } catch (SQLException e) {
-            DialogUtil.showError("Database error: " + e.getMessage());
+            DialogUtil.showError("Database error:" + e.getMessage());
         }
     }
+
 
     private void clearForm() {
         memberComboBox.getSelectionModel().clearSelection();

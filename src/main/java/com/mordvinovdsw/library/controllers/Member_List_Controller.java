@@ -1,6 +1,7 @@
 package com.mordvinovdsw.library.controllers;
 
 import com.mordvinovdsw.library.itemControllers.MemberItemController;
+import com.mordvinovdsw.library.models.Book;
 import com.mordvinovdsw.library.models.Member;
 
 import java.net.URL;
@@ -15,10 +16,7 @@ import com.mordvinovdsw.library.Database.DBConnection;
 
 import com.mordvinovdsw.library.Main;
 import com.mordvinovdsw.library.supportControllers.EditMemberController;
-import com.mordvinovdsw.library.utils.ComboBoxUtil;
-import com.mordvinovdsw.library.utils.DialogUtil;
-import com.mordvinovdsw.library.utils.MemberStatusChecker;
-import com.mordvinovdsw.library.utils.ScreenSizeConstants;
+import com.mordvinovdsw.library.utils.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -32,7 +30,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class Member_List_Controller implements Initializable {
+public class Member_List_Controller implements Initializable, DataChangeListener {
+
     private static final Logger LOGGER = Logger.getLogger(Member_List_Controller.class.getName());
     public AnchorPane rootAnchorPane;
     @FXML
@@ -46,7 +45,10 @@ public class Member_List_Controller implements Initializable {
     @FXML
     private ComboBox<String> sortComboBox;
     private List<Member> members;
-
+    @Override
+    public void onDataChange() {
+        refreshGrid();
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ComboBoxUtil.fillMemberSearchOptions(searchComboBox);
@@ -98,6 +100,7 @@ public class Member_List_Controller implements Initializable {
                 VBox memberItemPane = loader.load();
                 MemberItemController itemController = loader.getController();
                 itemController.setMember(member);
+                itemController.setRefreshCallback(this::refreshGrid);
 
                 gridPane.add(memberItemPane, column, row);
                 column++;
@@ -123,8 +126,9 @@ public class Member_List_Controller implements Initializable {
             Parent root = loader.load();
             EditMemberController editController = loader.getController();
             editController.prepareAdd();
+            editController.setRefreshCallback(this::refreshGrid);
             Stage stage = new Stage();
-            stage.setTitle("Add New Book");
+            stage.setTitle("Add New Member");
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
@@ -204,6 +208,7 @@ public class Member_List_Controller implements Initializable {
     private void refreshGrid() {
         members = getMembersFromDatabase();
         populateGridWithMembers(members);
-        LOGGER.log(Level.INFO, "Grid has been refreshed");
+        List<Member> updatedMembers= getMembersFromDatabase();
+        populateGridWithMembers(updatedMembers);
     }
 }

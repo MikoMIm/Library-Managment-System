@@ -6,6 +6,7 @@ import com.mordvinovdsw.library.Main;
 import com.mordvinovdsw.library.itemControllers.BookItemController;
 import com.mordvinovdsw.library.supportControllers.EditBookController;
 import com.mordvinovdsw.library.utils.ComboBoxUtil;
+import com.mordvinovdsw.library.utils.DataChangeListener;
 import com.mordvinovdsw.library.utils.DialogUtil;
 import com.mordvinovdsw.library.utils.ScreenSizeConstants;
 import javafx.collections.FXCollections;
@@ -33,7 +34,7 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Books_list_Controller implements Initializable {
+public class Books_list_Controller implements Initializable, DataChangeListener {
 
     @FXML
     private GridPane gridPane;
@@ -46,6 +47,11 @@ public class Books_list_Controller implements Initializable {
     @FXML
     private ComboBox<String> sortComboBox;
     private List<Book> books;
+
+    @Override
+    public void onDataChange() {
+        refreshGrid();
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -102,6 +108,7 @@ public class Books_list_Controller implements Initializable {
                 VBox bookItemPane = loader.load();
                 BookItemController itemController = loader.getController();
                 itemController.setBook(book);
+                itemController.setRefreshCallback(this::refreshGrid);
 
                 gridPane.add(bookItemPane, column, row);
                 column++;
@@ -126,15 +133,20 @@ public class Books_list_Controller implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mordvinovdsw/library/support_layouts/Edit_Add_Book.fxml"));
             Parent root = loader.load();
             EditBookController editController = loader.getController();
+            editController.setDataChangeListener(this);
             editController.prepareAdd();
             Stage stage = new Stage();
             stage.setTitle("Add New Book");
             stage.setScene(new Scene(root));
-            stage.show();
+            stage.showAndWait();
+
+            refreshGrid();
+
         } catch (IOException e) {
             DialogUtil.showError("IO Error: " + e.getMessage());
         }
     }
+
 
     @FXML
     private void sortData() {
@@ -196,5 +208,7 @@ public class Books_list_Controller implements Initializable {
     private void refreshGrid() {
         books = getBooksFromDatabase();
         populateGridWithBooks(books);
+        List<Book> updatedBooks = getBooksFromDatabase();
+        populateGridWithBooks(updatedBooks);
     }
 }

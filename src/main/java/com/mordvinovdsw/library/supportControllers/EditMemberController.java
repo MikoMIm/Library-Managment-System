@@ -2,7 +2,9 @@ package com.mordvinovdsw.library.supportControllers;
 
 import com.mordvinovdsw.library.dataManager.MemberDataManager;
 import com.mordvinovdsw.library.models.Member;
+import com.mordvinovdsw.library.utils.DataChangeListener;
 import com.mordvinovdsw.library.utils.DialogUtil;
+import com.mordvinovdsw.library.utils.StageUtils;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -24,15 +26,23 @@ public class EditMemberController {
     private ComboBox<String>  memberStatusComboBox;
     @FXML
     private Button addButton, saveButton, cancelButton;
-
+    private Runnable refreshCallback;
     private int currentMemberId;
     private final MemberDataManager memberDataManager = new MemberDataManager();
+
+    public void setRefreshCallback(Runnable callback) {
+        this.refreshCallback = callback;
+    }
 
     @FXML
     private void initialize() {
         setupStatusComboBox();
     }
-
+    private void finishDataUpdate() {
+        if (refreshCallback != null) {
+            refreshCallback.run();
+        }
+    }
     private void setupStatusComboBox() {
         memberStatusComboBox.setItems(FXCollections.observableArrayList("Active", "Inactive", "Suspended", "Expired"));
     }
@@ -80,6 +90,9 @@ public class EditMemberController {
                     MemberExpiryComboBox.getValue().toString(),
                     memberStatusComboBox.getValue()
             );
+            DialogUtil.showDialog("Success", "Member added successfully.");
+            finishDataUpdate();
+            cancel();
         } catch (SQLException e) {
             DialogUtil.showError("Database error: " + e.getMessage());
         }
@@ -100,6 +113,11 @@ public class EditMemberController {
                     MemberExpiryComboBox.getValue().toString(),
                     memberStatusComboBox.getValue()
             );
+            DialogUtil.showDialog("Success", "Member updated successfully.");
+            if (refreshCallback != null) {
+                refreshCallback.run();
+            }
+            cancel();
         } catch (SQLException e) {
             DialogUtil.showError("Database error: " + e.getMessage());
         }
@@ -134,4 +152,5 @@ public class EditMemberController {
 
         return false;
     }
+
 }

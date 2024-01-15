@@ -4,6 +4,7 @@ import com.mordvinovdsw.library.Database.DBConnection;
 import com.mordvinovdsw.library.dataManager.IssueDataManager;
 import com.mordvinovdsw.library.models.Issue;
 import com.mordvinovdsw.library.supportControllers.EditIssueController;
+import com.mordvinovdsw.library.utils.DataChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,10 +26,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class IssueItemController {
+    private Runnable refreshCallback;
+    private IssueDataManager issueDataManager = new IssueDataManager();
+    private Issue issue;
     private static final Logger LOGGER = Logger.getLogger(IssueItemController.class.getName());
     public Button remove;
     public Button edit;
-    private Issue issue;
 
     @FXML
     private Label idLabel;
@@ -42,7 +45,20 @@ public class IssueItemController {
     private Label ReturnDateLabel;
     @FXML
     private Label StatusLabel;
+    private DataChangeListener dataChangeListener;
 
+
+    public void setRefreshCallback(Runnable callback) {
+        this.refreshCallback = callback;
+    }
+    private void notifyDataChangeListener() {
+        if (dataChangeListener != null) {
+            dataChangeListener.onDataChange();
+        }
+    }
+    public void setDataChangeListener(DataChangeListener dataChangeListener) {
+        this.dataChangeListener = dataChangeListener;
+    }
 
     public void setIssue(Issue issue) {
         this.issue = issue;
@@ -115,11 +131,13 @@ public class IssueItemController {
     @FXML
     private void openEdit() {
         try {
-            Stage editStage = new Stage();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mordvinovdsw/library/support_layouts/Edit_Add_Issue.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mordvinovdsw/library/support_layouts/Edit_Add_Issue.fxml")); // Check this path
             Parent root = loader.load();
             EditIssueController editController = loader.getController();
             editController.prepareEdit(issue);
+            editController.setRefreshCallback(this::refreshData);
+
+            Stage editStage = new Stage();
             editStage.setTitle("Edit Issue");
             editStage.setScene(new Scene(root));
             editStage.show();
@@ -131,11 +149,24 @@ public class IssueItemController {
     @FXML
     private void removeData() {
         try {
-            IssueDataManager issueDataManager = new IssueDataManager();
             issueDataManager.removeIssue(issue.getIssueId());
+            refreshData();
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "SQL Error in removeData for Issue ID: " + issue.getIssueId(), e);
         }
     }
+
+    private void refreshData() {
+        try {
+            Issue updatedIssue = issueDataManager.fetchIssueById(issue.getIssueId());
+            if (updatedIssue != null) {
+                setIssue(updatedIssue);
+            }
+            notifyDataChangeListener();
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "SQL Error in refreshData for Issue ID: " + issue.getIssueId(), e);
+        }
+    }
+
 }
 
