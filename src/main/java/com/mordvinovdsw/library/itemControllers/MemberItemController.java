@@ -1,6 +1,7 @@
 package com.mordvinovdsw.library.itemControllers;
 
 import com.mordvinovdsw.library.Database.DBConnection;
+import com.mordvinovdsw.library.Database.MemberDAO;
 import com.mordvinovdsw.library.dataManager.MemberDataManager;
 import com.mordvinovdsw.library.models.Member;
 import com.mordvinovdsw.library.supportControllers.EditMemberController;
@@ -45,7 +46,11 @@ public class MemberItemController {
     private Label expiryLabel;
     @FXML
     private Label statusLabel;
+    private MemberDAO memberDAO;
 
+    public MemberItemController() {
+        memberDAO = new MemberDAO();
+    }
 
     public void setMember(Member member) {
         this.member = member;
@@ -123,10 +128,11 @@ public class MemberItemController {
 
 
     private void refreshData() {
-        Member updatedMember = memberDataManager.fetchMemberById(member.getId());
+        Member updatedMember = memberDAO.fetchMemberById(member.getId());
         if (updatedMember != null) {
             setMember(updatedMember);
         }
+        finishDataUpdate();
     }
 
     private void finishDataUpdate() {

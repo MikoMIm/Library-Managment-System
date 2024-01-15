@@ -16,6 +16,8 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.mordvinovdsw.library.utils.ComboBoxUtil.fillBookComboBox;
+
 public class EditIssueController {
     @FXML
     private Button saveButton;
@@ -57,7 +59,7 @@ public class EditIssueController {
     @FXML
     private void initialize() {
         ComboBoxUtil.fillMemberComboBox(memberComboBox);
-        ComboBoxUtil.fillBookComboBox(bookComboBox);
+        fillBookComboBox(bookComboBox, false); // Include the second parameter as 'false'
         fillStatusComboBox();
 
         setupComboBoxCellFactory(memberComboBox);
@@ -225,6 +227,7 @@ public class EditIssueController {
 
 
     public void prepareEdit(Issue issue) {
+        fillBookComboBox(bookComboBox, true);
         this.isEditMode = true;
         setIssue(issue);
         saveButton.setVisible(true);
@@ -232,6 +235,7 @@ public class EditIssueController {
     }
 
     public void prepareAdd() {
+        fillBookComboBox(bookComboBox, false);
         issueDatePicker.setValue(null);
         returnDatePicker.setValue(null);
         memberComboBox.setValue(null);

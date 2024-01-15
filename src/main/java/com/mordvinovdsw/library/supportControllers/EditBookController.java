@@ -123,6 +123,7 @@ public class EditBookController {
     private void addGenreComboBox() {
         if (genreComboBoxes.size() < 4) {
             ComboBox<Genre> newComboBox = new ComboBox<>();
+            newComboBox.getStylesheets().add(getClass().getResource("/Stylesheet/Style_fastMenu.css").toExternalForm());
             newComboBox.setEditable(true);
             newComboBox.setPrefWidth(genreComboBox.getPrefWidth());
             newComboBox.setPrefHeight(genreComboBox.getPrefHeight());
@@ -150,6 +151,7 @@ public class EditBookController {
     private void addAuthorComboBox() {
         if (authorComboBoxes.size() < 3) {
             ComboBox<Author> newComboBox = new ComboBox<>();
+            newComboBox.getStylesheets().add(getClass().getResource("/Stylesheet/Style_fastMenu.css").toExternalForm());
             newComboBox.setEditable(true);
             newComboBox.setPrefWidth(authorComboBox.getPrefWidth());
             newComboBox.setPrefHeight(authorComboBox.getPrefHeight());

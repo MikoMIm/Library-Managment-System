@@ -53,30 +53,4 @@ public class MemberDataManager {
             }
         }
     }
-
-    public Member fetchMemberById(int memberId) {
-        String sql = "SELECT * FROM Members WHERE Member_ID = ?";
-
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setInt(1, memberId);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    int id = rs.getInt("Member_ID");
-                    String name = rs.getString("Member_Name");
-                    String phone = rs.getString("Phone_Number");
-                    String email = rs.getString("Email_adress");
-                    String registerDate = rs.getString("Register_Date");
-                    String expairDate = rs.getString("Date_Expair");
-                    String status = rs.getString("Member_Status");
-
-                    return new Member(id, name, phone, email, registerDate, expairDate, status);
-                }
-            }
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "SQL Error in fetchMemberById for Member ID: " + memberId, e);
-        }
-        return null;
-    }
 }

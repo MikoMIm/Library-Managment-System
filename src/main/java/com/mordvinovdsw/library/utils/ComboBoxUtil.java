@@ -54,7 +54,7 @@ public class ComboBoxUtil {
         comboBox.setItems(members);
     }
 
-    public static void fillBookComboBox(ComboBox<IdentifiableItem> comboBox) {
+    public static void fillBookComboBox(ComboBox<IdentifiableItem> comboBox, boolean includeZeroQuantity) {
         ObservableList<IdentifiableItem> items = FXCollections.observableArrayList();
         String sql = "SELECT Book_Id, Book_Title, Book_Numbers FROM Book_List";
 
@@ -66,8 +66,9 @@ public class ComboBoxUtil {
                 int bookId = rs.getInt("Book_Id");
                 String bookTitle = rs.getString("Book_Title");
                 int bookNumbers = rs.getInt("Book_Numbers");
-                if (bookNumbers > 0) {
-                    items.add(new IdentifiableItem(bookId, bookTitle));
+
+                if (includeZeroQuantity || bookNumbers > 0) {
+                    items.add(new IdentifiableItem(bookId, bookTitle, bookNumbers));
                 }
             }
         } catch (SQLException e) {

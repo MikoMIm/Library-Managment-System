@@ -1,6 +1,6 @@
 package com.mordvinovdsw.library.itemControllers;
 
-import com.mordvinovdsw.library.dataManager.BookDataManager;
+import com.mordvinovdsw.library.Database.BookDAO;
 import com.mordvinovdsw.library.models.Book;
 import com.mordvinovdsw.library.Database.DBConnection;
 import com.mordvinovdsw.library.supportControllers.EditBookController;
@@ -129,7 +129,7 @@ public class BookItemController {
         }
     }
     private void refreshData() {
-        Book updatedBook = new BookDataManager().fetchBookById(book.getBookID());
+        Book updatedBook = new BookDAO().fetchBookById(book.getBookID());
         if (updatedBook != null) {
             setBook(updatedBook);
         } else {

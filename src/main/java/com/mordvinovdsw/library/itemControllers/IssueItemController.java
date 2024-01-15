@@ -1,6 +1,7 @@
 package com.mordvinovdsw.library.itemControllers;
 
 import com.mordvinovdsw.library.Database.DBConnection;
+import com.mordvinovdsw.library.Database.IssueDAO;
 import com.mordvinovdsw.library.dataManager.IssueDataManager;
 import com.mordvinovdsw.library.models.Issue;
 import com.mordvinovdsw.library.supportControllers.EditIssueController;
@@ -47,7 +48,11 @@ public class IssueItemController {
     private Label StatusLabel;
     private DataChangeListener dataChangeListener;
 
+    private IssueDAO issueDAO;
 
+    public IssueItemController() {
+        issueDAO = new IssueDAO();
+    }
     public void setRefreshCallback(Runnable callback) {
         this.refreshCallback = callback;
     }
@@ -157,10 +162,17 @@ public class IssueItemController {
     }
 
     private void refreshData() {
+        if (this.issue == null) {
+            LOGGER.log(Level.SEVERE, "Issue data is not set.");
+            return;
+        }
+
         try {
-            Issue updatedIssue = issueDataManager.fetchIssueById(issue.getIssueId());
+            Issue updatedIssue = issueDAO.fetchIssueById(issue.getIssueId());
             if (updatedIssue != null) {
                 setIssue(updatedIssue);
+            } else {
+                LOGGER.log(Level.INFO, "No data found for Issue ID: " + issue.getIssueId());
             }
             notifyDataChangeListener();
         } catch (SQLException e) {
