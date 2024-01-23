@@ -13,7 +13,9 @@ public class SceneController {
     public Stage getStage() {
         return stage;
     }
-
+    public void setStageTitle(String title) {
+        stage.setTitle(title);
+    }
     public SceneController(Stage stage) {
         this.stage = stage;
     }

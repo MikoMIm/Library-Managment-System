@@ -22,22 +22,27 @@ public class MainMenu_controller {
 
     public void openBookList() throws IOException {
         Main.getSceneController().setScene("/com/mordvinovdsw/library/Books_list.fxml", ScreenSizeConstants.MainControllerSize);
+        Main.getSceneController().setStageTitle("Book List");
     }
 
     public void openIssueList() throws IOException {
         Main.getSceneController().setScene("/com/mordvinovdsw/library/Issue_list.fxml",ScreenSizeConstants.MainControllerSize);
+        Main.getSceneController().setStageTitle("Issue List");
     }
 
     public void logout() throws IOException {
         Main.getSceneController().setScene("/com/mordvinovdsw/library/hello-view.fxml",ScreenSizeConstants.MainControllerSize);
+        Main.getSceneController().setStageTitle("LogIn");
     }
 
     public void openMemberList() throws IOException {
         Main.getSceneController().setScene("/com/mordvinovdsw/library/Member_list.fxml",ScreenSizeConstants.MainControllerSize);
+        Main.getSceneController().setStageTitle("Member List");
     }
 
     public void openAdminSettings() throws IOException {
         Main.getSceneController().setScene("/com/mordvinovdsw/library/Users_list.fxml",ScreenSizeConstants.MainControllerSize);
+        Main.getSceneController().setStageTitle("Admin Settings");
     }
 
     public void openImportExport() throws IOException {
