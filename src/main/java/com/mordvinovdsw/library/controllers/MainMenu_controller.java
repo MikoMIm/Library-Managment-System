@@ -43,11 +43,10 @@ public class MainMenu_controller {
     public void openImportExport() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mordvinovdsw/library/support_layouts/ImportExport_layout.fxml"));
         Parent root = loader.load();
-        Stage stage = new Stage();
+        Stage stage = Main.createStage("Import/Export", root);
         stage.initModality(Modality.NONE);
         stage.initStyle(StageStyle.DECORATED);
-        stage.setTitle("Import/Export");
-        stage.setScene(new Scene(root));
+
         stage.show();
     }
 

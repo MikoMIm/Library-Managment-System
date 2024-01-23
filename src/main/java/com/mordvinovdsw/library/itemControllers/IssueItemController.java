@@ -2,6 +2,7 @@ package com.mordvinovdsw.library.itemControllers;
 
 import com.mordvinovdsw.library.Database.DBConnection;
 import com.mordvinovdsw.library.Database.IssueDAO;
+import com.mordvinovdsw.library.Main;
 import com.mordvinovdsw.library.dataManager.IssueDataManager;
 import com.mordvinovdsw.library.models.Issue;
 import com.mordvinovdsw.library.supportControllers.EditIssueController;
@@ -136,15 +137,12 @@ public class IssueItemController {
     @FXML
     private void openEdit() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mordvinovdsw/library/support_layouts/Edit_Add_Issue.fxml")); // Check this path
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mordvinovdsw/library/support_layouts/Edit_Add_Issue.fxml"));
             Parent root = loader.load();
             EditIssueController editController = loader.getController();
             editController.prepareEdit(issue);
             editController.setRefreshCallback(this::refreshData);
-
-            Stage editStage = new Stage();
-            editStage.setTitle("Edit Issue");
-            editStage.setScene(new Scene(root));
+            Stage editStage = Main.createStage("Edit Issue", root);
             editStage.show();
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Error opening edit window for Issue ID: " + issue.getIssueId(), e);

@@ -2,6 +2,7 @@ package com.mordvinovdsw.library.itemControllers;
 
 import com.mordvinovdsw.library.Database.DBConnection;
 import com.mordvinovdsw.library.Database.MemberDAO;
+import com.mordvinovdsw.library.Main;
 import com.mordvinovdsw.library.dataManager.MemberDataManager;
 import com.mordvinovdsw.library.models.Member;
 import com.mordvinovdsw.library.supportControllers.EditMemberController;
@@ -102,10 +103,7 @@ public class MemberItemController {
             EditMemberController editController = loader.getController();
             editController.prepareEdit(member);
             editController.setRefreshCallback(this::refreshData);
-
-            Stage editStage = new Stage();
-            editStage.setTitle("Edit Member");
-            editStage.setScene(new Scene(root));
+            Stage editStage = Main.createStage("Edit Member", root);
             editStage.show();
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Error opening edit window for Member ID: " + member.getId(), e);

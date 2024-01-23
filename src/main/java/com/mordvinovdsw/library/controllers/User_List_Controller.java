@@ -4,6 +4,7 @@ import com.mordvinovdsw.library.Database.DBConnection;
 import com.mordvinovdsw.library.Main;
 import com.mordvinovdsw.library.itemControllers.UserItemController;
 import com.mordvinovdsw.library.models.User;
+import com.mordvinovdsw.library.supportControllers.EditMemberController;
 import com.mordvinovdsw.library.supportControllers.LoginUserController;
 import com.mordvinovdsw.library.utils.DialogUtil;
 import com.mordvinovdsw.library.utils.ScreenSizeConstants;
@@ -92,17 +93,15 @@ public class User_List_Controller implements Initializable {
     @FXML
     private void addNew() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mordvinovdsw/library/support_layouts/Login_Warning.fxml"));
-            Parent newRoot = loader.load();
-            LoginUserController newController = loader.getController();
-            newController.prepareAdd();
-
-            Scene newScene = new Scene(newRoot);
-            Stage newStage = new Stage();
-            newStage.setScene(newScene);
-            newStage.show();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mordvinovdsw/library/support_layouts/Edit_Add_Member.fxml"));
+            Parent root = loader.load();
+            EditMemberController editController = loader.getController();
+            editController.prepareAdd();
+            editController.setRefreshCallback(this::refreshGrid);
+            Stage stage = Main.createStage("Add New Member", root);
+            stage.show();
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Error adding new user: ", e);
+            DialogUtil.showError("IO Error: " + e.getMessage());
         }
     }
     @FXML

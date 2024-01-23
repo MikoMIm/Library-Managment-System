@@ -1,6 +1,7 @@
 package com.mordvinovdsw.library.itemControllers;
 
 import com.mordvinovdsw.library.Database.BookDAO;
+import com.mordvinovdsw.library.Main;
 import com.mordvinovdsw.library.models.Book;
 import com.mordvinovdsw.library.Database.DBConnection;
 import com.mordvinovdsw.library.supportControllers.EditBookController;
@@ -64,9 +65,7 @@ public class BookItemController {
             editController.fillForm(this.book);
             editController.prepareEdit(this.book);
             editController.setRefreshCallback(this::refreshData);
-            Stage stage = new Stage();
-            stage.setTitle("Edit Book");
-            stage.setScene(new Scene(root));
+            Stage stage = Main.createStage("Edit Book", root);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

@@ -127,9 +127,7 @@ public class Member_List_Controller implements Initializable, DataChangeListener
             EditMemberController editController = loader.getController();
             editController.prepareAdd();
             editController.setRefreshCallback(this::refreshGrid);
-            Stage stage = new Stage();
-            stage.setTitle("Add New Member");
-            stage.setScene(new Scene(root));
+            Stage stage = Main.createStage("Add New Member", root);
             stage.show();
         } catch (IOException e) {
             DialogUtil.showError("IO Error: " + e.getMessage());

@@ -1,6 +1,7 @@
 package com.mordvinovdsw.library.itemControllers;
 
 import com.mordvinovdsw.library.Database.DBConnection;
+import com.mordvinovdsw.library.Main;
 import com.mordvinovdsw.library.models.User;
 import com.mordvinovdsw.library.supportControllers.LoginUserController;
 import com.mordvinovdsw.library.utils.IssueStatusChecker;
@@ -48,13 +49,9 @@ public class UserItemController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mordvinovdsw/library/support_layouts/Login_Warning.fxml"));
             Parent editRoot = loader.load();
-
             LoginUserController editController = loader.getController();
             editController.prepareEdit(this.user);
-
-            Scene editScene = new Scene(editRoot);
-            Stage editStage = new Stage();
-            editStage.setScene(editScene);
+            Stage editStage = Main.createStage("Edit User", editRoot);
             editStage.show();
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Error opening edit window for User ID: " + user.getId(), e);

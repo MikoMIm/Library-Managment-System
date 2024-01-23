@@ -135,9 +135,7 @@ public class Books_list_Controller implements Initializable, DataChangeListener 
             EditBookController editController = loader.getController();
             editController.setDataChangeListener(this);
             editController.prepareAdd();
-            Stage stage = new Stage();
-            stage.setTitle("Add New Book");
-            stage.setScene(new Scene(root));
+            Stage stage = Main.createStage("Add New Book", root);
             stage.showAndWait();
 
             refreshGrid();
