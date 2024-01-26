@@ -23,7 +23,7 @@ public class ComboBoxUtil {
 
     public static void fillMemberSearchOptions(ComboBox<String> comboBox) {
         comboBox.setItems(FXCollections.observableArrayList(
-                "Member ID", "Member Name", "Member Phone Number", "Member Email",
+                "Member ID", "Member Name",
                 "Registration Date", "Date Expire", "Status"
         ));
     }

@@ -93,8 +93,6 @@ public class BookDataManager {
                         selectedAuthor = AuthorUtil.addNewAuthorToDatabase(authorName);
                     }
                 }
-
-                // Now insert the author if it's not null
                 if (selectedAuthor != null) {
                     pstmt.setInt(1, bookId);
                     pstmt.setInt(2, selectedAuthor.getAuthorID());

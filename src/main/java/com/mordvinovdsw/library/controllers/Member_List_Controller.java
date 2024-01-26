@@ -137,7 +137,7 @@ public class Member_List_Controller implements Initializable, DataChangeListener
     @FXML
     private void sortData() {
         ObservableList<String> options = FXCollections.observableArrayList(
-                "Member ID", "Member Name", "Member Phone Number", "Member Email",
+                "Member ID", "Member Name",
                 "Registration Date", "Date Expire", "Status"
         );
         sortComboBox.setItems(options);
@@ -150,12 +150,6 @@ public class Member_List_Controller implements Initializable, DataChangeListener
                     break;
                 case "Member Name":
                     members.sort(Comparator.comparing(Member::getName));
-                    break;
-                case "Member Phone Number":
-                    members.sort(Comparator.comparing(Member::getPhone));
-                    break;
-                case "Member Email":
-                    members.sort(Comparator.comparing(Member::getEmail));
                     break;
                 case "Registration Date":
                     members.sort(Comparator.comparing(Member::getRegisterDate));
