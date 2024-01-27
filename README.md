@@ -1,4 +1,8 @@
+
+![Logo3](https://github.com/MikoMIm/Library-Managment-System/assets/102617810/797bb4b4-a16a-4d35-b8e9-f96b871383b5)
+
 # Library Management System
+
 ## Introduction
 The Library Management System is a Java application designed to manage and automate the essential operations of a library. The system is built using JavaFX for the user interface and SQLite for database management.
 ## Features
