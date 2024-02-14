@@ -21,10 +21,26 @@ The Library Management System is a Java application designed to manage and autom
 ##  Automatically populate book data
 ![javaw_89JQXd7I27](https://github.com/MikoMIm/Library-Managment-System/assets/102617810/99df507e-054a-4140-93cd-abd7e7aa68d4)
 ## Screenshots
-
+### Book List
 ![Book_List](https://github.com/MikoMIm/Library-Managment-System/assets/102617810/56505424-3176-4488-bd7c-a64139282bbf)
+<hr>
+
+### Member List
 ![Members](https://github.com/MikoMIm/Library-Managment-System/assets/102617810/fb6c9a6d-68d2-4c0a-a75b-17ca5dd9446b)
+<hr>
+
+### Issue List
 ![Issue](https://github.com/MikoMIm/Library-Managment-System/assets/102617810/7ebf00af-4586-40d3-9427-e1075d9ee2bb)
+<hr>
+
+### Login Screen
 ![LoginScreen](https://github.com/MikoMIm/Library-Managment-System/assets/102617810/9b7e7396-9d42-44e9-bf4c-69034f6ae8e1)
+<hr>
+
+### MainMenu
 ![MainMenu](https://github.com/MikoMIm/Library-Managment-System/assets/102617810/fd118650-28dc-4a3d-8e10-1b82c08a0e9b)
+<hr>
+
+### Export Screen
 ![Export](https://github.com/MikoMIm/Library-Managment-System/assets/102617810/aff1693f-1d34-4291-959d-8bacdff15e1e)
+
